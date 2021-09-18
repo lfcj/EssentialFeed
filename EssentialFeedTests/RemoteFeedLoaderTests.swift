@@ -18,27 +18,31 @@ protocol HTTPClient {
     func get(from url: URL?)
 }
 
-class HTTPClientMock: HTTPClient {
-    private(set) var requestedURL: URL?
-
-    func get(from url: URL?) {
-        self.requestedURL = url
-    }
-}
-
 class RemoteFeedLoaderTests: XCTestCase {
 
     func test_init_doesNotRequestDataFromURL() {
-        let client = HTTPClientMock()
-        let _ = RemoteFeedLoader(url: URL(string: "https://www.google.com")!, client: client)
+        let (_, client) = makeSUT()
         XCTAssertNil(client.requestedURL)
     }
 
     func test_load_requestDataFromURL() {
-        let client = HTTPClientMock()
-        let sut = RemoteFeedLoader(url: URL(string: "https://www.another-url.com")!, client: client)
+        let (sut, client) = makeSUT(url: URL(string: "https://www.another-url.com")!)
         sut.load()
         XCTAssertNotNil(client.requestedURL)
+    }
+
+    // MARK: - Helpers
+
+    class HTTPClientMock: HTTPClient {
+        private(set) var requestedURL: URL?
+
+        func get(from url: URL?) {
+            self.requestedURL = url
+        }
+    }
+
+    func makeSUT(url: URL = URL(string: "https://www.google.com")!, client: HTTPClientMock = HTTPClientMock()) -> (RemoteFeedLoader, HTTPClientMock) {
+        (RemoteFeedLoader(url: url, client: client), client)
     }
 
 }

@@ -116,8 +116,6 @@
 				847B788D26F67363006D62DC /* Assets.xcassets */,
 				847B788F26F67363006D62DC /* LaunchScreen.storyboard */,
 				847B789226F67363006D62DC /* Info.plist */,
-				847B78B426F6746D006D62DC /* FeedItem.swift */,
-				847B78B626F674B3006D62DC /* FeedLoader.swift */,
 			);
 			path = EssentialFeed;
 			sourceTree = "<group>";
@@ -152,6 +150,8 @@
 		847B78BB2716A45A006D62DC /* Feed Feature */ = {
 			isa = PBXGroup;
 			children = (
+				847B78B426F6746D006D62DC /* FeedItem.swift */,
+				847B78B626F674B3006D62DC /* FeedLoader.swift */,
 			);
 			path = "Feed Feature";
 			sourceTree = "<group>";

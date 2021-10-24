@@ -32,8 +32,12 @@ public final class RemoteFeedLoader {
         client.get(from: url) { result in
             // The RemoteFeedLoader maps client errors to domain errors.
             switch result {
-            case .success:
-                completion(.failure(.invalidData))
+            case let .success(data, _):
+                if let _ = try? JSONSerialization.jsonObject(with: data) {
+                    completion(.success([]))
+                } else {
+                    completion(.failure(.invalidData))
+                }
             case .failure:
                 completion(.failure(.connectivity))
             }

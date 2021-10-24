@@ -33,8 +33,8 @@ public final class RemoteFeedLoader {
             // The RemoteFeedLoader maps client errors to domain errors.
             switch result {
             case let .success(data, _):
-                if let _ = try? JSONSerialization.jsonObject(with: data) {
-                    completion(.success([]))
+                if let feedItemsResult = try? JSONDecoder().decode(FeedItemResult.self, from: data) {
+                    completion(.success(feedItemsResult.items))
                 } else {
                     completion(.failure(.invalidData))
                 }
@@ -43,4 +43,8 @@ public final class RemoteFeedLoader {
             }
         }
     }
+}
+
+private struct FeedItemResult: Decodable {
+    let items: [FeedItem]
 }

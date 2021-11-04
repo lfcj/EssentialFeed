@@ -78,6 +78,19 @@ class RemoteFeedLoaderTests: XCTestCase {
         })
     }
 
+    func test_load_doesNotDeliverResultAfterSUTHasBeenDeallocated() {
+        var (sut, client): (RemoteFeedLoader?, HTTPClientSpy) = makeSUT()
+
+        var receivedResult: RemoteFeedLoader.Result? = nil
+        sut?.load { result in
+            receivedResult = result
+        }
+        sut = nil
+        client.complete(withStatusCode: 200, data: makeItemsJSON([]))
+
+        XCTAssertNil(receivedResult)
+    }
+
     // MARK: - Helpers
 
     private func makeSUT(

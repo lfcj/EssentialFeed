@@ -21,11 +21,7 @@ public final class RemoteFeedLoader: FeedLoader {
             // The RemoteFeedLoader maps client errors to domain errors.
             switch result {
             case let .success(data, response):
-                if let items = try? FeedItemsMapper.map(data, response) {
-                    completion(.success(items))
-                } else {
-                    completion(.failure(Error.invalidData))
-                }
+                completion(FeedItemsMapper.map(data, from: response))
             case .failure:
                 completion(.failure(Error.connectivity))
             }

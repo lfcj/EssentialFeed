@@ -28,15 +28,17 @@ final class URLSessionHTTPClientTests: XCTestCase {
         URLProtocolStub.startInterceptingRequests()
         let url = URL(string: "https://any-url.com")!
         let stubError = NSError(domain: "Any error", code: 1)
-        URLProtocolStub.stub(url: url, error: stubError)
+        URLProtocolStub.stub(url: url, data: nil, response: nil, error: stubError)
         let sut = URLSessionHttpClient()
         let exp = expectation(description: "Wait for get(from:url) completion")
         sut.get(from: url) { result in
-            guard case .failure(let receivedError as NSError) = result else {
-                XCTFail("Expected error with failure \(stubError). Got result \(result)")
-                return
+            switch result {
+            case let .failure(receivedError as NSError):
+                XCTAssertEqual(receivedError.domain, stubError.domain)
+                XCTAssertEqual(receivedError.code, stubError.code)
+            default:
+                XCTFail("Expected failure but received \(result)")
             }
-            XCTAssertEqual(stubError, receivedError.userInfo)
             exp.fulfill()
         }
         wait(for: [exp], timeout: 1.0)
@@ -48,6 +50,8 @@ final class URLSessionHTTPClientTests: XCTestCase {
 private class URLProtocolStub: URLProtocol {
 
     private struct Stub {
+        let data: Data?
+        let response: URLResponse?
         let error: Error?
     }
 
@@ -61,8 +65,8 @@ private class URLProtocolStub: URLProtocol {
 
     private static var stubs: [URL: Stub] = [:]
 
-    static func stub(url: URL, error: Error? = nil) {
-        stubs[url] = Stub(error: error)
+    static func stub(url: URL, data: Data?, response: URLResponse?, error: Error?) {
+        stubs[url] = Stub(data: data, response: response, error: error)
     }
 
     override class func canInit(with request: URLRequest) -> Bool {
@@ -81,6 +85,12 @@ private class URLProtocolStub: URLProtocol {
             return
         }
 
+        if let data = stub.data {
+            client?.urlProtocol(self, didLoad: data)
+        }
+        if let response = stub.response {
+            client?.urlProtocol(self, didReceive: response, cacheStoragePolicy: .notAllowed)
+        }
         if let error = stub.error {
             client?.urlProtocol(self, didFailWithError: error)
         }

@@ -8,6 +8,8 @@ class URLSessionHttpClient {
         self.session = session
     }
 
+    struct UnexpectedValuesRepresentation: Error {}
+
     func get(from url: URL, completion: @escaping (HTTPClientResult) -> Void) {
         let dataTask = session.dataTask(with: url) { data, response, error in
             if let data = data, let response = response as? HTTPURLResponse {
@@ -15,7 +17,7 @@ class URLSessionHttpClient {
             } else if let error = error {
                 completion(.failure(error))
             } else {
-                fatalError("request to url \(url) has invalid response: \(response)")
+                completion(.failure(UnexpectedValuesRepresentation()))
             }
         }
         dataTask.resume()
@@ -36,10 +38,27 @@ final class URLSessionHTTPClientTests: XCTestCase {
         URLProtocolStub.stopInterceptingRequests()
     }
 
+    func test_getFromURL_failsOnAllNilValues() {
+        URLProtocolStub.stub(data: nil, response: nil, error: nil)
+
+        let exp = expectation(description: "Wait for get(from:url) completion")
+
+        makeSUT().get(from: anyURL()) { result in
+            switch result {
+            case .failure:
+                break
+            default:
+                XCTFail("Expected failure but received \(result) instead")
+            }
+            exp.fulfill()
+        }
+        wait(for: [exp], timeout: 1.0)
+    }
+
     func test_getFromURL_performsGETRequestWithURL() {
         let url = anyURL()
         let stubError = NSError(domain: "Any error", code: 1)
-        URLProtocolStub.stub(url: url, data: nil, response: nil, error: stubError)
+        URLProtocolStub.stub(data: nil, response: nil, error: stubError)
 
         let exp = expectation(description: "Wait for get(from:url) completion")
         URLProtocolStub.observeRequests { request in
@@ -55,7 +74,7 @@ final class URLSessionHTTPClientTests: XCTestCase {
     func test_getFromURL_failsOnRequestError() {
         let url = anyURL()
         let stubError = NSError(domain: "Any error", code: 1)
-        URLProtocolStub.stub(url: url, data: nil, response: nil, error: stubError)
+        URLProtocolStub.stub(data: nil, response: nil, error: stubError)
         let exp = expectation(description: "Wait for get(from:url) completion")
         makeSUT().get(from: url) { result in
             switch result {
@@ -108,7 +127,7 @@ private class URLProtocolStub: URLProtocol {
         requestObserver = nil
     }
 
-    static func stub(url: URL, data: Data?, response: URLResponse?, error: Error?) {
+    static func stub(data: Data?, response: URLResponse?, error: Error?) {
         stub = Stub(data: data, response: response, error: error)
     }
 

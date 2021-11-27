@@ -112,6 +112,8 @@ The model, however, is very independent and can live in a different module and b
 
 	![Possible data task outcomes to test][6]
 
+	So far we have the last case: `nil, `nil`, `value.
+
 [1]: https://www.essentialdeveloper.com/articles/the-minimum-you-should-do-to-prevent-memory-leaks-in-swift
 [2]: https://www.essentialdeveloper.com/articles/xctest-swift-setup-teardown-vs-factory-methods
 [3]: https://github.com/lfcj/EssentialFeed/commit/9aec96725975871f560aec63c7a712e13f2c0b14

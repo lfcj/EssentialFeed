@@ -15,7 +15,7 @@ class URLSessionHttpClient {
             } else if let error = error {
                 completion(.failure(error))
             } else {
-                //fatalError("request to url \(url) has invalid response: \(response)")
+                fatalError("request to url \(url) has invalid response: \(response)")
             }
         }
         dataTask.resume()

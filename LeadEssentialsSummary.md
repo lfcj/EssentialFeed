@@ -103,14 +103,18 @@ The model, however, is very independent and can live in a different module and b
 * Avoiding the downsides of mocking/stubbing
 * The economics of test feedback
 	* Looking for bugs takes longer -> **if one has to debug to find where the test is failing, the value of the test is diminished.**. Each thing should be tested in different places, for example, avoid testing request and urls in the same test, separate those concerns.
+	* Use factory methods in tests to protect the tests from implementation details. It is a good call to also add memory leak tracking to those methods.
 	* It is important to add `file: StaticString = #file, line: UInt = #line` to helper methods.
 	* Minimizing risk in the codebase and maximizing learning by testing all scenarios (including error, invalid and unhappy paths)
 	* Refactoring techniques for abstracting tests from implementation details
 	* When using 3rd-party frameworks, it's advised to add extra tests to validate assumptions. One example was the test checking that empty Data triggered an error. Wrong -> `URLSession` just returns `.sucess()` with `Data` having 0 bytes.
+	* Keep these cases in mind when testing dataTask outcomes:
+
+	![Possible data task outcomes to test][6]
 
 [1]: https://www.essentialdeveloper.com/articles/the-minimum-you-should-do-to-prevent-memory-leaks-in-swift
 [2]: https://www.essentialdeveloper.com/articles/xctest-swift-setup-teardown-vs-factory-methods
 [3]: https://github.com/lfcj/EssentialFeed/commit/9aec96725975871f560aec63c7a712e13f2c0b14
 [4]: https://www.youtube.com/watch?v=C2GyNTN4j4o
 [5]: https://www.youtube.com/watch?v=qzTeyxIW_ow&list=PLyjgjmI1UzlSWtjAMPOt03L7InkCRlGzb&index=5
-
+[6]: /summary-images/data-task-possible-results.jpg

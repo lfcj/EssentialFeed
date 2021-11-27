@@ -192,6 +192,7 @@ private class URLProtocolStub: URLProtocol {
 
     override class func canInit(with request: URLRequest) -> Bool {
         URLProtocolStub.requestObserver?(request)
+        URLProtocolStub.requestObserver = nil
         return true
     }
 

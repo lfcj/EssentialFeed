@@ -12,7 +12,7 @@ class URLSessionHttpClient {
 
     func get(from url: URL, completion: @escaping (HTTPClientResult) -> Void) {
         let dataTask = session.dataTask(with: url) { data, response, error in
-            if let data = data, let response = response as? HTTPURLResponse {
+            if let data = data, !data.isEmpty, let response = response as? HTTPURLResponse {
                 completion(.success(data, response))
             } else if let error = error {
                 completion(.failure(error))
@@ -62,8 +62,26 @@ final class URLSessionHTTPClientTests: XCTestCase {
         XCTAssertEqual(receivedError?.code, requestError.code)
     }
 
-    func test_getFromURL_failsOnAllNilValues() {
+    func test_getFromURL_failsOnAllInvalidRepresentationCases() {
         XCTAssertNotNil(resultErrorFor(data: nil, response: nil, error: nil))
+
+        let nonHTTPURLResponse = URLResponse(url: anyURL(), mimeType: nil, expectedContentLength: 0, textEncodingName: nil)
+        XCTAssertNotNil(resultErrorFor(data: nil, response: nonHTTPURLResponse, error: nil))
+
+        let anyHTTPURLResponse = HTTPURLResponse(url: anyURL(), statusCode: 200, httpVersion: nil, headerFields: nil)
+        XCTAssertNotNil(resultErrorFor(data: nil, response: anyHTTPURLResponse, error: nil))
+
+        let anyData = Data("any data".utf8)
+        XCTAssertNotNil(resultErrorFor(data: anyData, response: nil, error: nil))
+
+        let anyError = NSError(domain: "any error", code: 0)
+        XCTAssertNotNil(resultErrorFor(data: anyData, response: nil, error: anyError))
+
+        XCTAssertNotNil(resultErrorFor(data: nil, response: nonHTTPURLResponse, error: anyError))
+        XCTAssertNotNil(resultErrorFor(data: nil, response: anyHTTPURLResponse, error: anyError))
+        XCTAssertNotNil(resultErrorFor(data: anyData, response: nonHTTPURLResponse, error: anyError))
+        XCTAssertNotNil(resultErrorFor(data: anyData, response: anyHTTPURLResponse, error: anyError))
+        XCTAssertNotNil(resultErrorFor(data: anyData, response: nonHTTPURLResponse, error: nil))
     }
 
     // MARK: - Helpers

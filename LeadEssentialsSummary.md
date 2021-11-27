@@ -102,7 +102,7 @@ The model, however, is very independent and can live in a different module and b
 
 * Avoiding the downsides of mocking/stubbing
 * The economics of test feedback
-	* Looking for bugs takes longer
+	* Looking for bugs takes longer -> **if one has to debug to find where the test is failing, the value of the test is diminished.**
 	* It is important to add `file: StaticString = #file, line: UInt = #line` to helper methods.
 	* Minimizing risk in the codebase and maximizing learning by testing all scenarios (including error, invalid and unhappy paths)
 	* Refactoring techniques for abstracting tests from implementation details

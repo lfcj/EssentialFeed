@@ -55,25 +55,23 @@ private class URLProtocolStub: URLProtocol {
         let error: Error?
     }
 
+    private static var stub: Stub?
+
     static func startInterceptingRequests() {
         URLProtocol.registerClass(URLProtocolStub.self)
     }
 
     static func stopInterceptingRequests() {
         URLProtocol.unregisterClass(URLProtocolStub.self)
+        stub = nil
     }
 
-    private static var stubs: [URL: Stub] = [:]
-
     static func stub(url: URL, data: Data?, response: URLResponse?, error: Error?) {
-        stubs[url] = Stub(data: data, response: response, error: error)
+        stub = Stub(data: data, response: response, error: error)
     }
 
     override class func canInit(with request: URLRequest) -> Bool {
-        guard let url = request.url else {
-            return false
-        }
-        return stubs[url] != nil
+        true
     }
 
     override class func canonicalRequest(for request: URLRequest) -> URLRequest {
@@ -81,7 +79,8 @@ private class URLProtocolStub: URLProtocol {
     }
 
     override func startLoading() {
-        guard let url = request.url, let stub = Self.stubs[url] else {
+        guard let stub = Self.stub else {
+            client?.urlProtocolDidFinishLoading(self)
             return
         }
 

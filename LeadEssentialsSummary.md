@@ -98,7 +98,7 @@ The model, however, is very independent and can live in a different module and b
 
 * **MVP:** This is inverted to what MVC does. The presenter has a reference to the View, but through a protocol.
 
-#### 8. Speeding up Development by: Reducing Debugging Time, Minimizing Risk & Maximizing Learning, and Decoupling Tests From Implementation Details
+#### 8. Speeding up Development by: Reducing Debugging Time, Minimizing Risk & Maximizing Learning, and Decoupling Tests From Implementation Details ✅
 
 * Avoiding the downsides of mocking/stubbing
 * The economics of test feedback
@@ -115,6 +115,23 @@ The model, however, is very independent and can live in a different module and b
 	So far we have the last case: `nil, `nil`, `value.
 	We implement a test for all the cases and land on finally testing sucessful situations.
 	Important here is to take into account that comparing classes compares the pointers, not the values. In the case of the URL Loading System, when we pass a response through the `URLProtocol`, the system copies it into another instance, so the pointers are different.
+	The URL Loading System also replaces `nil` data into `Data` with 0 bytes.
+
+
+#### 9. Randomizing & Parallelizing Tests, Code Coverage, Testing in Integration with the Backend, and Automating a Continious Integration (CI) Pipeline
+
+	* Extra testing configurations (running tests in random order, parallelizing test execution and gathering code coverage)
+		* The randomization is great to avoid any kind of order dependency in our tests.
+		* If tests run slowly, try running them in paralell. For this small use case it is not necessary.
+	* Testing client and server integration (end-to-end) even when the backend is still in development
+	* Economics of the end-to-end tests vs unit tests
+		* End-to-end tests can be expensive to maintain and we want to not keep them low by relying on more, faster, precise unit tests. That is if we trust our backend. If we do not, we do need more end-to-end tests before releasing buggy builds.
+
+	* Setting up a CI pipeline
+		* For a team it is painfully necessary to have a pipeline, but even as solo developers it is benefitial to have one to speed up development process and ensure quality and integrity of the codebase...and to allow to easily integrate new devs in the future.
+
+
+
 
 [1]: https://www.essentialdeveloper.com/articles/the-minimum-you-should-do-to-prevent-memory-leaks-in-swift
 [2]: https://www.essentialdeveloper.com/articles/xctest-swift-setup-teardown-vs-factory-methods

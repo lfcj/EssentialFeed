@@ -98,7 +98,7 @@ The model, however, is very independent and can live in a different module and b
 
 * **MVP:** This is inverted to what MVC does. The presenter has a reference to the View, but through a protocol.
 
-#### 8. Speeding up Development by: Reducing Debugging Time, Minimizing Risk & Maximizing Learning, and Decoupling Tests From Implementation Details
+#### 8. Speeding up Development by: Reducing Debugging Time, Minimizing Risk & Maximizing Learning, and Decoupling Tests From Implementation Details ✅
 
 * Avoiding the downsides of mocking/stubbing
 * The economics of test feedback

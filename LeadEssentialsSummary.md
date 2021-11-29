@@ -112,7 +112,7 @@ The model, however, is very independent and can live in a different module and b
 
 	![Possible data task outcomes to test][6]
 
-	So far we have the last case: `nil, `nil`, `value.
+	So far we have the last case: `nil`, `nil`, `value`.
 	We implement a test for all the cases and land on finally testing sucessful situations.
 	Important here is to take into account that comparing classes compares the pointers, not the values. In the case of the URL Loading System, when we pass a response through the `URLProtocol`, the system copies it into another instance, so the pointers are different.
 

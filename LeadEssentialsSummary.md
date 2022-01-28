@@ -117,7 +117,7 @@ None of them are architectures!
         	We implement a test for all the cases and land on finally testing sucessful situations.
         	Important here is to take into account that comparing classes compares the pointers, not the values. In the case of the URL Loading System, when we pass a response through the `URLProtocol`, the system copies it into another instance, so the pointers are different.
 
-#### 9. Randomizing & Parallelizing Tests, Code Coverage, Testing in Integration with the Backend, and Automating a Continuous Integration (CI) Pipeline (next)
+#### 9. Randomizing & Parallelizing Tests, Code Coverage, Testing in Integration with the Backend, and Automating a Continuous Integration (CI) Pipeline
 
 -   Extra testing configurations (running tests in random order, parallelizing test execution and gathering code coverage)
     -   By running tests in random order we find order dependencies in our test suite.
@@ -134,10 +134,25 @@ None of them are architectures!
 -   Economics of end-to-end tests vs unit tests
     -   End-to-end tests usually also need longer to run, and are harder to maintain.
     -   We want lots of reliable, fast unit tests. If we do not trust the backend, we also want enough integration tests as a backup to alert us when things go wrong.
+    -   **MAKE SURE TO ALWAYS ADD TEST FOR MEMORY LEAKS!**
 -   Setting up a CI pipeline
+    -   Create a Unit Testing Bundle target. That automatically creates a scheme
     -   Any team that does not have automated testing enabled is not as functional as they could be.
+    -   We want to run this automatically before merging to `master`.
+    -   In CI scheme, under Tests, add all the targets (Unit + Integration tests/targets), it is advised to
+    select randomized execution and code coverage.
     -   Even solo devs can profit from this to ensure quality of codebase...as well as helping welcome new devs in the future.
+    - Travis is OpenSource CI server, set .travis.yml for it. If not needed, disable codesign:
+    ```
+    os: osx
+    os_image: xcode13.2.1
+    language: swift
+    script: xcodebuild clean build test -project EssentialFeed.xcodeproj -scheme "CI" -destination 'platform=iOS Simulator,name=iPhone 12' CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO
+    ```
+    Run the `script` in the terminal to make sure everything is fine.
     -   CI is only the first step towards the bigger goals: Continuous Delivery and Continuous Deployment. Automatic checks support harmonious collaboration in development teams and increase transparency and trust with the business side as we can deploy versions of our code to a broader team throughout the day.
+    -   The link to the Travis status is https://travis-ci.com/github/lfcj/EssentialFeed
+    -   TODO: Add status page to README.md once I have a CI server
 
 [1]: https://www.essentialdeveloper.com/articles/the-minimum-you-should-do-to-prevent-memory-leaks-in-swift
 

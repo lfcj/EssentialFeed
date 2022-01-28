@@ -112,12 +112,12 @@ None of them are architectures!
     ![Possible data task outcomes to test][6]
 
     So far we have the last case: `nil`, `nil`, `value`.
-    
+
     We implement a test for all the cases and land on finally testing sucessful situations.
-    
+
     Important here is to take into account that comparing classes compares the pointers, not the values. In the case of the URL Loading System, when we pass a response through the `URLProtocol`, the system copies it into another instance, so the pointers are different.
 
-#### 9. Randomizing & Parallelizing Tests, Code Coverage, Testing in Integration with the Backend, and Automating a Continuous Integration (CI) Pipeline
+#### 9. Randomizing & Parallelizing Tests, Code Coverage, Testing in Integration with the Backend, and Automating a Continuous Integration (CI) Pipeline ✅
 
 -   Extra testing configurations (running tests in random order, parallelizing test execution and gathering code coverage)
     -   By running tests in random order we find order dependencies in our test suite.
@@ -153,6 +153,18 @@ None of them are architectures!
     -   CI is only the first step towards the bigger goals: Continuous Delivery and Continuous Deployment. Automatic checks support harmonious collaboration in development teams and increase transparency and trust with the business side as we can deploy versions of our code to a broader team throughout the day.
     -   The link to the Travis status is https://travis-ci.com/github/lfcj/EssentialFeed
     -   TODO: Add status page to README.md once I have a CI server
+
+#### Identifying, Debugging, and Solving Data Races with the Thread Sanitizer ✅
+
+-   Identifying, debugging, and solving data races with the Thread Sanitizer
+    - Turn it on under Edit Scheme -> Test -> Diagnostics -> Thread Sanitizer
+    - Although awesome, the thread sanitizer can slow down the CPU from 2 to 20 times, and incrase memory usage from 5 to 10 times.
+    - Due to this it is recommended only to leave this option on in the CI, not in the local tests.
+    - This, however, can result costly because it may need more server resources.
+    - Run at least once locally before doing so in the CI.
+-   Visualizing how global shared state and threading together are prone to data races
+    - Avoid globally modifiable states, _for God's sake_.
+
 
 [1]: https://www.essentialdeveloper.com/articles/the-minimum-you-should-do-to-prevent-memory-leaks-in-swift
 

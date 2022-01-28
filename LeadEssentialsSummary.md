@@ -154,7 +154,7 @@ None of them are architectures!
     -   The link to the Travis status is https://travis-ci.com/github/lfcj/EssentialFeed
     -   TODO: Add status page to README.md once I have a CI server
 
-#### Identifying, Debugging, and Solving Data Races with the Thread Sanitizer ✅
+#### 10. Identifying, Debugging, and Solving Data Races with the Thread Sanitizer ✅
 
 -   Identifying, debugging, and solving data races with the Thread Sanitizer
     - Turn it on under Edit Scheme -> Test -> Diagnostics -> Thread Sanitizer

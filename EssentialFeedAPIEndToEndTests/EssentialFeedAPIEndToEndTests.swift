@@ -1,34 +1,29 @@
-//
-//  EssentialFeedAPIEndToEndTests.swift
-//  EssentialFeedAPIEndToEndTests
-//
-//  Created by Luisa Fernanda Castaño on 28.01.22.
-//
-
+import EssentialFeed
 import XCTest
 
 class EssentialFeedAPIEndToEndTests: XCTestCase {
 
-    override func setUpWithError() throws {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
-    }
+    func test_endToEndTestServerGETFeedResult_matchesFixedTestsAccountData() {
+        let testServerURL = URL(string: "https://www.essentialdeveloper.com/s/feed-case-study-test-api-feed.json")!
+        let client = URLSessionHttpClient()
+        let loader = RemoteFeedLoader(url: testServerURL, client: client)
 
-    override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-    }
+        let exp = expectation(description: "Wait for load completion")
+        var receivedResult: LoadFeedResult?
+        loader.load { result in
+            receivedResult = result
+            exp.fulfill()
+        }
 
-    func testExample() throws {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-        // Any test you write for XCTest can be annotated as throws and async.
-        // Mark your test throws to produce an unexpected failure when your test encounters an uncaught error.
-        // Mark your test async to allow awaiting for asynchronous code to complete. Check the results with assertions afterwards.
-    }
+        wait(for: [exp], timeout: 5)
 
-    func testPerformanceExample() throws {
-        // This is an example of a performance test case.
-        measure {
-            // Put the code you want to measure the time of here.
+        switch receivedResult {
+        case .success(let items):
+            XCTAssertEqual(items.count, 8, "Expected 8 items")
+        case .failure(let error):
+            XCTFail("Expected successful feed result and got an error: \(error)")
+        case .none:
+            XCTFail("Expected successful feed result and got nothing")
         }
     }
 

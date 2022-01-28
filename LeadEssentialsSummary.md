@@ -1,6 +1,6 @@
-        # iOS Lead Essentials
+# iOS Lead Essentials
 
-Github:
+Github: https://github.com/lfcj/EssentialFeed
 
 ## Networking Module
 
@@ -25,11 +25,9 @@ Github:
 
     ### Stubs and Spies are test-doubles. 📚💡
 
-        	a. A Stub is used to set predefined behaviors or responses during tests. For example, you 		can create a Stub to provide "canned" HTTP responses (e.g., predefined JSON data or 			error).
+-  a. A Stub is used to set predefined behaviors or responses during tests. For example, you can create a Stub to provide "canned" HTTP responses (e.g., predefined JSON data or error).
 
-        	b. A Spy collects or "records" usage information such as method invocation count and 			values received. So you can use/verify them later in the test.
-
-        	A Spy is often also a Stub, as you can choose to set predefined actions/responses into it.
+-  b. A Spy collects or "records" usage information such as method invocation count and values received. So you can use/verify them later in the test. A Spy is often also a Stub, as you can choose to set predefined actions/responses into it.
 
 #### 4. A Classicist TDD Approach (No Mocking) to Mapping JSON with Decodable + Domain-Specific Models ✅
 
@@ -49,11 +47,11 @@ Github:
 
     ##### Video: [The Minimum You Should Do To Prevent Memory Leaks in Swift][1]
 
-      In tests make sure that references to objects are nil by the time the retainer ends using the referenced object. The normal solution is to always use [weak retainedObject].
+    In tests make sure that references to objects are nil by the time the retainer ends using the referenced object. The normal solution is to always use [weak retainedObject].
 
     ##### Video: [XCTest + Swift: SetUp/TearDown vs Factory Methods][2]
 
-        	TIL: An instance of the Test class is created per test, so global variables within tests will not keep up changes between one test and the next one. There is also not order of execution. Given these points it is mostly better to have factory methods vs using the setUp/tearDown. Readability is also affected because one has to scroll up and down to see what initial config is done.
+    TIL: An instance of the Test class is created per test, so global variables within tests will not keep up changes between one test and the next one. There is also not order of execution. Given these points it is mostly better to have factory methods vs using the setUp/tearDown. Readability is also affected because one has to scroll up and down to see what initial config is done.
 
 #### 6. Conforming to Feature Abstractions While Maintaining System Modularity + Keeping Test Details Out of Production With Enum Pattern Matching and Async Expectations ✅
 
@@ -66,13 +64,13 @@ Github:
 
 -   Learn various testing strategies for network requests and their trade-offs:
 
-        * **End-to-end-testing:** It is an integration test between client and server. Real requests are done. This can make our development slow because the API might not be ready. It can also happen that there is just not network or that it is slow.
+    * **End-to-end-testing:** It is an integration test between client and server. Real requests are done. This can make our development slow because the API might not be ready. It can also happen that there is just not network or that it is slow.
 
-        * **Mocking with Subclasses:** It can be dangerous when subclassing classes we do not own, such as URLSession. There are methods that could do things we do not expect. It is also very coupled with the production code because we have to follow the step by step process that happens in production to fulfil our expectations. As an example URLSession’s initialiser was deprecated. Refactoring code in production immediately  breaks tests.
+    * **Mocking with Subclasses:** It can be dangerous when subclassing classes we do not own, such as URLSession. There are methods that could do things we do not expect. It is also very coupled with the production code because we have to follow the step by step process that happens in production to fulfil our expectations. As an example URLSession’s initialiser was deprecated. Refactoring code in production immediately  breaks tests.
 
-        * **Mocking with Protocols:** We can define protocols that have the interfaces we’d like to spy on. With this we can hide unnecessary details and avoid overwriting methods, we only care about specific behaviours. This, however, does not solve the tight coupling problem. Creating these protocols is also noisy in the production code because the sole purpose of the protocols may be testing.
+    * **Mocking with Protocols:** We can define protocols that have the interfaces we’d like to spy on. With this we can hide unnecessary details and avoid overwriting methods, we only care about specific behaviours. This, however, does not solve the tight coupling problem. Creating these protocols is also noisy in the production code because the sole purpose of the protocols may be testing.
 
-        * **URLProtocol stubbing:** This is done using the “little-known URL Loading System”. It is fast and reliable, recommended by Apple to test network requests, so hopefully not unexpected mocking behaviour. It is good to decouple code from the production one as well as production details. We can also use this for other purposes such as analytics, caching or profiling (how long are things taking?). It awesome cuz one can just register stubs that would spy on requests, but the delegation to the stub is handled by the system. URLProtocol is an abstract class, when subclassed, one needs to implement 4 methods and one has access to all of the instance variables of the URLSession. See [commit][3] for an example.
+    * **URLProtocol stubbing:** This is done using the “little-known URL Loading System”. It is fast and reliable, recommended by Apple to test network requests, so hopefully not unexpected mocking behaviour. It is good to decouple code from the production one as well as production details. We can also use this for other purposes such as analytics, caching or profiling (how long are things taking?). It awesome cuz one can just register stubs that would spy on requests, but the delegation to the stub is handled by the system. URLProtocol is an abstract class, when subclassed, one needs to implement 4 methods and one has access to all of the instance variables of the URLSession. See [commit][3] for an example.
 
     What we did with URLProtocol is intercepting and handling URL requests.
     Subclass and protocol-based mocking of classes we don’t own (e.g., the Foundation URLSession class)
@@ -82,9 +80,9 @@ Github:
 -   Good architecture makes a system soft -> easy to change and adapt to the ever changing requirements.
 -   A soft system is:
 
-        	* **flexible:** it welcomes requirement changes.
-        	* **maintainable:** Improves the estimation accuracy of the team. With new requirements it is more clear to know what is needed to do the changes. They are
-        	* **scalable:** They are easy to test.
+    * **flexible:** it welcomes requirement changes.
+    * **maintainable:** Improves the estimation accuracy of the team. With new requirements it is more clear to know what is needed to do the changes. They are
+    * **scalable:** They are easy to test.
 
 ##### Video: [Clean iOS Architecture pt.5: MVC, MVVM, and MVP (UI Design Patterns)][5]
 
@@ -103,19 +101,21 @@ None of them are architectures!
 
 -   Avoiding the downsides of mocking/stubbing
 -   The economics of test feedback
-    		* Looking for bugs takes longer -> **if one has to debug to find where the test is failing, the value of the test is diminished.**. Each thing should be tested in different places, for example, avoid testing request and urls in the same test, separate those concerns.
-    		* Use factory methods in tests to protect the tests from implementation details. It is a good call to also add memory leak tracking to those methods.
-    		* It is important to add `file: StaticString = #file, line: UInt = #line` to helper methods.
-    		* Minimizing risk in the codebase and maximizing learning by testing all scenarios (including error, invalid and unhappy paths)
-    		* Refactoring techniques for abstracting tests from implementation details
-    		* When using 3rd-party frameworks, it's advised to add extra tests to validate assumptions. One example was the test checking that empty Data triggered an error. Wrong -> `URLSession` just returns `.sucess()` with `Data` having 0 bytes.
-    		\* Keep these cases in mind when testing dataTask outcomes:
+    * Looking for bugs takes longer -> **if one has to debug to find where the test is failing, the value of the test is diminished.**. Each thing should be tested in different places, for example, avoid testing request and urls in the same test, separate those concerns.
+    * Use factory methods in tests to protect the tests from implementation details. It is a good call to also add memory leak tracking to those methods.
+    * It is important to add `file: StaticString = #file, line: UInt = #line` to helper methods.
+    * Minimizing risk in the codebase and maximizing learning by testing all scenarios (including error, invalid and unhappy paths)
+    * Refactoring techniques for abstracting tests from implementation details
+    * When using 3rd-party frameworks, it's advised to add extra tests to validate assumptions. One example was the test checking that empty Data triggered an error. Wrong -> `URLSession` just returns `.sucess()` with `Data` having 0 bytes.
+    * Keep these cases in mind when testing dataTask outcomes:
 
-        	![Possible data task outcomes to test][6]
+    ![Possible data task outcomes to test][6]
 
-        	So far we have the last case: `nil`, `nil`, `value`.
-        	We implement a test for all the cases and land on finally testing sucessful situations.
-        	Important here is to take into account that comparing classes compares the pointers, not the values. In the case of the URL Loading System, when we pass a response through the `URLProtocol`, the system copies it into another instance, so the pointers are different.
+    So far we have the last case: `nil`, `nil`, `value`.
+    
+    We implement a test for all the cases and land on finally testing sucessful situations.
+    
+    Important here is to take into account that comparing classes compares the pointers, not the values. In the case of the URL Loading System, when we pass a response through the `URLProtocol`, the system copies it into another instance, so the pointers are different.
 
 #### 9. Randomizing & Parallelizing Tests, Code Coverage, Testing in Integration with the Backend, and Automating a Continuous Integration (CI) Pipeline
 

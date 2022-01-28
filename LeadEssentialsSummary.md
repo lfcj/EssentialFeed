@@ -165,6 +165,28 @@ None of them are architectures!
 -   Visualizing how global shared state and threading together are prone to data races
     - Avoid globally modifiable states, _for God's sake_.
 
+#### 11. What Many Apps Get Wrong About Reachability and How To Get It Right ✅
+
+-   There’s no reliable way to check for connectivity without actually trying to perform the request! From (Apple)][7]:
+
+> “Always attempt to make a connection. Do not attempt to guess whether network service is available, and do not cache that determination.”
+
+-   It is advised to retry network requests when there are connectivity errors, or telling the user it looks like they are offline. But **not running the request** is bad UX.
+
+-   Tools such as `SCNetworkReachability` are good for diagnosing the causes behind a request failing, not to realiably know if there is Internet.
+
+    ##### What are alternatives?
+
+    - Setting `URLSessionConfiguration.default.waitsForConnectivity` to `true` starts the task when there is connectivity.
+
+        - Background sessions **always** wait for connectivity anyway.
+        - There is also a waiting time timeout, which is controlled by `timeoutIntervalForResource`.
+        - The URLSession delegate method notifies when a task is waiting. See `urlSession(taskIsWaitingForConnectivity)`.
+        - Only make sure to `nil` the delegate because the reference to it is strong -> Memory Leak Alert.
+        - Check `allowsExpensiveNetworkAccess` and `allowsConstrainedNetworkAccess` isntead of checking for reachability.
+
+    - If the request can start but fails due to lack of connection, it is the client's decision to retry or not.
+
 
 [1]: https://www.essentialdeveloper.com/articles/the-minimum-you-should-do-to-prevent-memory-leaks-in-swift
 
@@ -177,3 +199,5 @@ None of them are architectures!
 [5]: https://www.youtube.com/watch?v=qzTeyxIW_ow&list=PLyjgjmI1UzlSWtjAMPOt03L7InkCRlGzb&index=5
 
 [6]: /summary-images/data-task-possible-results.jpg
+
+[7]: https://developer.apple.com/library/archive/documentation/NetworkingInternetWeb/Conceptual/NetworkingOverview/WhyNetworkingIsHard/WhyNetworkingIsHard.html#//apple_ref/doc/uid/TP40010220-CH13-SW3

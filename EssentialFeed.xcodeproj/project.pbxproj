@@ -53,9 +53,9 @@
 
 /* Begin PBXFileReference section */
 		4095D2E727A4913600534A47 /* EssentialFeedAPIEndToEndTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EssentialFeedAPIEndToEndTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		4095D2F027A4918900534A47 /* EssentialFeedAPIEndToEndTests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "EssentialFeedAPIEndToEndTests-Bridging-Header.h"; sourceTree = "<group>"; };
 		4095D2F127A4918A00534A47 /* EssentialFeedAPIEndToEndTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EssentialFeedAPIEndToEndTests.swift; sourceTree = "<group>"; };
 		4095D2F327A4927700534A47 /* URLSessionHttpClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSessionHttpClient.swift; sourceTree = "<group>"; };
+		4095D2F527A494C200534A47 /* EssentialFeedAPIEndToEndTests-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "EssentialFeedAPIEndToEndTests-Bridging-Header.h"; sourceTree = "<group>"; };
 		84095EF8275271790099B4D0 /* XCTestCase+MemoryLeakTracking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XCTestCase+MemoryLeakTracking.swift"; sourceTree = "<group>"; };
 		844AEC97274AB7A6003212BD /* URLSessionHTTPClientTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSessionHTTPClientTests.swift; sourceTree = "<group>"; };
 		847B788126F67362006D62DC /* EssentialFeed.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EssentialFeed.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -115,8 +115,8 @@
 		4095D2E827A4913600534A47 /* EssentialFeedAPIEndToEndTests */ = {
 			isa = PBXGroup;
 			children = (
+				4095D2F527A494C200534A47 /* EssentialFeedAPIEndToEndTests-Bridging-Header.h */,
 				4095D2F127A4918A00534A47 /* EssentialFeedAPIEndToEndTests.swift */,
-				4095D2F027A4918900534A47 /* EssentialFeedAPIEndToEndTests-Bridging-Header.h */,
 			);
 			path = EssentialFeedAPIEndToEndTests;
 			sourceTree = "<group>";

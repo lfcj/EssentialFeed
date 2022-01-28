@@ -167,7 +167,7 @@ None of them are architectures!
 
 #### 11. What Many Apps Get Wrong About Reachability and How To Get It Right ✅
 
--   There’s no reliable way to check for connectivity without actually trying to perform the request! From (Apple)][7]:
+-   There’s no reliable way to check for connectivity without actually trying to perform the request! From [Apple][7]:
 
 > “Always attempt to make a connection. Do not attempt to guess whether network service is available, and do not cache that determination.”
 

@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		4095D2F227A4918A00534A47 /* EssentialFeedAPIEndToEndTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4095D2F127A4918A00534A47 /* EssentialFeedAPIEndToEndTests.swift */; };
-		4095D2F427A4927700534A47 /* URLSessionHttpClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4095D2F327A4927700534A47 /* URLSessionHttpClient.swift */; };
 		4095D2F627A4996E00534A47 /* XCTestCase+MemoryLeakTracking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84095EF8275271790099B4D0 /* XCTestCase+MemoryLeakTracking.swift */; };
 		84095EF9275271790099B4D0 /* XCTestCase+MemoryLeakTracking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84095EF8275271790099B4D0 /* XCTestCase+MemoryLeakTracking.swift */; };
 		84095EFB27528C690099B4D0 /* URLSessionHTTPClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84095EFA27528C690099B4D0 /* URLSessionHTTPClient.swift */; };
@@ -56,7 +55,6 @@
 /* Begin PBXFileReference section */
 		4095D2E727A4913600534A47 /* EssentialFeedAPIEndToEndTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EssentialFeedAPIEndToEndTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4095D2F127A4918A00534A47 /* EssentialFeedAPIEndToEndTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EssentialFeedAPIEndToEndTests.swift; sourceTree = "<group>"; };
-		4095D2F327A4927700534A47 /* URLSessionHttpClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSessionHttpClient.swift; sourceTree = "<group>"; };
 		4095D2F527A494C200534A47 /* EssentialFeedAPIEndToEndTests-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "EssentialFeedAPIEndToEndTests-Bridging-Header.h"; sourceTree = "<group>"; };
 		84095EF8275271790099B4D0 /* XCTestCase+MemoryLeakTracking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XCTestCase+MemoryLeakTracking.swift"; sourceTree = "<group>"; };
 		84095EFA27528C690099B4D0 /* URLSessionHTTPClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSessionHTTPClient.swift; sourceTree = "<group>"; };
@@ -140,6 +138,7 @@
 				847B78A526F67363006D62DC /* EssentialFeedUITests */,
 				4095D2E827A4913600534A47 /* EssentialFeedAPIEndToEndTests */,
 				847B788226F67362006D62DC /* Products */,
+				84BD059327AEB38200F57E34 /* Recovered References */,
 			);
 			sourceTree = "<group>";
 		};
@@ -389,7 +388,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4095D2F427A4927700534A47 /* URLSessionHttpClient.swift in Sources */,
 				847B78B526F6746D006D62DC /* FeedItem.swift in Sources */,
 				847B788926F67362006D62DC /* ViewController.swift in Sources */,
 				847B788526F67362006D62DC /* AppDelegate.swift in Sources */,
@@ -638,7 +636,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = F562T35AEB;
+				DEVELOPMENT_TEAM = G7YAMEJH7M;
 				INFOPLIST_FILE = EssentialFeed/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -657,7 +655,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = F562T35AEB;
+				DEVELOPMENT_TEAM = G7YAMEJH7M;
 				INFOPLIST_FILE = EssentialFeed/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

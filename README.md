@@ -194,7 +194,7 @@ None of them are architectures!
 
     - If the request can start but fails due to lack of connection, it is the client's decision to retry or not.
 
-### Networking Module Learning Outcome
+#### Networking Module Learning Outcome
 
 -   *Try to commit as often as possible*
 -   Basic depiction of dependencies, abstractions and concrete types in diagrams
@@ -249,6 +249,22 @@ None of them are architectures!
 -   Testing client and server integration (end-to-end) even when the backend is still in development
 -   Economics of end-to-end tests vs unit tests
 -   Setting up a CI pipeline
+
+#### Key Stats to Consider in Codebases
+
+- [x] Less than Lines of Code per file
+- [x] No TODOs nor FIX comments
+- [x] No (!) force unwrapping
+- [x] No `unowned` reference count
+    - Using `unowned` is not recommended because it is difficult to understand the lifetime of objects, especially when they are controlled by frameworks, e.g.: `UIKit`. Objects/views/windows often live longer than one thinks they do. On the other hand, we strive to have modular and highly decoupled systems, so when using abstractions such as protocols to perform operations, we cannot guarantee their lifetime...nor should we try to guess it as we would be leaking implementation details.
+- [x] No more than 4 indentation level.
+- [x] Assignable `var` variable count.
+- [x] 0 merges to `master` with failing tests.
+
+```
+Clear separation of concerns, establishing proper boundaries and utilizing dependency inversion whenever necessary are the keys to a clean architecture, not the paradigm one uses
+```
+
 
 [1]: https://www.essentialdeveloper.com/articles/the-minimum-you-should-do-to-prevent-memory-leaks-in-swift
 

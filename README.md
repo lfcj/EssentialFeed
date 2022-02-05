@@ -164,13 +164,13 @@ None of them are architectures!
 #### 10. Identifying, Debugging, and Solving Data Races with the Thread Sanitizer ✅
 
 -   Identifying, debugging, and solving data races with the Thread Sanitizer
-    - Turn it on under Edit Scheme -> Test -> Diagnostics -> Thread Sanitizer
-    - Although awesome, the thread sanitizer can slow down the CPU from 2 to 20 times, and incrase memory usage from 5 to 10 times.
-    - Due to this it is recommended only to leave this option on in the CI, not in the local tests.
-    - This, however, can result costly because it may need more server resources.
-    - Run at least once locally before doing so in the CI.
+    -   Turn it on under Edit Scheme -> Test -> Diagnostics -> Thread Sanitizer
+    -   Although awesome, the thread sanitizer can slow down the CPU from 2 to 20 times, and incrase memory usage from 5 to 10 times.
+    -   Due to this it is recommended only to leave this option on in the CI, not in the local tests.
+    -   This, however, can result costly because it may need more server resources.
+    -   Run at least once locally before doing so in the CI.
 -   Visualizing how global shared state and threading together are prone to data races
-    - Avoid globally modifiable states, _for God's sake_.
+    -   Avoid globally modifiable states, *for God's sake*.
 
 #### 11. What Many Apps Get Wrong About Reachability and How To Get It Right ✅
 
@@ -184,15 +184,15 @@ None of them are architectures!
 
     ##### What are alternatives?
 
-    - Setting `URLSessionConfiguration.default.waitsForConnectivity` to `true` starts the task when there is connectivity.
+    -   Setting `URLSessionConfiguration.default.waitsForConnectivity` to `true` starts the task when there is connectivity.
 
-        - Background sessions **always** wait for connectivity anyway.
-        - There is also a waiting time timeout, which is controlled by `timeoutIntervalForResource`.
-        - The URLSession delegate method notifies when a task is waiting. See `urlSession(taskIsWaitingForConnectivity)`.
-        - Only make sure to `nil` the delegate because the reference to it is strong -> Memory Leak Alert.
-        - Check `allowsExpensiveNetworkAccess` and `allowsConstrainedNetworkAccess` isntead of checking for reachability.
+        -   Background sessions **always** wait for connectivity anyway.
+        -   There is also a waiting time timeout, which is controlled by `timeoutIntervalForResource`.
+        -   The URLSession delegate method notifies when a task is waiting. See `urlSession(taskIsWaitingForConnectivity)`.
+        -   Only make sure to `nil` the delegate because the reference to it is strong -> Memory Leak Alert.
+        -   Check `allowsExpensiveNetworkAccess` and `allowsConstrainedNetworkAccess` isntead of checking for reachability.
 
-    - If the request can start but fails due to lack of connection, it is the client's decision to retry or not.
+    -   If the request can start but fails due to lack of connection, it is the client's decision to retry or not.
 
 #### Networking Module Learning Outcome ✅
 
@@ -252,18 +252,17 @@ None of them are architectures!
 
 #### Key Stats to Consider in Codebases ✅
 
-- [x] Less than Lines of Code per file
-- [x] No TODOs nor FIX comments
-- [x] No (!) force unwrapping
-- [x] No `unowned` reference count
-    - Using `unowned` is not recommended because it is difficult to understand the lifetime of objects, especially when they are controlled by frameworks, e.g.: `UIKit`. Objects/views/windows often live longer than one thinks they do. On the other hand, we strive to have modular and highly decoupled systems, so when using abstractions such as protocols to perform operations, we cannot guarantee their lifetime...nor should we try to guess it as we would be leaking implementation details.
-- [x] No more than 4 indentation level.
-- [x] Assignable `var` variable count.
-- [x] 0 merges to `master` with failing tests.
+-   [x] Less than Lines of Code per file
+-   [x] No TODOs nor FIX comments
+-   [x] No (!) force unwrapping
+-   [x] No `unowned` reference count
+    -   Using `unowned` is not recommended because it is difficult to understand the lifetime of objects, especially when they are controlled by frameworks, e.g.: `UIKit`. Objects/views/windows often live longer than one thinks they do. On the other hand, we strive to have modular and highly decoupled systems, so when using abstractions such as protocols to perform operations, we cannot guarantee their lifetime...nor should we try to guess it as we would be leaking implementation details.
+-   [x] No more than 4 indentation level.
+-   [x] Assignable `var` variable count.
+-   [x] 0 merges to `master` with failing tests.
 
-```
-Clear separation of concerns, establishing proper boundaries and utilizing dependency inversion whenever necessary are the keys to a clean architecture, not the paradigm one uses
-```
+
+    Clear separation of concerns, establishing proper boundaries and utilizing dependency inversion whenever necessary are the keys to a clean architecture, not the paradigm one uses
 
 ## Main Module
 

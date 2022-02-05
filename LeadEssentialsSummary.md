@@ -1,4 +1,10 @@
-# iOS Lead Essentials
+# iOS Lead Essentials Course
+
+[![iOS Essential Feed Automation Tests](https://github.com/lfcj/EssentialFeed/actions/workflows/ios.yml/badge.svg)](https://github.com/lfcj/EssentialFeed/actions/workflows/ios.yml)
+
+This README contains the notes for the course.
+
+# iOS Lead Essentials Notes
 
 Github: https://github.com/lfcj/EssentialFeed
 

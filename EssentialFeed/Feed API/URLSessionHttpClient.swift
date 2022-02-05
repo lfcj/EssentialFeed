@@ -1,13 +1,13 @@
 import Foundation
 
-public class URLSessionHttpClient: HTTPClient {
+public class URLSessionHTTPClient: HTTPClient {
     private let session: URLSession
 
     public init(session: URLSession = .shared) {
         self.session = session
     }
 
-    struct UnexpectedValuesRepresentation: Error {}
+    private struct UnexpectedValuesRepresentation: Error {}
 
     public func get(from url: URL, completion: @escaping (HTTPClientResult) -> Void) {
         let dataTask = session.dataTask(with: url) { data, response, error in
@@ -22,4 +22,3 @@ public class URLSessionHttpClient: HTTPClient {
         dataTask.resume()
     }
 }
-

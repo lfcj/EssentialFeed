@@ -264,9 +264,26 @@ None of them are architectures!
 
     Clear separation of concerns, establishing proper boundaries and utilizing dependency inversion whenever necessary are the keys to a clean architecture, not the paradigm one uses
 
-## Main Module
+## Persisntece Module
 
 #### 12. URLCache as a Persistence Alternative & Solving The Infamous “But it works on my machine!” Caching Problem
+
+-   Pros and cons of `URLCache` as a caching/persistence alternative.
+    - `URLCache` caches response by mapping `CachedURLResponse`s to `URLRequest`s. One can create its own `URLCache` instance with disk path, and memory preferences (RAM or hard drive). Creating policies onself is also possible (`requestCachePolicy`). It all works out of the box as long as the server implements cache-control correctly.
+    - It is possible to set a custom `URLCache.shared`, it is only advised to do so as soon as possible so it is propagated correctly, e.g.: after `didFinishLaunch` method.
+
+    ##### Notes:
+    - Only HTTP/HTTPs requests are cached.
+    - Only 200-299 successful responses are cached.
+    - Response came from server and not from cache.
+    - The session config allows caching.
+    - The `URLRequest` cache policy allows caching.
+    - The cache-related headers in the response allow caching.
+    - The response size fits in the cache size, e.g.: response must not be larger than about 5% of the disk cache size.
+
+-   Depicting an architecture diagram of implicitly coupled Networking and Caching modules
+-   Improving the test suite integrity by eliminating shared caching artifacts across test executions
+    -  `URLSession` caches by default, so if our tests use it, there will be a shared state that can affect our end-to-end tests. This must be avoided by using the ephemeral configuration of `URLSession` not to store any data to disk. This makes that all session data is stored to RAM.
 
 [1]: https://www.essentialdeveloper.com/articles/the-minimum-you-should-do-to-prevent-memory-leaks-in-swift
 

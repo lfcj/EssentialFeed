@@ -194,7 +194,7 @@ None of them are architectures!
 
     - If the request can start but fails due to lack of connection, it is the client's decision to retry or not.
 
-#### Networking Module Learning Outcome
+#### Networking Module Learning Outcome ✅
 
 -   *Try to commit as often as possible*
 -   Basic depiction of dependencies, abstractions and concrete types in diagrams
@@ -250,7 +250,7 @@ None of them are architectures!
 -   Economics of end-to-end tests vs unit tests
 -   Setting up a CI pipeline
 
-#### Key Stats to Consider in Codebases
+#### Key Stats to Consider in Codebases ✅
 
 - [x] Less than Lines of Code per file
 - [x] No TODOs nor FIX comments
@@ -264,7 +264,6 @@ None of them are architectures!
 ```
 Clear separation of concerns, establishing proper boundaries and utilizing dependency inversion whenever necessary are the keys to a clean architecture, not the paradigm one uses
 ```
-
 
 [1]: https://www.essentialdeveloper.com/articles/the-minimum-you-should-do-to-prevent-memory-leaks-in-swift
 

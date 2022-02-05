@@ -265,6 +265,10 @@ None of them are architectures!
 Clear separation of concerns, establishing proper boundaries and utilizing dependency inversion whenever necessary are the keys to a clean architecture, not the paradigm one uses
 ```
 
+## Main Module
+
+#### 12. URLCache as a Persistence Alternative & Solving The Infamous “But it works on my machine!” Caching Problem
+
 [1]: https://www.essentialdeveloper.com/articles/the-minimum-you-should-do-to-prevent-memory-leaks-in-swift
 
 [2]: https://www.essentialdeveloper.com/articles/xctest-swift-setup-teardown-vs-factory-methods

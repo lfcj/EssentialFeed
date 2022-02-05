@@ -264,9 +264,9 @@ None of them are architectures!
 
     Clear separation of concerns, establishing proper boundaries and utilizing dependency inversion whenever necessary are the keys to a clean architecture, not the paradigm one uses
 
-## Persisntece Module
+## Persistence Module
 
-#### 12. URLCache as a Persistence Alternative & Solving The Infamous “But it works on my machine!” Caching Problem
+#### 12. URLCache as a Persistence Alternative & Solving The Infamous “But it works on my machine!” Caching Problem ✅
 
 -   Pros and cons of `URLCache` as a caching/persistence alternative.
     - `URLCache` caches response by mapping `CachedURLResponse`s to `URLRequest`s. One can create its own `URLCache` instance with disk path, and memory preferences (RAM or hard drive). Creating policies onself is also possible (`requestCachePolicy`). It all works out of the box as long as the server implements cache-control correctly.

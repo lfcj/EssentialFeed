@@ -13,6 +13,7 @@ Github: https://github.com/lfcj/EssentialFeed
 #### 1. From Singletons and Globals to Proper Dependency Injection ✅
 
 -   It is about singletons, Singletons, and inverse dependency injection by which it is easier to decouple from third party libraries
+-   An object can be a Singleton if it makes sense to have one and only one instance of it throughout the app life cycle. Even in this case, components shouldn't access the singleton directly if one wants to decouple the components from the concrete singleton class -> Use Reverse Dependency Injection for that!
 
 #### 2. Asserting a Captured Value Is Not Enough + Cross-Module Access Control ✅
 
@@ -192,7 +193,63 @@ None of them are architectures!
         - Check `allowsExpensiveNetworkAccess` and `allowsConstrainedNetworkAccess` isntead of checking for reachability.
 
     - If the request can start but fails due to lack of connection, it is the client's decision to retry or not.
-    
+
+### Networking Module Learning Outcome
+
+-   *Try to commit as often as possible*
+-   Basic depiction of dependencies, abstractions and concrete types in diagrams
+-   How diagrams translate into code and vice versa
+-   How the SOLID principles and composition are applied through examples
+-   Differences and similarities between closures and protocols as abstractions in Swift (unnamed type signatures vs. strictly named types)
+-   Representing component and module relationships in a diagram
+-   How concrete or modular a system is from its diagram representation
+-   Understand that every system needs to be tailored, rather than fit a predefined template
+-   The process of modularization needs to be applied incrementally
+-   How good architecture is a byproduct of good team processes
+-   The importance of good communication and well-defined requirements
+-   How to deal with lousy requirements
+-   How to represent and communicate requirements into different formats
+-   How contracts enable teams to develop independently (even when key parts of the system such as the UI or the backend API are not yet implemented.)
+-   Establishing processes promoting detailed documentation.
+-   The tradeoffs of the project’s starting point (should we start with abstractions or concrete components?!).
+-   How to speed up the development process using macOS frameworks.
+-   How to test-drive an API layer implementation
+-   Modular Design
+-   Singletons: When and Why
+-   Singletons: Better alternatives
+-   Singletons: Refactoring steps to gradually remove tight coupling created by singletons
+-   Controlling your dependencies: Locating globally shared instances (Implicit) vs. Injecting dependencies (Explicit)
+-   Controlling your dependencies: Dependency injection
+-   Understand the trade-offs of access control for testing purposes
+-   Expand behavior checking (and coverage) using test spy objects
+-   Handling network errors
+-   Differences between stubbing and spying when unit testing
+-   How to extend code coverage by using samples of values to test specific test cases
+-   Design better code with enums to make invalid paths unrepresentable
+-   Differences and trade-offs between mocking vs. testing collaborators in integration
+-   Mapping JSON data to native models using the `Decodable` protocol
+-   How to protect your architecture abstractions by working with domain-specific models
+-   How to simplify tests leveraging factory methods and test helper functions
+-   Automating memory leak detection with tests
+-   Preventing common async bugs
+-   Protecting the production code from test details
+-   Maintain modularity by protecting high-level abstractions from low-level implementation details
+-   Dealing with potential issues when using the `Swift.Error` protocol
+-   Pattern matching using Swift enums
+-   Assert asynchronous behavior with `XCTestCase` expectations
+-   Learn various testing strategies for network requests and their trade-offs
+-   Subclass and protocol-based mocking of classes we don’t own (e.g., the Foundation `URLSession` class)
+-   The (little-known) URL Loading System
+-   Intercepting and handling URL requests with `URLProtocol`
+-   Avoiding the downsides of mocking/stubbing
+-   The economics of test feedback
+-   Minimizing risk in the codebase and maximizing learning by testing all scenarios (including error, invalid and unhappy paths)
+-   Refactoring techniques for abstracting tests from implementation details
+-   Extra testing configurations (running tests in random order, parallelizing test execution, and gathering code coverage)
+-   Testing client and server integration (end-to-end) even when the backend is still in development
+-   Economics of end-to-end tests vs unit tests
+-   Setting up a CI pipeline
+
 [1]: https://www.essentialdeveloper.com/articles/the-minimum-you-should-do-to-prevent-memory-leaks-in-swift
 
 [2]: https://www.essentialdeveloper.com/articles/xctest-swift-setup-teardown-vs-factory-methods

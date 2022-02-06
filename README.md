@@ -269,21 +269,21 @@ None of them are architectures!
 #### 12. URLCache as a Persistence Alternative & Solving The Infamous “But it works on my machine!” Caching Problem ✅
 
 -   Pros and cons of `URLCache` as a caching/persistence alternative.
-    - `URLCache` caches response by mapping `CachedURLResponse`s to `URLRequest`s. One can create its own `URLCache` instance with disk path, and memory preferences (RAM or hard drive). Creating policies onself is also possible (`requestCachePolicy`). It all works out of the box as long as the server implements cache-control correctly.
-    - It is possible to set a custom `URLCache.shared`, it is only advised to do so as soon as possible so it is propagated correctly, e.g.: after `didFinishLaunch` method.
+    -   `URLCache` caches response by mapping `CachedURLResponse`s to `URLRequest`s. One can create its own `URLCache` instance with disk path, and memory preferences (RAM or hard drive). Creating policies onself is also possible (`requestCachePolicy`). It all works out of the box as long as the server implements cache-control correctly.
+    -   It is possible to set a custom `URLCache.shared`, it is only advised to do so as soon as possible so it is propagated correctly, e.g.: after `didFinishLaunch` method.
 
     ##### Notes:
-    - Only HTTP/HTTPs requests are cached.
-    - Only 200-299 successful responses are cached.
-    - Response came from server and not from cache.
-    - The session config allows caching.
-    - The `URLRequest` cache policy allows caching.
-    - The cache-related headers in the response allow caching.
-    - The response size fits in the cache size, e.g.: response must not be larger than about 5% of the disk cache size.
+    -   Only HTTP/HTTPs requests are cached.
+    -   Only 200-299 successful responses are cached.
+    -   Response came from server and not from cache.
+    -   The session config allows caching.
+    -   The `URLRequest` cache policy allows caching.
+    -   The cache-related headers in the response allow caching.
+    -   The response size fits in the cache size, e.g.: response must not be larger than about 5% of the disk cache size.
 
 -   Depicting an architecture diagram of implicitly coupled Networking and Caching modules
 -   Improving the test suite integrity by eliminating shared caching artifacts across test executions
-    -  `URLSession` caches by default, so if our tests use it, there will be a shared state that can affect our end-to-end tests. This must be avoided by using the ephemeral configuration of `URLSession` not to store any data to disk. This makes that all session data is stored to RAM.
+    -   `URLSession` caches by default, so if our tests use it, there will be a shared state that can affect our end-to-end tests. This must be avoided by using the ephemeral configuration of `URLSession` not to store any data to disk. This makes that all session data is stored to RAM.
 
 #### 13. Clarifying Requirements, Enhancing Cross-Team Domain Knowledge, and Iterative vs. Big Upfront Design ✅
 
@@ -292,7 +292,7 @@ None of them are architectures!
 -   In TDD a test class name can match the behaviour it tests, not the name of a class.
 -   Write up requirements as specific as possible to come up with cases that product/design did not specify.
 
-#### 14. Decoupling Use-Case Business Logic From Framework Details + Controlling Time + Multi-Method Abstractions Following The Interface Segregation and Single Responsibility Principles
+#### 14. Decoupling Use-Case Business Logic From Framework Details + Controlling Time + Multi-Method Abstractions Following The Interface Segregation and Single Responsibility Principles ✅
 
 -   Start starting tests without a protocol, if possible, that allows introducing properties/methods without breaking a contract.
     - The class created in the tests can always become the `Spy` and the name it had can be the protocol name.
@@ -305,7 +305,36 @@ None of them are architectures!
     - It is a good idea to inject time creation as a dependency to be able to control time/dates during tests.
 -   When adding a spy to the tests, make sure that this one saves all the information without having to take order into account when testing.
 
+#### 15. Proper Memory-Management of Captured References Within Deeply Nested Closures + Identifying Highly-Coupled Modules ✅
 
+-   Checking expected behavior after deallocation
+    - Using `unowned` can make that an instance is still 'alive' after being deallocated. We should test against this and use `weak` instead of `unowned`.
+-   Identifying highly coupled modules with a visual representation of dependencies.
+    -   A good question to know if modules are too coupled is to ask: "Can I refactor or add new features to this module without touching any files of the other module?" The answer should be yes.
+    -   Design of software must facilitate change.
+-   A good architecture has these traits:
+    -   Welcome requirement changes
+    -   Improve estimation accuracy
+    -   Make testing easier
+    -   Allow independent development (and deployment, and testing in isolation/parallel)
+    -   Make it easier to maintain a fast and constant pace
+    -   Increase the number of reusable components
+
+#### 16. Visualizing and Solving High-Coupling Issues by Decentralizing Components Using Data Transfer Model Representations ✅
+
+-   Data transfer model representations for achieving modularity.
+    -   This is also know as DTO: Data Transfer Objects
+    -   Using single models across modules leads to complex, expensive-to-maintain and hard-to-use code.
+    -   Make the name of each model very specific to its usage.
+    -   The translation layer is the mapping to and from data representations.
+    -   Measure performance when translating models! It is often surprising how minimal the impact is, especially when using immutable data. This is because the compiler optimizes such immutable data mappings since copies are not always necessary.
+    -   If the collection is too big, lazy evaluation and caching are good tools to improve performance.
+-   Decentralizing components to develop and deploy parts of the system in parallel.
+-   The return on investment (ROI) of refactoring as a result of disciplined decoupling techniques.
+    -   By only testing the public interfaces, refactoring code is easy without having to change tests. So `public` better than `@testable` when testing :)
+    -   Call remote models similar to the contract done with the backend and client properties/models closer to what the domain experts spec.
+-   A Swifty way of translating models with Array type constraint extensions.
+    -   `extension`s of classes, especially native ones, that deal with local logic, should be kept private.
 
 [1]: https://www.essentialdeveloper.com/articles/the-minimum-you-should-do-to-prevent-memory-leaks-in-swift
 

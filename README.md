@@ -285,6 +285,13 @@ None of them are architectures!
 -   Improving the test suite integrity by eliminating shared caching artifacts across test executions
     -  `URLSession` caches by default, so if our tests use it, there will be a shared state that can affect our end-to-end tests. This must be avoided by using the ephemeral configuration of `URLSession` not to store any data to disk. This makes that all session data is stored to RAM.
 
+#### 13. Clarifying Requirements, Enhancing Cross-Team Domain Knowledge, and Iterative vs. Big Upfront Design ✅
+
+-   Developing software is a social activity.
+-   Aim for flexible solutions to be able to adapt quickly.
+-   In TDD a test class name can match the behaviour it tests, not the name of a class.
+-   Write up requirements as specific as possible to come up with cases that product/design did not specify.
+
 [1]: https://www.essentialdeveloper.com/articles/the-minimum-you-should-do-to-prevent-memory-leaks-in-swift
 
 [2]: https://www.essentialdeveloper.com/articles/xctest-swift-setup-teardown-vs-factory-methods

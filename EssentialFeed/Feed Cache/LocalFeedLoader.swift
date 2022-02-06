@@ -2,7 +2,8 @@ import Foundation
 
 public final class LocalFeedLoader {
 
-    public typealias SaveCompletion = (Error?) -> Void
+    public typealias SaveResult = Error?
+    public typealias SaveCompletion = (SaveResult) -> Void
 
     let store: FeedStore
     let currentDate: () -> Date

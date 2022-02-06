@@ -292,6 +292,21 @@ None of them are architectures!
 -   In TDD a test class name can match the behaviour it tests, not the name of a class.
 -   Write up requirements as specific as possible to come up with cases that product/design did not specify.
 
+#### 14. Decoupling Use-Case Business Logic From Framework Details + Controlling Time + Multi-Method Abstractions Following The Interface Segregation and Single Responsibility Principles
+
+-   Start starting tests without a protocol, if possible, that allows introducing properties/methods without breaking a contract.
+    - The class created in the tests can always become the `Spy` and the name it had can be the protocol name.
+-   Enriching test coverage by asserting the presence, the order, and values of method invocations.
+-   Disciplined application of the Interface Segregation and Single Responsibility Principles.
+    - ❔ When adding methods to a protocol, ask: "is every method related and responsible for the one and only responsability?" If not, create a new protocol.
+    - The ISP stays that **no client should be forced to depend on methods it does not use**.
+    - Classes in the Swift library such as `Sequence` and `Collection` do not break ISP, they have many methods because they solve universal abstractions on the types they represent.
+-   Controlling the current date/time during tests.
+    - It is a good idea to inject time creation as a dependency to be able to control time/dates during tests.
+-   When adding a spy to the tests, make sure that this one saves all the information without having to take order into account when testing.
+
+
+
 [1]: https://www.essentialdeveloper.com/articles/the-minimum-you-should-do-to-prevent-memory-leaks-in-swift
 
 [2]: https://www.essentialdeveloper.com/articles/xctest-swift-setup-teardown-vs-factory-methods

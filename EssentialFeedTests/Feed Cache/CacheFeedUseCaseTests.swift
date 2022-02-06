@@ -3,6 +3,8 @@ import EssentialFeed
 
 class LocalFeedLoader {
 
+    typealias SaveCompletion = (Error?) -> Void
+
     let store: FeedStore
     let currentDate: () -> Date
 
@@ -11,18 +13,23 @@ class LocalFeedLoader {
         self.currentDate = currentDate
     }
 
-    func save(_ items: [FeedItem], completion: @escaping (Error?) -> Void) {
+    func save(_ items: [FeedItem], completion: @escaping SaveCompletion) {
         store.deleteCachedFeed { [weak self] error in
             guard let self = self else { return }
 
             if let error = error {
                 completion(error)
             } else {
-                self.store.insert(items, timestamp: self.currentDate()) { [weak self] error in
-                    guard self != nil else { return }
-                    completion(error)
-                }
+                self.cache(items, with: completion)
             }
+        }
+    }
+
+    private func cache(_ items: [FeedItem], with completion: @escaping SaveCompletion) {
+        store.insert(items, timestamp: currentDate()) { [weak self] error in
+            guard self != nil else { return }
+
+            completion(error)
         }
     }
  

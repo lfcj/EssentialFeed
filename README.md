@@ -336,6 +336,19 @@ None of them are architectures!
 -   A Swifty way of translating models with Array type constraint extensions.
     -   `extension`s of classes, especially native ones, that deal with local logic, should be kept private.
 
+#### 17. Performing Calendrical Calculations Correctly, Dealing With Coincidental Duplication While Respecting the DRY Principle, Decoupling Tests From Implementation With Tiny DSLs, and Test Triangulation to Increase Coverage & Confidence ✅
+
+-   Identifying coincidental duplication while respecting the DRY (Don't Repeat Yourself) principle.
+    -   Code that looks the same but is conceptually different is not duplicate.
+-   Performing calendrical calculations correctly.
+    -   Naive calendrical calculations can be very bad for UX. Calendars are full of edge cases.
+    -   Use the native `Calendar` as much as possible to avoid calculations.
+    -   Tests should be calendar/timezone agnostic whenever possible.
+-   Creating a simple DSL (Domain Specific Language) to decouple tests from implementation details.
+    -   An example of this are methods in extensions to make our codebase more readable and more adjusted to the domain needs.
+-   Increasing test coverage and reducing the probability of error by triangulating data points.
+    -   When testing, triangulation is done by thinking of three points regarding each reality, e.g: what if less, what if equal, what if more?
+
 [1]: https://www.essentialdeveloper.com/articles/the-minimum-you-should-do-to-prevent-memory-leaks-in-swift
 
 [2]: https://www.essentialdeveloper.com/articles/xctest-swift-setup-teardown-vs-factory-methods

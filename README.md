@@ -358,6 +358,18 @@ None of them are architectures!
     -   This principle allows identifying methods that do too much. The idea is **a query/get-call should only return a result and should not have side effects**. On the other hand, **a command/set-call changes the state of a system (side-effects) but does not return a value**.
     -   There are cases in which CQS is not needed, like the `remove` method, which mutates the collection and returns the removed object. Why not needed? Because this method leads to simpler and more idiomatic code.
 
+#### 19. Separating Queries & Side-effects for Simplicity and Reusability, Choosing Between Enum Switching Strategies, and Differentiating App-Specific from App-Agnostic Logic
+
+-   Separating queries and side-effects by following the Command-Query Separation principle
+    -   If a query and and command become tangled, they need to be separated, e.g.: a `load` method that deleted the cache becomes `load()` and `validateCache`.
+-   Choosing between enum switch strategies: Explicit Cases vs. default vs. @unknown default
+    -   By avoiding using `default` we get notified when new cases are added.
+    -   An altenative is using `@unknonw default`, which causes a warning instead of a build error when new cases are added. We get the best of two worlds: flexible code and the free reminder to double check on the `switch` logic.
+-   Producing a reliable codebase history (always in a working state)
+    -   Each commit should have working code with all tests green, even if not refactored not clear yet.
+-   Identifying Application-specific vs. Application-agnostic logic
+    -   Specific use cases may not suit every application, but core business modesl/rules/policies should.
+
 [1]: https://www.essentialdeveloper.com/articles/the-minimum-you-should-do-to-prevent-memory-leaks-in-swift
 
 [2]: https://www.essentialdeveloper.com/articles/xctest-swift-setup-teardown-vs-factory-methods

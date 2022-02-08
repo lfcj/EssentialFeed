@@ -349,6 +349,15 @@ None of them are architectures!
 -   Increasing test coverage and reducing the probability of error by triangulating data points.
     -   When testing, triangulation is done by thinking of three points regarding each reality, e.g: what if less, what if equal, what if more?
 
+#### 18. Test-driving Cache Invalidation + Identifying Complex (Bloated) Functionality With The Command–Query Separation Principle ✅
+
+-   Test-driving cache invalidation
+-   Identifying bloated requirements
+    -   Break each task into smaller tasks, this helps find hidden tasks.
+-   Identifying bloated code with the _Command–Query Separation_ principle
+    -   This principle allows identifying methods that do too much. The idea is **a query/get-call should only return a result and should not have side effects**. On the other hand, **a command/set-call changes the state of a system (side-effects) but does not return a value**.
+    -   There are cases in which CQS is not needed, like the `remove` method, which mutates the collection and returns the removed object. Why not needed? Because this method leads to simpler and more idiomatic code.
+
 [1]: https://www.essentialdeveloper.com/articles/the-minimum-you-should-do-to-prevent-memory-leaks-in-swift
 
 [2]: https://www.essentialdeveloper.com/articles/xctest-swift-setup-teardown-vs-factory-methods

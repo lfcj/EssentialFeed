@@ -358,7 +358,7 @@ None of them are architectures!
     -   This principle allows identifying methods that do too much. The idea is **a query/get-call should only return a result and should not have side effects**. On the other hand, **a command/set-call changes the state of a system (side-effects) but does not return a value**.
     -   There are cases in which CQS is not needed, like the `remove` method, which mutates the collection and returns the removed object. Why not needed? Because this method leads to simpler and more idiomatic code.
 
-#### 19. Separating Queries & Side-effects for Simplicity and Reusability, Choosing Between Enum Switching Strategies, and Differentiating App-Specific from App-Agnostic Logic
+#### 19. Separating Queries & Side-effects for Simplicity and Reusability, Choosing Between Enum Switching Strategies, and Differentiating App-Specific from App-Agnostic Logic ✅
 
 -   Separating queries and side-effects by following the Command-Query Separation principle
     -   If a query and and command become tangled, they need to be separated, e.g.: a `load` method that deleted the cache becomes `load()` and `validateCache`.
@@ -369,6 +369,7 @@ None of them are architectures!
     -   Each commit should have working code with all tests green, even if not refactored not clear yet.
 -   Identifying Application-specific vs. Application-agnostic logic
     -   Specific use cases may not suit every application, but core business modesl/rules/policies should.
+-   By keeping methods without side effects that validate our cache we can schedule periodic runs for them without worrying about collateral changes.
 
 [1]: https://www.essentialdeveloper.com/articles/the-minimum-you-should-do-to-prevent-memory-leaks-in-swift
 

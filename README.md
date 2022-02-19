@@ -371,6 +371,37 @@ None of them are architectures!
     -   Specific use cases may not suit every application, but core business modesl/rules/policies should.
 -   By keeping methods without side effects that validate our cache we can schedule periodic runs for them without worrying about collateral changes.
 
+#### 20. Separating App-specific, App-agnostic & Framework logic, Entities vs. Value Objects, Establishing Single Sources of Truth, and Designing Side-effect-free (Deterministic) Domain Models with Functional Core, Imperative Shell Principles
+
+
+-   Application-specific vs. Application-agnostic vs. Framework (Infrastructure) Logic
+    -   Use Cases describe _**application-specific business logic**_ and is often implemented by a Controller (aka Interactor/ModelController/Service...) type collaborating with other components (coordinating domain models and application infrastructure abstractions). Controllers deal with application interactions (e.g., coordinating asynchronous operations from collaborators) with strict boundaries (protocol/closure) to protect the application from depending on low-level details (e.g., 3rd-party frameworks). It should not depend on concrete (specific) framework details.
+    -   Domain Models describe _**application-agnostic business logic**_. This kind of logic is application-independent, also known as core business logic. Core business logic is often reused across Use Cases within the same application and even across other applications. It should not depend on any application or framework details. Domain Models are usually tiny little objects when compared with the size of the system. But its importance is much greater than its size. Domain Models implement the essential business logic (the code that really matters to the business), so we don’t lose sight of the domain within the technical and infrastructure complexities. Notice how, for example, we strive to keep our models simple, with no asynchronous or impure behavior (application detail) leaking into the domain models.
+    -   Framework/infrastructure logic is not to implement any business rules. Mixing infrastructure details with business logic is one of the most common  mistakes we find in codebases (e.g.: `Database` and `Network` clients implementing validation of business rules operations or Domain Models inheriting from framework types such as CoreData's `NSManagedObject`). When this happens the business logic is scattered across the code and there is no central source of truth. It is then harder to use, reuse, maintain and test business rules and infrastructure code.
+    -   The less a piece of code knows/does, a.k.a. the more we separate code, the easier it is to use, develop, reuse, maintain, test.
+    - Infrastructure/framework interface implementations should be as simple and dumb as possible. It should only fulfil framework commands sent by the controllers via abstract interfaces (protocol or closures). Examples are: Download something from URL, fetch store this in URL, fetch something from cache.
+-   Entities vs. Value objects
+    -   `Entities` are models with intrinsic identity. `Value` objects rare models with no intrinsic identity. Both can contain business rules.
+    -   💡 A `Value` type can be replaced by static or free functions when it does not hold a state.
+    -   A good way to know if a type is a `Value` one or not is by checking if comparing its values is enough to make the comparison. an example would be `Money` when it looks like this:
+    ```
+    struct Money {
+      let amount: Decimal
+      let currency
+    }
+    ```
+    When used by a system to track money and it gains a `let id: MoneyID`, then it becomes an `Entity` because it has an identity.
+    -   Two  `Entities` with the same ID are considered identical even if their values do not match.
+    -   A controller should coordinate the communication to external systems when performing business logic.
+-   Designing side-effect free (deterministic) core business rules
+    -   It is important to keep our core domain free from side-effects to keep it easy to maintain, build and test.
+    -   Side effects are UI updates, I/O database writes, etc.)
+-   Establishing Functional Core, Imperative Shell
+    -   The goal is to have a deterministic core by it not having side-effects.
+-   Promoting reusability and reducing cost, duplication, and defects with single sources of truth
+    -   We want to hide implementation details as much as possible to reduce the cost of change, making mistakes, have reusable components and keep a DRY codebase. One example was the fact that the "7 days old cache policy" was included in the names of test methods. That was not hidden.
+    -   Try to hide all of those magic numbers behind variables to keep them reusable and easy to change.
+
 [1]: https://www.essentialdeveloper.com/articles/the-minimum-you-should-do-to-prevent-memory-leaks-in-swift
 
 [2]: https://www.essentialdeveloper.com/articles/xctest-swift-setup-teardown-vs-factory-methods

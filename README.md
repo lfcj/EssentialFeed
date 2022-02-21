@@ -418,7 +418,41 @@ None of them are architectures!
 -   Proactively avoiding bugs caused by side-effects in multithreaded environments
     -   Avoid side-effects, respect the CQS paradigm!
 
+#### 22. Persisting/Retrieving Models with Codable+FileSystem, Test-driving in Integration with Real Frameworks Instead of Mocks & Measuring Test Times Overhead with `xcodebuild`
 
+-   Encoding and decoding models with `Codable`
+    -   One disadvantage of using `Codable` (and its convenience of Swift hiding a lot of decoding/encoding logic) is that we cannot longer hide framework details from our model.
+    -   An alternative is to create create a `Codable<Name>` for each model so we can map `Codable<Name>` to `<Name>` and avoid that `<Name>` knows infrastructure details.
+    -   There is no wrong/right option that can be applied universally.
+-   Persisting model data to disk
+    -   Not mocking collaborators of APIs we test has risks: collaborators, especially system ones, can have side effects that can affect our tests.
+    -   It is important to remove any state inside `tearDown` to avoid the former point.
+    -   A downside is that if the test fails to finish (crash?), `tearDown` is not called and you end up with flaky tests that fail sometimes. The solution to that is also clearing up state inside `setUp`, so cleaning before execution.
+-   Retrieving model data from disk
+    -   Relying on shared disk URLs prevent us from running tests in parallel as other tests may leave artifacts that need to be cleaned up before any other test runs.
+-   Test-driving infrastructure components in integration with real frameworks instead of mocks
+-   Preventing hard-to-debug test issues in stateful components by cleaning up the system state before and after test executions
+    -   It is possible to use the same artifact name or to append an ID to it every time. Just watch out to clean that up as with CIs it can amount to a lot of data used.
+    -   Using  `cachesDirectory` (which the OS cleans up when necessary), we avoid `documentDirectory` for which the developer needs to worry about maintenance.
+-   Preventing hidden-coupling implications of cross-boundary `Codable` requirements
+    -   It is important to measure the test suite performance over time.
+-   Improving testability, maintainability, and reusability by moving from implicit hardcoded data to explicit data injection
+-   Using `xcodebuild` to measure test times and discover potential overheads
+    -   This can be done in the CI and the data can be collected to alert when performance outliers are detected. To measure this run:
+    ```
+    xcodebuild clean build test -project EssentialFeed/EssentialFeed.xcodeproj -scheme "EssentialFeed"
+    ```
+    A useful report can be:
+
+    >   Executed 46 tests, with 0 failures (0 unexpected) in 0.151 (0.177) seconds
+
+-   I/O operations can be expensive, so it is a good idea to measure the before and after performances.
+-   Codebase health analysis
+    -   One parameters is checking the number of lines of code changed with `commit`.
+
+    >   "Make it work. Make it right. Make it fast. In that order."—Kent Beck
+
+    -   Parts three (The Codebase) and four (The Software Product and the Delivery Process) of the book show a good list of indicators to pay attention to. Collecting them over time gives a good hint on the health of the codebase and on improvements to overtake.
 
 [1]: https://www.essentialdeveloper.com/articles/the-minimum-you-should-do-to-prevent-memory-leaks-in-swift
 

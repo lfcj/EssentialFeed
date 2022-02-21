@@ -404,6 +404,22 @@ None of them are architectures!
     -   We want to hide implementation details as much as possible to reduce the cost of change, making mistakes, have reusable components and keep a DRY codebase. One example was the fact that the "7 days old cache policy" was included in the names of test methods. That was not hidden.
     -   Try to hide all of those magic numbers behind variables to keep them reusable and easy to change.
 
+#### 21. Dependency Inversion Anatomy (High-level | Boundary | Low-level), Defining Inbox Checklists and Contract Specs to Improve Collaboration and Avoid Side-effect Bugs in Multithreaded Environments ✅
+
+-   The anatomy of Dependency Inversion (High-level, Low-level, and Boundary components)
+    -   A good modular system relies on dependency inversion between high-level (e.g.: business rules) and low-level (e.g.: infrastructure implementations) components.
+    -   Good rules to follow include:
+        -   A high level component has no references to low level components.
+        -   A low level component is aware of the delivery mechanism.
+        -   A boundary component is (a protocol or a closure) acts as an abstract barrier to guarantee that the high level component does not need to know low-level details.
+-   Specs as Contracts & Documenting infrastructure requirements with an Inbox checklist
+    -   Before writing code, write all possible use cases/specifications for the delivered product. Use that contract to start writing the tests.
+    -   Well written contracts make it easier for different devs to participate on the same project without interferring with each other.
+-   Proactively avoiding bugs caused by side-effects in multithreaded environments
+    -   Avoid side-effects, respect the CQS paradigm!
+
+
+
 [1]: https://www.essentialdeveloper.com/articles/the-minimum-you-should-do-to-prevent-memory-leaks-in-swift
 
 [2]: https://www.essentialdeveloper.com/articles/xctest-swift-setup-teardown-vs-factory-methods

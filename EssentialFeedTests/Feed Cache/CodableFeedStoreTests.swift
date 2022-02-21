@@ -76,15 +76,14 @@ class CodableFeedStoreTests: XCTestCase {
     func test_retrieve_hasNoSideEffectsOnEmtpyCache() {
         let sut = makeSUT()
 
-        expect(sut, toRetrieve: .empty)
-        expect(sut, toRetrieve: .empty)
+        expect(sut, toRetrieveTwice: .empty)
     }
 
     func test_retrieveAfterInsertingToEmptyCache_retrievesInsertedValues() {
         let sut = makeSUT()
         let insertFeed = uniqueImageFeed().local
         let insertTimestamp = Date()
-        let exp = expectation(description: "Wait for cache retrieval")
+        let exp = expectation(description: "Wait for cache insertion")
 
         sut.insert(insertFeed, timestamp: insertTimestamp) { insertionError in
             XCTAssertNil(insertionError, "Got unexpected insertion error \(String(describing: insertionError))")
@@ -100,7 +99,7 @@ class CodableFeedStoreTests: XCTestCase {
         let sut = makeSUT()
         let insertFeed = uniqueImageFeed().local
         let insertTimestamp = Date()
-        let exp = expectation(description: "Wait for cache retrieval")
+        let exp = expectation(description: "Wait for cache insertion")
 
         sut.insert(insertFeed, timestamp: insertTimestamp) { insertionError in
             XCTAssertNil(insertionError, "Got unexpected insertion error \(String(describing: insertionError))")
@@ -109,8 +108,8 @@ class CodableFeedStoreTests: XCTestCase {
 
         wait(for: [exp], timeout: 1)
 
-        expect(sut, toRetrieve: .found(feed: insertFeed, timestamp: insertTimestamp))
-        expect(sut, toRetrieve: .found(feed: insertFeed, timestamp: insertTimestamp))
+        expect(sut, toRetrieveTwice: .found(feed: insertFeed, timestamp: insertTimestamp))
+        expect(sut, toRetrieveTwice: .found(feed: insertFeed, timestamp: insertTimestamp))
     }
 
     // MARK: - Helpers
@@ -139,6 +138,16 @@ class CodableFeedStoreTests: XCTestCase {
         }
 
         wait(for: [exp], timeout: 1)
+    }
+
+    private func expect(
+        _ sut: CodableFeedStore,
+        toRetrieveTwice expectedResult: RetrieveCacheFeedResult,
+        file: StaticString = #filePath,
+        line: UInt = #line
+    ) {
+        expect(sut, toRetrieve: expectedResult)
+        expect(sut, toRetrieve: expectedResult)
     }
 
     private func testSpecificStoreURL() -> URL {

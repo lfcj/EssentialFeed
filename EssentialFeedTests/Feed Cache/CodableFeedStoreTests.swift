@@ -55,18 +55,16 @@ class CodableFeedStore {
 
 class CodableFeedStoreTests: XCTestCase {
 
-    private let storeURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!.appendingPathComponent("image-feed.store ")
-
     override func setUp() {
         super.setUp()
 
-        try? FileManager.default.removeItem(at: storeURL)
+        try? FileManager.default.removeItem(at: storeURL())
     }
 
     override func tearDown() {
         super.tearDown()
 
-        try? FileManager.default.removeItem(at: storeURL)
+        try? FileManager.default.removeItem(at: storeURL())
     }
 
     func test_retrieve_deliversEmtpyOnEmtpyCache() {
@@ -133,9 +131,13 @@ class CodableFeedStoreTests: XCTestCase {
     // MARK: - Helpers
 
     func makeSUT(file: StaticString = #filePath, line: UInt = #line) -> CodableFeedStore {
-        let store = CodableFeedStore(storeURL: storeURL)
+        let store = CodableFeedStore(storeURL: storeURL())
         trackForMemoryLeaks(store, file: file, line: line)
         return store
+    }
+
+    func storeURL() -> URL {
+        FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!.appendingPathComponent("image-feed.store ")
     }
 
 }

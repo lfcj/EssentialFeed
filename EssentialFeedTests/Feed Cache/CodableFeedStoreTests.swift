@@ -81,35 +81,21 @@ class CodableFeedStoreTests: XCTestCase {
 
     func test_retrieveAfterInsertingToEmptyCache_retrievesInsertedValues() {
         let sut = makeSUT()
-        let insertFeed = uniqueImageFeed().local
-        let insertTimestamp = Date()
-        let exp = expectation(description: "Wait for cache insertion")
+        let feed = uniqueImageFeed().local
+        let timestamp = Date()
 
-        sut.insert(insertFeed, timestamp: insertTimestamp) { insertionError in
-            XCTAssertNil(insertionError, "Got unexpected insertion error \(String(describing: insertionError))")
-            exp.fulfill()
-        }
-
-        wait(for: [exp], timeout: 1)
-    
-        expect(sut, toRetrieve: .found(feed: insertFeed, timestamp: insertTimestamp))
+        insert((feed, timestamp), into: sut)
+        expect(sut, toRetrieve: .found(feed: feed, timestamp: timestamp))
     }
 
     func test_retrieveTwice_deliversSameCacheEveryTime() {
         let sut = makeSUT()
-        let insertFeed = uniqueImageFeed().local
-        let insertTimestamp = Date()
-        let exp = expectation(description: "Wait for cache insertion")
+        let feed = uniqueImageFeed().local
+        let timestamp = Date()
 
-        sut.insert(insertFeed, timestamp: insertTimestamp) { insertionError in
-            XCTAssertNil(insertionError, "Got unexpected insertion error \(String(describing: insertionError))")
-            exp.fulfill()
-        }
-
-        wait(for: [exp], timeout: 1)
-
-        expect(sut, toRetrieveTwice: .found(feed: insertFeed, timestamp: insertTimestamp))
-        expect(sut, toRetrieveTwice: .found(feed: insertFeed, timestamp: insertTimestamp))
+        insert((feed, timestamp), into: sut)
+        expect(sut, toRetrieveTwice: .found(feed: feed, timestamp: timestamp))
+        expect(sut, toRetrieveTwice: .found(feed: feed, timestamp: timestamp))
     }
 
     // MARK: - Helpers
@@ -118,6 +104,22 @@ class CodableFeedStoreTests: XCTestCase {
         let store = CodableFeedStore(storeURL: testSpecificStoreURL())
         trackForMemoryLeaks(store, file: file, line: line)
         return store
+    }
+
+    private func insert(
+        _ cache: (feed: [LocalFeedImage], timestamp: Date),
+        into sut: CodableFeedStore,
+        file: StaticString = #filePath,
+        line: UInt = #line
+    ) {
+        let exp = expectation(description: "Wait for cache insertion")
+
+        sut.insert(cache.feed, timestamp: cache.timestamp) { insertionError in
+            XCTAssertNil(insertionError, "Got unexpected insertion error \(String(describing: insertionError))")
+            exp.fulfill()
+        }
+
+        wait(for: [exp], timeout: 1)
     }
 
     private func expect(

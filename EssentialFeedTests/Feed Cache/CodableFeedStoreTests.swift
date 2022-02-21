@@ -120,7 +120,22 @@ class CodableFeedStoreTests: XCTestCase {
         return store
     }
 
-    private func expect(_ sut: CodableFeedStore, toRetrieve expectedResult: RetrieveCacheFeedResult, file: StaticString = #filePath, line: UInt = #line) {
+    private func expect(
+        _ sut: CodableFeedStore,
+        toRetrieveTwice expectedResult: RetrieveCacheFeedResult,
+        file: StaticString = #filePath,
+        line: UInt = #line
+    ) {
+        expect(sut, toRetrieve: expectedResult)
+        expect(sut, toRetrieve: expectedResult)
+    }
+
+    private func expect(
+        _ sut: CodableFeedStore,
+        toRetrieve expectedResult: RetrieveCacheFeedResult,
+        file: StaticString = #filePath,
+        line: UInt = #line
+    ) {
         let exp = expectation(description: "Wait for cache retrieval")
 
         sut.retrieve { receivedResult in
@@ -138,16 +153,6 @@ class CodableFeedStoreTests: XCTestCase {
         }
 
         wait(for: [exp], timeout: 1)
-    }
-
-    private func expect(
-        _ sut: CodableFeedStore,
-        toRetrieveTwice expectedResult: RetrieveCacheFeedResult,
-        file: StaticString = #filePath,
-        line: UInt = #line
-    ) {
-        expect(sut, toRetrieve: expectedResult)
-        expect(sut, toRetrieve: expectedResult)
     }
 
     private func testSpecificStoreURL() -> URL {

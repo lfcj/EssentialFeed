@@ -456,6 +456,12 @@ None of them are architectures!
 
 -   📚Try to convert comments into helper methods to avoid having to write comments. These are easily outdated.
 
+#### 23. Deleting Models and Handling Errors with Codable+FileSystem, Making Async Code Look Sync in Tests to Eliminate Arrow Anti-Pattern, and More Essential Test Guidelines to Improve Code Quality and Team Communication
+
+-   Turning async code into sync for expressiveness and readability in tests
+-   Eliminating hard-to-read nested code (arrow-shaped code)
+-   Monitoring the impact of refactoring with quantitative analysis
+-   Improving test code by providing better names & making dependencies explicit
 
 [1]: https://www.essentialdeveloper.com/articles/the-minimum-you-should-do-to-prevent-memory-leaks-in-swift
 

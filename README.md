@@ -418,7 +418,7 @@ None of them are architectures!
 -   Proactively avoiding bugs caused by side-effects in multithreaded environments
     -   Avoid side-effects, respect the CQS paradigm!
 
-#### 22. Persisting/Retrieving Models with Codable+FileSystem, Test-driving in Integration with Real Frameworks Instead of Mocks & Measuring Test Times Overhead with `xcodebuild`
+#### 22. Persisting/Retrieving Models with Codable+FileSystem, Test-driving in Integration with Real Frameworks Instead of Mocks & Measuring Test Times Overhead with `xcodebuild` ✅
 
 -   Encoding and decoding models with `Codable`
     -   One disadvantage of using `Codable` (and its convenience of Swift hiding a lot of decoding/encoding logic) is that we cannot longer hide framework details from our model.
@@ -453,6 +453,9 @@ None of them are architectures!
     >   "Make it work. Make it right. Make it fast. In that order."—Kent Beck
 
     -   Parts three (The Codebase) and four (The Software Product and the Delivery Process) of the book show a good list of indicators to pay attention to. Collecting them over time gives a good hint on the health of the codebase and on improvements to overtake.
+
+-   📚Try to convert comments into helper methods to avoid having to write comments. These are easily outdated.
+
 
 [1]: https://www.essentialdeveloper.com/articles/the-minimum-you-should-do-to-prevent-memory-leaks-in-swift
 

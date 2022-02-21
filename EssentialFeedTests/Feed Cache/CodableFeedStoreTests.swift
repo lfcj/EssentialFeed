@@ -98,6 +98,14 @@ class CodableFeedStoreTests: XCTestCase {
         expect(sut, toRetrieveTwice: .found(feed: feed, timestamp: timestamp))
     }
 
+    func test_retrieve_deliversFailureOnRetrievalError() {
+        let sut = makeSUT()
+
+        try! "invalid data".write(to: testSpecificStoreURL(), atomically: true, encoding: .utf8)
+
+        expect(sut, toRetrieve: .failure(anyNSError()))
+    }
+
     // MARK: - Helpers
 
     private func makeSUT(file: StaticString = #filePath, line: UInt = #line) -> CodableFeedStore {
@@ -145,7 +153,7 @@ class CodableFeedStoreTests: XCTestCase {
             case let (.found(receivedFeed, receivedTimestamp), .found(expectedFeed, expectedTimestamp)):
                 XCTAssertEqual(receivedFeed, expectedFeed)
                 XCTAssertEqual(receivedTimestamp, expectedTimestamp)
-            case (.empty, .empty):
+            case (.empty, .empty), (.failure, .failure):
                 break
             default:
                 XCTFail("Expected two equal results, but got \(receivedResult) and \(expectedResult) instead")

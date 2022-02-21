@@ -3,8 +3,25 @@ import XCTest
 
 class CodableFeedStore {
     private struct Cache: Codable {
-        let feed: [LocalFeedImage]
+        let feed: [CodableFeedImage]
         let timestamp: Date
+    }
+    private struct CodableFeedImage: Codable {
+        private let id: UUID
+        private let description: String?
+        private let location: String?
+        private let url: URL
+
+        init(_ localFeed: LocalFeedImage) {
+            self.id = localFeed.id
+            self.description = localFeed.description
+            self.location = localFeed.location
+            self.url = localFeed.url
+        }
+
+        var local: LocalFeedImage {
+            LocalFeedImage(id: id, description: description, location: location, url: url)
+        }
     }
 
     private let storeURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!.appendingPathComponent("image-feed.store ")
@@ -16,7 +33,7 @@ class CodableFeedStore {
 
         do {
             let foundCachedData = try JSONDecoder().decode(Cache.self, from: data)
-            completion(.found(feed: foundCachedData.feed, timestamp: foundCachedData.timestamp))
+            completion(.found(feed: foundCachedData.feed.map { $0.local }, timestamp: foundCachedData.timestamp))
         } catch (let error) {
             completion(.failure(error))
         }
@@ -24,7 +41,8 @@ class CodableFeedStore {
 
     func insert(_ feed: [LocalFeedImage], timestamp: Date, completion: @escaping FeedStore.InsertionCompletion) {
         let encoder = JSONEncoder()
-        let encoded = try! encoder.encode(Cache(feed: feed, timestamp: timestamp))
+        let codableCache = Cache(feed: feed.map(CodableFeedImage.init), timestamp: timestamp)
+        let encoded = try! encoder.encode(codableCache)
         try! encoded.write(to: storeURL)
         completion(nil)
     }

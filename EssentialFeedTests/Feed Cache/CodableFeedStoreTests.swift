@@ -1,4 +1,5 @@
 import EssentialFeed
+import Foundation
 import XCTest
 
 class CodableFeedStore {
@@ -154,13 +155,32 @@ class CodableFeedStoreTests: XCTestCase {
         XCTAssertNotNil(insertionError, "Expected cache insertion to fail with an error")
     }
 
-    func test_delete_hasNoEffectOnEmptyCache() {
+    func test_delete_hasNoSideEffectOnEmptyCache() {
         let sut = makeSUT()
-        expect(sut, toRetrieve: .empty)
 
         let deletionError = delete(sut)
-        XCTAssertNotNil(deletionError, "Expected successfully deleting cache")
+
+        XCTAssertNil(deletionError, "Expected successfully deleting cache")
         expect(sut, toRetrieve: .empty)
+    }
+
+    func test_delete_emptiesPreviouslyInsertedCache() {
+        let sut = makeSUT()
+        insert((feed: uniqueImageFeed().local, timestamp: Date()), into: sut)
+
+        let deletionError = delete(sut)
+
+        XCTAssertNil(deletionError, "Expected successfully deleting non-empty cache")
+        expect(sut, toRetrieve: .empty)
+    }
+
+    func test_delete_deliversEroorOnDeletionError() {
+        let noDeletePermissionURL = cachesDirectory()
+        let sut = makeSUT(storeURL: noDeletePermissionURL)
+
+        let deletionError = delete(sut)
+
+        XCTAssertNotNil(deletionError, "Expected cache deletion to fail")
     }
 
     // MARK: - Helpers
@@ -245,7 +265,7 @@ class CodableFeedStoreTests: XCTestCase {
 
 
     private func testSpecificStoreURL() -> URL {
-        FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).first!.appendingPathComponent("\(type(of: self)).store ")
+        cachesDirectory().appendingPathComponent("\(type(of: self)).store ")
     }
 
     private func setUpEmptyStoreState() {
@@ -258,5 +278,9 @@ class CodableFeedStoreTests: XCTestCase {
 
     private func deleteStoreArtifacts() {
         try? FileManager.default.removeItem(at: testSpecificStoreURL())
+    }
+
+    private func cachesDirectory() -> URL {
+        FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).first!
     }
 }

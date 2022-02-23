@@ -477,6 +477,14 @@ None of them are architectures!
     -   It is better to repeat oneself with the purpose of being very explicit, than not doing so and leaving important logic hidden.
 -   📚 The **Liskov Principle** tell us that types in a program should be replaceable with instances of their subtypes without altering the correctness of the program.
 
+#### 24. Designing and Testing Thread-safe Components with DispatchQueue, Serial vs. Concurrent Queues, Thread-safe Value Types, and Avoiding Race Conditions
+
+-   Designing and testing thread-safe components with DispatchQueue
+-   Differences between serial and concurrent dispatch queues
+-   Avoiding threading race conditions (e.g., data corruption/crashes)
+-   Thread-safe(r) value types
+-   Measuring test time overheads
+
 [1]: https://www.essentialdeveloper.com/articles/the-minimum-you-should-do-to-prevent-memory-leaks-in-swift
 
 [2]: https://www.essentialdeveloper.com/articles/xctest-swift-setup-teardown-vs-factory-methods

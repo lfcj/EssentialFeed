@@ -456,12 +456,25 @@ None of them are architectures!
 
 -   📚 Try to convert comments into helper methods to avoid having to write comments. These are easily outdated.
 
-#### 23. Deleting Models and Handling Errors with Codable+FileSystem, Making Async Code Look Sync in Tests to Eliminate Arrow Anti-Pattern, and More Essential Test Guidelines to Improve Code Quality and Team Communication
+#### 23. Deleting Models and Handling Errors with Codable+FileSystem, Making Async Code Look Sync in Tests to Eliminate Arrow Anti-Pattern, and More Essential Test Guidelines to Improve Code Quality and Team Communication ✅
 
 -   Turning async code into sync for expressiveness and readability in tests
+    -   This can be done by adding a helper method to translate from:
+    ```
+    func asyncFunction(completion: @escaping (ReturnType) -> Void)
+    ```
+    to:
+    ```
+    func syncFunction() -> ReturnType
+    ```
+    This is doable in the tests thanks to being able to `wait` for expectations.
+
 -   Eliminating hard-to-read nested code (arrow-shaped code)
+    -   By using sync-looking methods, we avoid completions and hence arrow-shaped code.
 -   Monitoring the impact of refactoring with quantitative analysis
+    -   It is helpful to measure lines of code and number of indentations as characteristics of outcomes of refactoring.
 -   Improving test code by providing better names & making dependencies explicit
+    -   It is better to repeat oneself with the purpose of being very explicit, than not doing so and leaving important logic hidden.
 -   📚 The **Liskov Principle** tell us that types in a program should be replaceable with instances of their subtypes without altering the correctness of the program.
 
 [1]: https://www.essentialdeveloper.com/articles/the-minimum-you-should-do-to-prevent-memory-leaks-in-swift

@@ -454,7 +454,7 @@ None of them are architectures!
 
     -   Parts three (The Codebase) and four (The Software Product and the Delivery Process) of the book show a good list of indicators to pay attention to. Collecting them over time gives a good hint on the health of the codebase and on improvements to overtake.
 
--   📚Try to convert comments into helper methods to avoid having to write comments. These are easily outdated.
+-   📚 Try to convert comments into helper methods to avoid having to write comments. These are easily outdated.
 
 #### 23. Deleting Models and Handling Errors with Codable+FileSystem, Making Async Code Look Sync in Tests to Eliminate Arrow Anti-Pattern, and More Essential Test Guidelines to Improve Code Quality and Team Communication
 
@@ -462,6 +462,7 @@ None of them are architectures!
 -   Eliminating hard-to-read nested code (arrow-shaped code)
 -   Monitoring the impact of refactoring with quantitative analysis
 -   Improving test code by providing better names & making dependencies explicit
+-   📚 The **Liskov Principle** tell us that types in a program should be replaceable with instances of their subtypes without altering the correctness of the program.
 
 [1]: https://www.essentialdeveloper.com/articles/the-minimum-you-should-do-to-prevent-memory-leaks-in-swift
 

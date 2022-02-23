@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4043CDE527C6CE60006BA6AA /* CodableFeedStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4043CDE427C6CE60006BA6AA /* CodableFeedStore.swift */; };
 		4070B21E27BD9B2400047005 /* ValidateFeedCacheUseCaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4070B21D27BD9B2400047005 /* ValidateFeedCacheUseCaseTests.swift */; };
 		4070B22027BD9FCC00047005 /* FeedCacheTestHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4070B21F27BD9FCC00047005 /* FeedCacheTestHelpers.swift */; };
 		4070B22227BDA0D400047005 /* SharedTestHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4070B22127BDA0D400047005 /* SharedTestHelpers.swift */; };
@@ -65,6 +66,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		4043CDE427C6CE60006BA6AA /* CodableFeedStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodableFeedStore.swift; sourceTree = "<group>"; };
 		4070B21D27BD9B2400047005 /* ValidateFeedCacheUseCaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidateFeedCacheUseCaseTests.swift; sourceTree = "<group>"; };
 		4070B21F27BD9FCC00047005 /* FeedCacheTestHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedCacheTestHelpers.swift; sourceTree = "<group>"; };
 		4070B22127BDA0D400047005 /* SharedTestHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedTestHelpers.swift; sourceTree = "<group>"; };
@@ -172,6 +174,7 @@
 				8432625727B05F1D00367338 /* FeedStore.swift */,
 				8432625B27B06CB900367338 /* LocalFeedImage.swift */,
 				409686A027C2D09D0096D2A3 /* FeedCachePolicy.swift */,
+				4043CDE427C6CE60006BA6AA /* CodableFeedStore.swift */,
 			);
 			path = "Feed Cache";
 			sourceTree = "<group>";
@@ -450,6 +453,7 @@
 				409686A127C2D09D0096D2A3 /* FeedCachePolicy.swift in Sources */,
 				8432625827B05F1D00367338 /* FeedStore.swift in Sources */,
 				8432625A27B06C4000367338 /* RemoteFeedItem.swift in Sources */,
+				4043CDE527C6CE60006BA6AA /* CodableFeedStore.swift in Sources */,
 				847B788926F67362006D62DC /* ViewController.swift in Sources */,
 				847B788526F67362006D62DC /* AppDelegate.swift in Sources */,
 				84D41B7127345BA600C63604 /* FeedItemsMapper.swift in Sources */,

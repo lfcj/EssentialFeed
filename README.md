@@ -477,15 +477,19 @@ None of them are architectures!
     -   It is better to repeat oneself with the purpose of being very explicit, than not doing so and leaving important logic hidden.
 -   📚 The **Liskov Principle** tell us that types in a program should be replaceable with instances of their subtypes without altering the correctness of the program.
 
-#### 24. Designing and Testing Thread-safe Components with DispatchQueue, Serial vs. Concurrent Queues, Thread-safe Value Types, and Avoiding Race Conditions
+#### 24. Designing and Testing Thread-safe Components with DispatchQueue, Serial vs. Concurrent Queues, Thread-safe Value Types, and Avoiding Race Conditions ✅
 
 -   Designing and testing thread-safe components with DispatchQueue
+    -   💡 Test first that methods are run serially
+    -   Use a local DispatchQueue (when suited). A `DispatchQueue(label: "\(Class.self)Queue", qos: .userInitiated)` is a background queue, BUT blocks run serially.
 -   Differences between serial and concurrent dispatch queues
+    -   If we have methods that have no side effects (READ ones?), these ones can be completely asynchronous. Our `DispatchQueue` can have the `attributes: .concurrent` and the methods with side effects can be dispatched using `flags: .barrier`. This makes sure that they act as a barrier and nothing is dispatched until they are done.
 -   Avoiding threading race conditions (e.g., data corruption/crashes)
     -   Classes are **reference types** and share a single copy of data. Bad news for mutex.
     -   Structs, enums and tuples are **value types** and are passed as unique copies of the instance.
     -   **Pure Value Types** are the ones that only have value types and they do not share a mutable state -> **Thread Safe**.
     -   **Impure Value Types** are value types with pointers to reference types, such as classes or closures -> Not Thread Safe.
+    -   It is important to add documentation to methods so clients know that completion handlers can be invoked in any thread...if they want to update the UI, they then need to call main queue for that, for example.
 -   Thread-safe(r) value types
     ##### Video: [How Safe are Structs?][8]
     -   The most voted SO answer says that "structs should be chosen by default...[they] are safer and bug free, especially in a multithreaded environment".

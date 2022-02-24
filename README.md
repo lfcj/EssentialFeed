@@ -440,7 +440,7 @@ None of them are architectures!
 -   Using `xcodebuild` to measure test times and discover potential overheads
     -   This can be done in the CI and the data can be collected to alert when performance outliers are detected. To measure this run:
     ```
-    xcodebuild clean build test -project EssentialFeed/EssentialFeed.xcodeproj -scheme "EssentialFeed"
+    xcodebuild clean build test -project EssentialFeed.xcodeproj -scheme "EssentialFeed" -destination 'platform=iOS Simulator,name=iPhone 12' CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO
     ```
     A useful report can be:
 
@@ -482,8 +482,27 @@ None of them are architectures!
 -   Designing and testing thread-safe components with DispatchQueue
 -   Differences between serial and concurrent dispatch queues
 -   Avoiding threading race conditions (e.g., data corruption/crashes)
+    -   Classes are **reference types** and share a single copy of data. Bad news for mutex.
+    -   Structs, enums and tuples are **value types** and are passed as unique copies of the instance.
+    -   **Pure Value Types** are the ones that only have value types and they do not share a mutable state -> **Thread Safe**.
+    -   **Impure Value Types** are value types with pointers to reference types, such as classes or closures -> Not Thread Safe.
 -   Thread-safe(r) value types
+    ##### Video: [How Safe are Structs?][8]
+    -   The most voted SO answer says that "structs should be chosen by default...[they] are safer and bug free, especially in a multithreaded environment".
+    -   This is not always true, what is **Thread Safe** are **Pure Value Types**, an impure one is not thread safe.
+    -   If the struct has a closure, that closure can have a different return type every time, making it mutable.
+    -   The important thing is that structs do not have behaviours.
 -   Measuring test time overheads
+    -   To measure the time it takes to test, run:
+    ```
+    xcodebuild clean build test -project EssentialFeed.xcodeproj -scheme "EssentialFeed" -destination 'platform=iOS Simulator,name=iPhone 12' CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO
+    ```
+    The time it took looks like this:
+    ```
+    2022-02-24 08:37:40.781 xcodebuild[88678:2003168] [MT] IDETestOperationsObserverDebug: 0.000 sec, +0.000 sec -- start
+    2022-02-24 08:37:40.781 xcodebuild[88678:2003168] [MT] IDETestOperationsObserverDebug: 19.863 sec, +19.863 sec -- end
+    ```
+    It is a good idea to collect these times to check the sanity and performance of our tests.
 
 [1]: https://www.essentialdeveloper.com/articles/the-minimum-you-should-do-to-prevent-memory-leaks-in-swift
 
@@ -498,3 +517,5 @@ None of them are architectures!
 [6]: /summary-images/data-task-possible-results.jpg
 
 [7]: https://developer.apple.com/library/archive/documentation/NetworkingInternetWeb/Conceptual/NetworkingOverview/WhyNetworkingIsHard/WhyNetworkingIsHard.html#//apple_ref/doc/uid/TP40010220-CH13-SW3
+
+[8]: https://www.essentialdeveloper.com/articles/how-safe-are-swift-structs

@@ -508,6 +508,13 @@ None of them are architectures!
     ```
     It is a good idea to collect these times to check the sanity and performance of our tests.
 
+#### Tools
+-   To draw the Dependency Diagrams, https://draw.io is used.
+-   "To measure lines of code and other health indicators in the codebase we have developed our own tools to do so." Example:
+-   Find all lines of code:
+    ```
+    find EssentialFeed/EssentialFeedTests -iname '*.swift' -type f -print0 | xargs -0 wc -l
+    ```
 [1]: https://www.essentialdeveloper.com/articles/the-minimum-you-should-do-to-prevent-memory-leaks-in-swift
 
 [2]: https://www.essentialdeveloper.com/articles/xctest-swift-setup-teardown-vs-factory-methods

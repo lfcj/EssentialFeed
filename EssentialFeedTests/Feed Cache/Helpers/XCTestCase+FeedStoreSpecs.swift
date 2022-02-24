@@ -7,6 +7,17 @@ extension FeedStoreSpecs where Self: XCTestCase {
         expect(sut, toRetrieve: .empty, file: file, line: line)
     }
 
+    func assertThatInsertPutsFeedAndTimestampInCache(
+        on sut: FeedStore,
+        feed: [LocalFeedImage],
+        timestamp: Date,
+        file: StaticString = #file,
+        line: UInt = #line
+    ) {
+        insert((feed, timestamp), into: sut)
+        expect(sut, toRetrieve: .found(feed: feed, timestamp: timestamp))
+    }
+
     @discardableResult
     func insert(
         _ cache: (feed: [LocalFeedImage], timestamp: Date),

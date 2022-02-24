@@ -35,8 +35,7 @@ class CodableFeedStoreTests: XCTestCase, FailableFeedStore  {
         let feed = uniqueImageFeed().local
         let timestamp = Date()
 
-        insert((feed, timestamp), into: sut)
-        expect(sut, toRetrieve: .found(feed: feed, timestamp: timestamp))
+        assertThatInsertPutsFeedAndTimestampInCache(on: sut, feed: feed, timestamp: timestamp)
     }
 
     func test_retrieveTwice_deliversSameCacheEveryTime() {
@@ -44,9 +43,7 @@ class CodableFeedStoreTests: XCTestCase, FailableFeedStore  {
         let feed = uniqueImageFeed().local
         let timestamp = Date()
 
-        insert((feed, timestamp), into: sut)
-
-        expect(sut, toRetrieveTwice: .found(feed: feed, timestamp: timestamp))
+        assertThatInsertPutsFeedAndTimestampInCache(on: sut, feed: feed, timestamp: timestamp)
     }
 
     func test_retrieve_deliversFailureOnRetrievalError() {
@@ -91,11 +88,7 @@ class CodableFeedStoreTests: XCTestCase, FailableFeedStore  {
 
         insert((feed: uniqueImageFeed().local, timestamp: Date()), into: sut)
 
-        let latestFeed = uniqueImageFeed().local
-        let latestTimestamp = Date()
-        insert((feed: latestFeed, timestamp: latestTimestamp), into: sut)
-
-        expect(sut, toRetrieve: .found(feed: latestFeed, timestamp: latestTimestamp))
+        assertThatInsertPutsFeedAndTimestampInCache(on: sut, feed: uniqueImageFeed().local, timestamp: Date())
     }
 
     func test_insert_deliversErrorOnInsertionError() {

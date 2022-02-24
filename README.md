@@ -515,6 +515,17 @@ None of them are architectures!
     ```
     find EssentialFeed/EssentialFeedTests -iname '*.swift' -type f -print0 | xargs -0 wc -l
     ```
+
+#### 25.  Protocol vs Class Inheritance, Composite Reuse Principle, and Extracting Reusable Test Specs with Protocol Inheritance, Extensions and Composition
+
+
+-   Forming good abstractions by following the Liskov Substitution and Interface Segregation principles
+-   Protocol vs. Class inheritance
+-   Composite Reuse Principle (aka “Prefer composition over inheritance”)
+-   Extracting reusable test specs to facilitate the correct/expected implementation of protocols
+-   Using Swift’s protocol inheritance, extensions, composition, and conditional conformance to create clean & reusable abstractions
+-   Creating explicit and straightforward test contexts
+
 [1]: https://www.essentialdeveloper.com/articles/the-minimum-you-should-do-to-prevent-memory-leaks-in-swift
 
 [2]: https://www.essentialdeveloper.com/articles/xctest-swift-setup-teardown-vs-factory-methods

@@ -156,6 +156,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		401533B027CA3B5000ED0D74 /* Codable */ = {
+			isa = PBXGroup;
+			children = (
+				401F911127CA192B0076DFFD /* CoreDataFeedStore.swift */,
+			);
+			path = Codable;
+			sourceTree = "<group>";
+		};
 		401F910627CA0ED40076DFFD /* FeedStoreSpecs */ = {
 			isa = PBXGroup;
 			children = (
@@ -171,6 +179,7 @@
 		401F910F27CA190E0076DFFD /* Infrastructure */ = {
 			isa = PBXGroup;
 			children = (
+				401533B027CA3B5000ED0D74 /* Codable */,
 				401F911027CA19210076DFFD /* CoreData */,
 			);
 			path = Infrastructure;
@@ -180,7 +189,6 @@
 			isa = PBXGroup;
 			children = (
 				401F911527CA21A30076DFFD /* FeedStore.xcdatamodeld */,
-				401F911127CA192B0076DFFD /* CoreDataFeedStore.swift */,
 				401F911327CA1C060076DFFD /* ManagedCache.swift */,
 			);
 			path = CoreData;

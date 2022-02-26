@@ -532,6 +532,40 @@ None of them are architectures!
 -   Creating explicit and straightforward test contexts
     -   Try that tests only have one assertion. Break it all down into as many tests as needed to achieve this.
 
+#### 26.  Core Data Overview, Implementation, Concurrency Model, Trade-offs, Modeling & Testing Techniques, and Implementing Reusable Protocol Specs ✅
+
+-   Core Data overview, implementation, concurrency model, trade-offs, modeling, and testing techniques
+    -   Core Data is a persistence solution framework developed and maintained by Apple.
+    -   An advantage is that it abstracts the details of mapping objects to a store, so interacting with the database directly is not needed.
+    -   It offers a manager that allows rollbacks and tracking changes.
+    -   Advantages:
+        -   It implements efficient caching strategies and storage.
+        -   The model relationships.
+        -   Lightweight migrations
+        -   Offers different ways so to deal with concurrency.
+        -   It is possible to undo/rollback.
+        -   Not needed to deal with databases directly.
+    -   Disadvantages:
+        -   It has a steep  learning curve.
+        -   The architecture is comples.
+        -   The backing stores are plain-text (e.g.: XML or SQLite). That means that there is not a an easy way to encrypt the data _yet_. Data-Production (Face|Touch-ID or password are the only security measure right now).
+
+    > Core Data has a straightforward concurrency model: the managed object context and its managed objects must be accessed only from the context's queue. Everything below the context – i.e. the persistent store coordinator, the persistent store, and SQLite – is thread-safe and can be shared between multiple contexts.– Florian Kugler.
+
+    -   `NSManagedObjectContext.perform` uses its own thread to execute blocks. This is very important not to cause concurrency issues. Its closure is executed asynchronously. The synchronous method is `performAndWait`. In this case the block is still executed in its own thread, but the method does not return until the block is returned.
+    -   If the dataset is small, it is possible to load it to memory completely to operate on it. It is possible using `fetchBatchSize: 0` and `returnsObjectsAsFaults: false`.
+
+-   Implementing reusable protocol specs
+
+    > A lot of the downside of frameworks can be avoided by applying them selectively to solve difficult problems without looking for a one-size-fits-all solution – Eric Evans.
+
+    -   Using the file URL `/dev/null` for persistent store makes that the Core Data stack does not save SQLite artifacts to disk, so the work happens in memory. This is faster when running tests and helps avoid side effects.
+    -   If side effects are needed for testing, use an _in-memory store_. Just name the `dev/null` store like this:
+    ```
+    let storeURL = URL(fileURLWithPath: "/dev/null").appendingPathComponent("a name")
+    ```
+
+
 [1]: https://www.essentialdeveloper.com/articles/the-minimum-you-should-do-to-prevent-memory-leaks-in-swift
 
 [2]: https://www.essentialdeveloper.com/articles/xctest-swift-setup-teardown-vs-factory-methods

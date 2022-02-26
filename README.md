@@ -567,10 +567,19 @@ None of them are architectures!
     let storeURL = URL(fileURLWithPath: "/dev/null").appendingPathComponent("a name")
     ```
 
-#### 27. Finishing the Cache Implementation with Business Logic + Core Data Integration Tests—Unit vs. Integration: Pros/Cons, Performance, Complexity & How to Achieve The ideal Testing Pyramid Distribution
+#### 27. Finishing the Cache Implementation with Business Logic + Core Data Integration Tests—Unit vs. Integration: Pros/Cons, Performance, Complexity & How to Achieve The ideal Testing Pyramid Distribution ✅
 
 -   Unit/Isolated vs. Integration Tests: pros/cons, performance, complexity, and how to make the most out of both.
 -   Achieving a healthy distribution of testing strategies (the ideal testing pyramid).
+    -   A testing pyramid has Unit/Isolated tests as the base, Integration tests as the middle part and UI tests on the top. This is because the high cost/time of the ones above is higher.
+    -   There is no common definition of what are unit, integration, UI, performance, etc. tests, so we will define one:
+    -   One should be able to run isolated tests several times a day without affecting productivity.
+
+        > **Integration Tests:** Any test that checks two or more components collaborating without mocks, stubs, spies, or any other test double. That is opposed to a single behaviour being checked by a single component in a unit or isolated test.
+
+    -   The number of integration tests needed is equal the states that component A can have times the states that component B has, e.g.: 4x5 = 20 tests needed.
+    -   When the system grows to hundreds of state, this becomes non-sustainable.
+
 
 #### Persistence Module Learning Outcome ✅
 

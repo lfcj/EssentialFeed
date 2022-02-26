@@ -17,14 +17,7 @@ public final class CoreDataFeedStore: FeedStore {
                 let request = NSFetchRequest<ManagedCache>(entityName: ManagedCache.entity().name!)
                 request.returnsObjectsAsFaults = false
                 if let cache = try context.fetch(request).first {
-                    completion(.found(
-                            feed: cache.feed
-                                .compactMap { $0 as? ManagedFeedImage }
-                                .map {
-                                    LocalFeedImage(id: $0.id, description: $0.imageDescription, location: $0.location, url: $0.url)
-                                },
-                            timestamp: cache.timestamp
-                        )
+                    completion(.found(feed: cache.localFeed, timestamp: cache.timestamp)
                     )
                 } else {
                     completion(.empty)
@@ -42,16 +35,8 @@ public final class CoreDataFeedStore: FeedStore {
             do {
                 let managedCache = ManagedCache(context: context)
                 managedCache.timestamp = timestamp
-                managedCache.feed = NSOrderedSet(
-                    array: feed.map { local in
-                        let managed = ManagedFeedImage(context: context)
-                        managed.id = local.id
-                        managed.imageDescription = local.description
-                        managed.location = local.location
-                        managed.url = local.url
-                        return managed
-                    }
-                )
+                managedCache.feed = ManagedCache.images(from: feed, in: context)
+
                 try context.save()
                 completion(nil)
             } catch {
@@ -61,6 +46,8 @@ public final class CoreDataFeedStore: FeedStore {
     }
 
     public func deleteCachedFeed(completion: @escaping DeletionCompletion) {
+// MARK: - NSPersistentContainer Extension
+
 private extension NSPersistentContainer {
     enum LoadingError: Swift.Error {
         case modelNotFound
@@ -84,10 +71,38 @@ private extension NSPersistentContainer {
     }
 }
 
+// MARK: - NSManagedObjectModel Extension
+
 private extension NSManagedObjectModel {
     static func with(name: String, in bundle: Bundle) -> NSManagedObjectModel? {
         bundle
             .url(forResource: name, withExtension: "momd")
             .flatMap { NSManagedObjectModel(contentsOf: $0) }
+    }
+}
+
+// MARK: - ManagedCache Extension
+
+private extension ManagedCache {
+    static func images(from localFeed: [LocalFeedImage], in context: NSManagedObjectContext) -> NSOrderedSet {
+        NSOrderedSet(
+            array: localFeed.map { local in
+                let managed = ManagedFeedImage(context: context)
+                managed.id = local.id
+                managed.imageDescription = local.description
+                managed.location = local.location
+                managed.url = local.url
+                return managed
+            }
+        )
+    }
+    var localFeed: [LocalFeedImage] { feed.compactMap { ($0 as? ManagedFeedImage)?.local } }
+}
+
+// MARK: - ManagedFeedImage Extension
+
+private extension ManagedFeedImage {
+    var local: LocalFeedImage {
+        LocalFeedImage(id: id, description: imageDescription, location: location, url: url)
     }
 }

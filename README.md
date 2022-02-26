@@ -567,6 +567,11 @@ None of them are architectures!
     let storeURL = URL(fileURLWithPath: "/dev/null").appendingPathComponent("a name")
     ```
 
+#### 27. Finishing the Cache Implementation with Business Logic + Core Data Integration Tests—Unit vs. Integration: Pros/Cons, Performance, Complexity & How to Achieve The ideal Testing Pyramid Distribution
+
+-   Unit/Isolated vs. Integration Tests: pros/cons, performance, complexity, and how to make the most out of both.
+-   Achieving a healthy distribution of testing strategies (the ideal testing pyramid).
+
 #### Persistence Module Learning Outcome ✅
 
 -   `URLCache` as a caching/persistence alternative (pros and cons)
@@ -666,7 +671,7 @@ There are certain statistics that help have an overview over the health of the c
 
 ## UI + Presentation Module
 
-#### 27. Gathering Fast Feedback and Validating UI Design and Dev Decisions Through Realistic App Prototypes ✅
+#### 28. Gathering Fast Feedback and Validating UI Design and Dev Decisions Through Realistic App Prototypes ✅
 
 -   Validating UI design and dev decisions through prototyping.
     -   🤩 A tip is to set `.defaultHigh` for vertical constraints in `TableViewCell`s. That prevents these ones from conflicting with other constraint and generating warnings.
@@ -681,7 +686,7 @@ There are certain statistics that help have an overview over the health of the c
 -   Using Storyboards it is easy to quickly prototypes UIs and generate TF builds so design and product can test.
 -   It is possible to fake asynchronous loading of images by setting the `alpha` to 0 on `prepareForReuse` and animate it to `1` when the image is set.
 
-#### 28. Apple MVC, Test-driving UIViewControllers, Dealing with UIKit’s Inversion of Control & Temporal Coupling, and Decoupling Tests from UI Implementation Details ✅
+#### 29. Apple MVC, Test-driving UIViewControllers, Dealing with UIKit’s Inversion of Control & Temporal Coupling, and  Decoupling Tests from UI Implementation Details ✅
 
 -   Validating UX experiences and exploring solutions through prototyping
 -   Introduction to the MVC UI architectural design pattern

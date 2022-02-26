@@ -11,6 +11,7 @@
 		401F910A27CA125B0076DFFD /* XCTestCase+FailableInsertFeedStoreSpecs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 401F910927CA125B0076DFFD /* XCTestCase+FailableInsertFeedStoreSpecs.swift */; };
 		401F910C27CA13120076DFFD /* XCTestCase+FailableDeleteFeedStoreSpecs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 401F910B27CA13120076DFFD /* XCTestCase+FailableDeleteFeedStoreSpecs.swift */; };
 		401F910E27CA17A30076DFFD /* CoreDataFeedStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 401F910D27CA17A30076DFFD /* CoreDataFeedStoreTests.swift */; };
+		401F911227CA192B0076DFFD /* CoreDataFeedStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 401F911127CA192B0076DFFD /* CoreDataFeedStore.swift */; };
 		4043CDE527C6CE60006BA6AA /* CodableFeedStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4043CDE427C6CE60006BA6AA /* CodableFeedStore.swift */; };
 		4070B21E27BD9B2400047005 /* ValidateFeedCacheUseCaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4070B21D27BD9B2400047005 /* ValidateFeedCacheUseCaseTests.swift */; };
 		4070B22027BD9FCC00047005 /* FeedCacheTestHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4070B21F27BD9FCC00047005 /* FeedCacheTestHelpers.swift */; };
@@ -76,6 +77,7 @@
 		401F910927CA125B0076DFFD /* XCTestCase+FailableInsertFeedStoreSpecs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XCTestCase+FailableInsertFeedStoreSpecs.swift"; sourceTree = "<group>"; };
 		401F910B27CA13120076DFFD /* XCTestCase+FailableDeleteFeedStoreSpecs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XCTestCase+FailableDeleteFeedStoreSpecs.swift"; sourceTree = "<group>"; };
 		401F910D27CA17A30076DFFD /* CoreDataFeedStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataFeedStoreTests.swift; sourceTree = "<group>"; };
+		401F911127CA192B0076DFFD /* CoreDataFeedStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataFeedStore.swift; sourceTree = "<group>"; };
 		4043CDE427C6CE60006BA6AA /* CodableFeedStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodableFeedStore.swift; sourceTree = "<group>"; };
 		4070B21D27BD9B2400047005 /* ValidateFeedCacheUseCaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidateFeedCacheUseCaseTests.swift; sourceTree = "<group>"; };
 		4070B21F27BD9FCC00047005 /* FeedCacheTestHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedCacheTestHelpers.swift; sourceTree = "<group>"; };
@@ -162,6 +164,22 @@
 			path = FeedStoreSpecs;
 			sourceTree = "<group>";
 		};
+		401F910F27CA190E0076DFFD /* Infrastructure */ = {
+			isa = PBXGroup;
+			children = (
+				401F911027CA19210076DFFD /* CoreData */,
+			);
+			path = Infrastructure;
+			sourceTree = "<group>";
+		};
+		401F911027CA19210076DFFD /* CoreData */ = {
+			isa = PBXGroup;
+			children = (
+				401F911127CA192B0076DFFD /* CoreDataFeedStore.swift */,
+			);
+			path = CoreData;
+			sourceTree = "<group>";
+		};
 		4095D2E827A4913600534A47 /* EssentialFeedAPIEndToEndTests */ = {
 			isa = PBXGroup;
 			children = (
@@ -196,6 +214,7 @@
 		8432625427B05EF100367338 /* Feed Cache */ = {
 			isa = PBXGroup;
 			children = (
+				401F910F27CA190E0076DFFD /* Infrastructure */,
 				8432625527B05F0000367338 /* LocalFeedLoader.swift */,
 				8432625727B05F1D00367338 /* FeedStore.swift */,
 				8432625B27B06CB900367338 /* LocalFeedImage.swift */,
@@ -480,6 +499,7 @@
 				8432625827B05F1D00367338 /* FeedStore.swift in Sources */,
 				8432625A27B06C4000367338 /* RemoteFeedItem.swift in Sources */,
 				4043CDE527C6CE60006BA6AA /* CodableFeedStore.swift in Sources */,
+				401F911227CA192B0076DFFD /* CoreDataFeedStore.swift in Sources */,
 				847B788926F67362006D62DC /* ViewController.swift in Sources */,
 				847B788526F67362006D62DC /* AppDelegate.swift in Sources */,
 				84D41B7127345BA600C63604 /* FeedItemsMapper.swift in Sources */,

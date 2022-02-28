@@ -634,7 +634,7 @@ None of them are architectures!
 -   Unit/Isolated vs. Integration Tests: pros/cons, performance, complexity, and how to make the most out of both.
 -   Achieving a healthy distribution of testing strategies (the ideal testing pyramid).
 
-#### Key Stats
+#### Key Stats ✅
 
 There are certain statistics that help have an overview over the health of the codebase. Examples are:
 

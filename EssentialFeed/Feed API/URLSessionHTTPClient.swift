@@ -18,7 +18,7 @@ public class URLSessionHTTPClient: HTTPClient {
                     } else if let data = data, let response = response as? HTTPURLResponse {
                         return (data, response)
                     } else {
-                        throw UnexpectedValuesRepresentation() 
+                        throw UnexpectedValuesRepresentation()
                     }
                 }
             )

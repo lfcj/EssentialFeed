@@ -648,6 +648,20 @@ There are certain statistics that help have an overview over the health of the c
 #####   Repository report
 <img src="/summary-images/repository-report.png" width=40% height=40%>
 
+
+#### Bonus: Improving Model Composability With Swift’s Standard Result and Optional Types, Map, Functors, and Powerful Refactorings Backed by Tests and Types (Compiler!) ✅
+
+-   Migrating Swift versions using a TDD + Git workflow
+-   Refactoring code backed by tests and types
+-   Modeling for simplicity and composability with Swift’s standard types (Array, Optional, Result…)
+-   Map, Functors and composition
+
+    >   Types that implement map (by following some rules) are called Functors.
+    >   A Functor is “a mapping between categories where the structure is preserved.”
+
+    -   The new `Swift.Result` has a new initializer that allows doing `Result { ... return / try }`
+    -   `compactMapValues` is a nice method that allows mapping from dictionaries.
+
 [1]: https://www.essentialdeveloper.com/articles/the-minimum-you-should-do-to-prevent-memory-leaks-in-swift
 
 [2]: https://www.essentialdeveloper.com/articles/xctest-swift-setup-teardown-vs-factory-methods

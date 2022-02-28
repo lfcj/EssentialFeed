@@ -634,6 +634,19 @@ None of them are architectures!
 -   Unit/Isolated vs. Integration Tests: pros/cons, performance, complexity, and how to make the most out of both.
 -   Achieving a healthy distribution of testing strategies (the ideal testing pyramid).
 
+#### Key Stats
+
+There are certain statistics that help have an overview over the health of the codebase. Examples are:
+
+#####   Production report
+![Codebase health status – production report][9]
+
+-   The assignable `var` properties denote a mutable state and these ones are hard to maintain as they easily grow out of control.
+#####   Testing report
+![Codebase health status – test report][10]
+#####   Repository report
+![Codebase health status – repository report][11]
+
 [1]: https://www.essentialdeveloper.com/articles/the-minimum-you-should-do-to-prevent-memory-leaks-in-swift
 
 [2]: https://www.essentialdeveloper.com/articles/xctest-swift-setup-teardown-vs-factory-methods
@@ -649,3 +662,9 @@ None of them are architectures!
 [7]: https://developer.apple.com/library/archive/documentation/NetworkingInternetWeb/Conceptual/NetworkingOverview/WhyNetworkingIsHard/WhyNetworkingIsHard.html#//apple_ref/doc/uid/TP40010220-CH13-SW3
 
 [8]: https://www.essentialdeveloper.com/articles/how-safe-are-swift-structs
+
+[9]: /summary-images/production-report.png
+
+[10]: /summary-images/test-report.png
+
+[11]: /summary-images/repository-report.png

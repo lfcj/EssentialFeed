@@ -14,17 +14,18 @@ public final class LocalFeedLoader {
 
 extension LocalFeedLoader {
 
-    public typealias SaveResult = Error?
+    public typealias SaveResult = Result<Void, Error>
     public typealias SaveCompletion = (SaveResult) -> Void
 
     public func save(_ feed: [FeedImage], completion: @escaping SaveCompletion) {
-        store.deleteCachedFeed { [weak self] error in
+        store.deleteCachedFeed { [weak self] result in
             guard let self = self else { return }
 
-            if let error = error {
-                completion(error)
-            } else {
+            switch result {
+            case .success:
                 self.cache(feed, with: completion)
+            case let .failure(error):
+                completion(.failure(error))
             }
         }
     }

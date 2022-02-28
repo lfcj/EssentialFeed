@@ -639,13 +639,14 @@ None of them are architectures!
 There are certain statistics that help have an overview over the health of the codebase. Examples are:
 
 #####   Production report
-![Codebase health status – production report][9]
-
+<img src="/summary-images/production-report.png" width=40% height=40%>
 -   The assignable `var` properties denote a mutable state and these ones are hard to maintain as they easily grow out of control.
+-   
 #####   Testing report
-![Codebase health status – test report][10]
+<img src="/summary-images/test-report.png" width=40% height=40%>
+
 #####   Repository report
-![Codebase health status – repository report][11]
+<img src="/summary-images/repository-report.png" width=40% height=40%>
 
 [1]: https://www.essentialdeveloper.com/articles/the-minimum-you-should-do-to-prevent-memory-leaks-in-swift
 
@@ -662,9 +663,3 @@ There are certain statistics that help have an overview over the health of the c
 [7]: https://developer.apple.com/library/archive/documentation/NetworkingInternetWeb/Conceptual/NetworkingOverview/WhyNetworkingIsHard/WhyNetworkingIsHard.html#//apple_ref/doc/uid/TP40010220-CH13-SW3
 
 [8]: https://www.essentialdeveloper.com/articles/how-safe-are-swift-structs
-
-[9]: /summary-images/production-report.png
-
-[10]: /summary-images/test-report.png
-
-[11]: /summary-images/repository-report.png

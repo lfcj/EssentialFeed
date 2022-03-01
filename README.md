@@ -662,6 +662,24 @@ There are certain statistics that help have an overview over the health of the c
     -   The new `Swift.Result` has a new initializer that allows doing `Result { ... return / try }`
     -   `compactMapValues` is a nice method that allows mapping from dictionaries.
 
+## UI + Presentation Module
+
+#### 27. Gathering Fast Feedback and Validating UI Design and Dev Decisions Through Realistic App Prototypes ✅
+
+-   Validating UI design and dev decisions through prototyping.
+    -   🤩 A tip is to set `.defaultHigh` for vertical constraints in `TableViewCell`s. That prevents these ones from conflicting with other constraint and generating warnings.
+    -   `clipToBounds = true` makes that subviews are not rendered outside of the corners.
+-   A good set of checklist points to mark is:
+    -   the design is polished following the specs (app icons, fonts, colors, margins, images, animations, etc.—aim for a realistic experience!)
+    -   the content is localized, if your testers expect it to be
+    -   the app works on all expected orientations
+    -   the description on the tester invite is detailed and specific enough to avoid any confusion for the testers (with a clear way for testers to provide feedback!)
+-   Working effectively with designers
+-   Improving collaboration and getting fast feedback from clients with prototyping
+-   Using Storyboards it is easy to quickly prototypes UIs and generate TF builds so design and product can test.
+-   It is possible to fake asynchronous loading of images by setting the `alpha` to 0 on `prepareForReuse` and animate it to `1` when the image is set.
+
+
 [1]: https://www.essentialdeveloper.com/articles/the-minimum-you-should-do-to-prevent-memory-leaks-in-swift
 
 [2]: https://www.essentialdeveloper.com/articles/xctest-swift-setup-teardown-vs-factory-methods

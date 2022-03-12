@@ -1,10 +1,5 @@
-//
-//  SceneDelegate.swift
-//  EssentialFeed
-//
-//  Created by Admin on 18/09/2021.
-//
 
+#if os(iOS)
 import UIKit
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
@@ -25,4 +20,4 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
 
 }
-
+#endif

@@ -3,18 +3,17 @@
 //  EssentialFeed
 //
 //  Created by Admin on 18/09/2021.
-//
 
+
+#if os(iOS)
 import UIKit
 
 @main
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate {}
+#endif
 
-
-
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        return true
-    }
-
-}
-
+#if os(OSX)
+import Cocoa
+@main
+class AppDelegate: NSObject, NSApplicationDelegate {}
+#endif

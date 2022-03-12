@@ -40,10 +40,7 @@
 		844AEC98274AB7A6003212BD /* URLSessionHTTPClientTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844AEC97274AB7A6003212BD /* URLSessionHTTPClientTests.swift */; };
 		847B788526F67362006D62DC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847B788426F67362006D62DC /* AppDelegate.swift */; };
 		847B788726F67362006D62DC /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847B788626F67362006D62DC /* SceneDelegate.swift */; };
-		847B788926F67362006D62DC /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847B788826F67362006D62DC /* ViewController.swift */; };
-		847B788C26F67362006D62DC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 847B788A26F67362006D62DC /* Main.storyboard */; };
 		847B788E26F67363006D62DC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 847B788D26F67363006D62DC /* Assets.xcassets */; };
-		847B789126F67363006D62DC /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 847B788F26F67363006D62DC /* LaunchScreen.storyboard */; };
 		847B789C26F67363006D62DC /* EssentialFeedTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847B789B26F67363006D62DC /* EssentialFeedTests.swift */; };
 		847B78A726F67363006D62DC /* EssentialFeedUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847B78A626F67363006D62DC /* EssentialFeedUITests.swift */; };
 		847B78B526F6746D006D62DC /* FeedImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847B78B426F6746D006D62DC /* FeedImage.swift */; };
@@ -122,7 +119,6 @@
 		847B788126F67362006D62DC /* EssentialFeed.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EssentialFeed.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		847B788426F67362006D62DC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		847B788626F67362006D62DC /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		847B788826F67362006D62DC /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		847B788B26F67362006D62DC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		847B788D26F67363006D62DC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		847B789026F67363006D62DC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -323,7 +319,6 @@
 				847B78BA2716A451006D62DC /* Feed API */,
 				847B788426F67362006D62DC /* AppDelegate.swift */,
 				847B788626F67362006D62DC /* SceneDelegate.swift */,
-				847B788826F67362006D62DC /* ViewController.swift */,
 				847B788A26F67362006D62DC /* Main.storyboard */,
 				847B788D26F67363006D62DC /* Assets.xcassets */,
 				847B788F26F67363006D62DC /* LaunchScreen.storyboard */,
@@ -585,9 +580,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				847B789126F67363006D62DC /* LaunchScreen.storyboard in Resources */,
 				847B788E26F67363006D62DC /* Assets.xcassets in Resources */,
-				847B788C26F67362006D62DC /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -644,7 +637,6 @@
 				401533B427CA3CB200ED0D74 /* ManagedFeedImage.swift in Sources */,
 				4043CDE527C6CE60006BA6AA /* CodableFeedStore.swift in Sources */,
 				401F911227CA192B0076DFFD /* CoreDataFeedStore.swift in Sources */,
-				847B788926F67362006D62DC /* ViewController.swift in Sources */,
 				847B788526F67362006D62DC /* AppDelegate.swift in Sources */,
 				401F911427CA1C060076DFFD /* ManagedCache.swift in Sources */,
 				84D41B7127345BA600C63604 /* FeedItemsMapper.swift in Sources */,

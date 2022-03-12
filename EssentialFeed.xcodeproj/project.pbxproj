@@ -66,6 +66,13 @@
 			remoteGlobalIDString = 843262D127D0133500367338;
 			remoteInfo = EssentialFeediOS;
 		};
+		843BFCF527DD39BC001F7DC0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 847B787926F67362006D62DC /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 847B788026F67362006D62DC;
+			remoteInfo = EssentialFeed;
+		};
 		847B789826F67363006D62DC /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 847B787926F67362006D62DC /* Project object */;
@@ -439,6 +446,7 @@
 			);
 			dependencies = (
 				843262DC27D0133500367338 /* PBXTargetDependency */,
+				843BFCF627DD39BC001F7DC0 /* PBXTargetDependency */,
 			);
 			name = EssentialFeediOSTests;
 			productName = EssentialFeediOSTests;
@@ -517,6 +525,7 @@
 					};
 					843262D827D0133500367338 = {
 						CreatedOnToolsVersion = 13.2.1;
+						TestTargetID = 847B788026F67362006D62DC;
 					};
 					847B788026F67362006D62DC = {
 						CreatedOnToolsVersion = 12.5.1;
@@ -696,6 +705,11 @@
 			target = 843262D127D0133500367338 /* EssentialFeediOS */;
 			targetProxy = 843262DB27D0133500367338 /* PBXContainerItemProxy */;
 		};
+		843BFCF627DD39BC001F7DC0 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 847B788026F67362006D62DC /* EssentialFeed */;
+			targetProxy = 843BFCF527DD39BC001F7DC0 /* PBXContainerItemProxy */;
+		};
 		847B789926F67363006D62DC /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 847B788026F67362006D62DC /* EssentialFeed */;
@@ -748,11 +762,15 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = lfcj.EssentialFeedAPIEndToEndTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos macosx";
+				SUPPORTS_MACCATALYST = NO;
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/EssentialFeed.app/EssentialFeed";
+				TEST_HOST = "";
+				"TEST_HOST[sdk=iphonesimulator15.2]" = "$(BUILT_PRODUCTS_DIR)/EssentialFeed.app/EssentialFeed";
+				"TEST_HOST[sdk=macosx12.1]" = "$(BUILT_PRODUCTS_DIR)/EssentialFeed.app/Contents/MacOS/EssentialFeed";
 			};
 			name = Debug;
 		};
@@ -776,10 +794,14 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = lfcj.EssentialFeedAPIEndToEndTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos macosx";
+				SUPPORTS_MACCATALYST = NO;
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/EssentialFeed.app/EssentialFeed";
+				TEST_HOST = "";
+				"TEST_HOST[sdk=iphonesimulator15.2]" = "$(BUILT_PRODUCTS_DIR)/EssentialFeed.app/EssentialFeed";
+				"TEST_HOST[sdk=macosx12.1]" = "$(BUILT_PRODUCTS_DIR)/EssentialFeed.app/Contents/MacOS/EssentialFeed";
 			};
 			name = Release;
 		};
@@ -807,6 +829,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.lfcj.EssentialFeediOS;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
+				SUPPORTS_MACCATALYST = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -839,6 +862,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.lfcj.EssentialFeediOS;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
+				SUPPORTS_MACCATALYST = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -850,6 +874,7 @@
 		843262E327D0133500367338 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -859,15 +884,20 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.lfcj.EssentialFeediOSTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTS_MACCATALYST = NO;
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/EssentialFeed.app/EssentialFeed";
+				"TEST_HOST[sdk=iphonesimulator15.2]" = "$(BUILT_PRODUCTS_DIR)/EssentialFeed.app/EssentialFeed";
+				"TEST_HOST[sdk=macosx12.1]" = "$(BUILT_PRODUCTS_DIR)/EssentialFeed.app/Contents/MacOS/EssentialFeed";
 			};
 			name = Debug;
 		};
 		843262E427D0133500367338 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -877,9 +907,11 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.lfcj.EssentialFeediOSTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTS_MACCATALYST = NO;
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/EssentialFeed.app/EssentialFeed";
 			};
 			name = Release;
 		};
@@ -1017,6 +1049,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos macosx";
 				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -1040,6 +1073,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos macosx";
 				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -1063,9 +1097,12 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.lfcj.EssentialFeedTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos macosx";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/EssentialFeed.app/EssentialFeed";
+				"TEST_HOST[sdk=iphonesimulator15.2]" = "$(BUILT_PRODUCTS_DIR)/EssentialFeed.app/EssentialFeed";
+				"TEST_HOST[sdk=macosx*]" = "$(BUILT_PRODUCTS_DIR)/EssentialFeed.app/Contents/MacOS/EssentialFeed";
 			};
 			name = Debug;
 		};
@@ -1087,9 +1124,12 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.lfcj.EssentialFeedTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos macosx";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/EssentialFeed.app/EssentialFeed";
+				"TEST_HOST[sdk=iphonesimulator*]" = "$(BUILT_PRODUCTS_DIR)/EssentialFeed.app/EssentialFeed";
+				"TEST_HOST[sdk=macosx12.1]" = "$(BUILT_PRODUCTS_DIR)/EssentialFeed.app/Contents/MacOS/EssentialFeed";
 			};
 			name = Release;
 		};
@@ -1109,6 +1149,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.lfcj.EssentialFeedUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos macosx";
+				SUPPORTS_MACCATALYST = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_TARGET_NAME = EssentialFeed;
@@ -1131,6 +1172,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.lfcj.EssentialFeedUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos macosx";
+				SUPPORTS_MACCATALYST = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_TARGET_NAME = EssentialFeed;

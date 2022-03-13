@@ -681,7 +681,7 @@ There are certain statistics that help have an overview over the health of the c
 -   Using Storyboards it is easy to quickly prototypes UIs and generate TF builds so design and product can test.
 -   It is possible to fake asynchronous loading of images by setting the `alpha` to 0 on `prepareForReuse` and animate it to `1` when the image is set.
 
-#### 28. Apple MVC, Test-driving UIViewControllers, Dealing with UIKit’s Inversion of Control & Temporal Coupling, and Decoupling Tests from UI Implementation Details
+#### 28. Apple MVC, Test-driving UIViewControllers, Dealing with UIKit’s Inversion of Control & Temporal Coupling, and Decoupling Tests from UI Implementation Details ✅
 
 -   Validating UX experiences and exploring solutions through prototyping
 -   Introduction to the MVC UI architectural design pattern

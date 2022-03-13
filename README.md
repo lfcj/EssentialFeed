@@ -697,6 +697,7 @@ There are certain statistics that help have an overview over the health of the c
 -   Decoupling tests from UI implementation details
     -   It is important to include all the lifecycle events that have Temporal Coupling into the same test to still be able to execute in random order.
     -   It is good to only have one assertion per test, but it is encouraged to add more to tell a story when there is Temporal Coupling.
+        -   Try to separate by logical units (e.g.: activity indicator is shown _when_).
 
 [1]: https://www.essentialdeveloper.com/articles/the-minimum-you-should-do-to-prevent-memory-leaks-in-swift
 

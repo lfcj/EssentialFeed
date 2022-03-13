@@ -1,3 +1,4 @@
+import EssentialFeed
 import XCTest
 
 final class FeedViewController: UIViewController {

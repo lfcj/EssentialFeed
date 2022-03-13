@@ -190,4 +190,3 @@ class LoadFeedFromRemoteUseCaseTests: XCTestCase {
 
 }
 
-

@@ -1,6 +1,6 @@
 # iOS Lead Essentials Course
 
-[![iOS Essential Feed Automation Tests](https://github.com/lfcj/EssentialFeed/actions/workflows/ios.yml/badge.svg)](https://github.com/lfcj/EssentialFeed/actions/workflows/ios.yml)
+[![iOS Essential Feed Automation Tests](https://github.com/lfcj/EssentialFeed/actions/workflows/CI-iOS.yml/badge.svg)](https://github.com/lfcj/EssentialFeed/actions/workflows/CI-iOS.yml)
 
 [![MacOS Essential Feed Automation Tests](https://github.com/lfcj/EssentialFeed/actions/workflows/CI-macos.yml/badge.svg)](https://github.com/lfcj/EssentialFeed/actions/workflows/CI-macos.yml)
 

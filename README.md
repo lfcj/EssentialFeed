@@ -681,6 +681,21 @@ There are certain statistics that help have an overview over the health of the c
 -   Using Storyboards it is easy to quickly prototypes UIs and generate TF builds so design and product can test.
 -   It is possible to fake asynchronous loading of images by setting the `alpha` to 0 on `prepareForReuse` and animate it to `1` when the image is set.
 
+#### 28. Apple MVC, Test-driving UIViewControllers, Dealing with UIKit’s Inversion of Control & Temporal Coupling, and Decoupling Tests from UI Implementation Details
+
+-   Validating UX experiences and exploring solutions through prototyping
+-   Introduction to the MVC UI architectural design pattern
+    -   A big missconception is that in MVC there is only one model: no, we need plenty of ones.
+-   Test-driving MVC implementations
+-   Testing effectively with 3rd-party frameworks
+-   Preventing bugs caused by 3rd-party framework’s Inversion of Control and Temporal Coupling
+    -   **Inversion of Control:** Any programming style where an overall framework or runtime controls the program flow.
+    `UIKit` uses [Inversion of Control][9] a lot to notify of events, user actions, and view lifecycle events. This makes that we do not have a lot of control of when a view lifecycle starts/ends. We can only react to them whenever they happen. Also, view lifecycle events happen with an order, which introduces Temporal Coupling:
+
+    > “Temporal Coupling is a common problem in API design. It occurs when there’s an implicit relationship between two or more members of a class, requiring clients to invoke one member before the other. This tightly couples the members in the temporal dimension.”—Dependency Injection: Principles, Practices, and Patterns by Mark Seemann & Steven van Deursen
+
+-   Decoupling tests from UI implementation details
+    -   It is important to include all the lifecycle events that have Temporal Coupling into the same test to still be able to execute in random order.
 
 [1]: https://www.essentialdeveloper.com/articles/the-minimum-you-should-do-to-prevent-memory-leaks-in-swift
 
@@ -697,3 +712,5 @@ There are certain statistics that help have an overview over the health of the c
 [7]: https://developer.apple.com/library/archive/documentation/NetworkingInternetWeb/Conceptual/NetworkingOverview/WhyNetworkingIsHard/WhyNetworkingIsHard.html#//apple_ref/doc/uid/TP40010220-CH13-SW3
 
 [8]: https://www.essentialdeveloper.com/articles/how-safe-are-swift-structs
+
+[9]:  https://martinfowler.com/bliki/InversionOfControl.html

@@ -713,6 +713,30 @@ There are certain statistics that help have an overview over the health of the c
     -   It is good to only have one assertion per test, but it is encouraged to add more to tell a story when there is Temporal Coupling.
         -   Try to separate by logical units (e.g.: activity indicator is shown _when_).
 
+#### 30. Effectively Test-driving MVC UI with Multiple Views/Models/State, Efficiently Loading/Prefetching/Cancelling Image Requests, Inside-Out vs. Outside-In Development, and Identifying the Massive View Controller Anti-pattern by Following Design Principles
+
+-   Inside-Out vs. Outside-In development approaches
+    -   **Inside-Out:** You start by implementing Core functionality (Inside) and move to Outer layers (Out).
+    -   **Outside-In:** One starts from the outer layers and ends with the core functionality.
+
+    Both are very good. When one has the UI application upfront and not just use cases, the latter one makes more sense.
+-   Efficiently loading images in UITableView cells
+-   Efficiently prefetching images when cells are near visible
+-   Efficiently canceling image loading requests to avoid excessive data usage
+-   Managing multiple views, models, and state
+-   Moving state management responsibility to clients with Return Values
+-   Identifying the Massive View Controller antipattern
+-   Test-driving UI components
+-   Testing UIKit components without mocking
+-   Creating in-memory UIImage representations for fast and reliable tests
+-   Following the Open Closed, Interface Segregation, and Dependency Inversion Principles
+    -   **Open Closed Principle:** A component should be open for extension, but closed for modification. This means one can extend the behaviour of the component without making changes to it.
+    -   **Interface Segregation:** Protocols need to be kept concise and not have too many methods.
+
+    It is common in iOS codebases to see huge protocols and implementations of them that run `fatalError`, which breaks Liskov's Principle.
+
+> Keep in mind that your components will conform to the Open Closed Principle (OCP) as a result of respecting other principles such as the Interface Segregation (ISP), Liskov Substitution (LSP), Dependency Inversion (DIP) and Single Responsibility (SRP). Making sure to follow these guidelines will give you the freedom to extend your system with the minimum cost for changing it.
+
 [1]: https://www.essentialdeveloper.com/articles/the-minimum-you-should-do-to-prevent-memory-leaks-in-swift
 
 [2]: https://www.essentialdeveloper.com/articles/xctest-swift-setup-teardown-vs-factory-methods

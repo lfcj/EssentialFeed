@@ -343,8 +343,7 @@ None of them are architectures!
 -   Identifying coincidental duplication while respecting the DRY (Don't Repeat Yourself) principle.
     -   Code that looks the same but is conceptually different is not duplicate.
 -   Performing calendrical calculations correctly.
-    -   Naive calendrical calculations can be very bad for UX. Calendars are full of edge cases.
-    -   Use the native `Calendar` as much as possible to avoid calculations.
+     -   Use the native `Calendar` as much as possible to avoid calculations.
     -   Tests should be calendar/timezone agnostic whenever possible.
 -   Creating a simple DSL (Domain Specific Language) to decouple tests from implementation details.
     -   An example of this are methods in extensions to make our codebase more readable and more adjusted to the domain needs.
@@ -725,6 +724,7 @@ There are certain statistics that help have an overview over the health of the c
 -   Efficiently canceling image loading requests to avoid excessive data usage
 -   Managing multiple views, models, and state
 -   Moving state management responsibility to clients with Return Values
+    -   One alternative to reduce method counts in interfaces is to move the responsibility of keeping count of something to the client instead of having a method so outer entities take care of calling those methods from outside.
 -   Identifying the Massive View Controller antipattern
 -   Test-driving UI components
 -   Testing UIKit components without mocking

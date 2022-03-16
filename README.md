@@ -656,7 +656,7 @@ There are certain statistics that help have an overview over the health of the c
 #####   Production report
 <img src="/summary-images/production-report.png" width=40% height=40%>
 -   The assignable `var` properties denote a mutable state and these ones are hard to maintain as they easily grow out of control.
--   
+
 #####   Testing report
 <img src="/summary-images/test-report.png" width=40% height=40%>
 

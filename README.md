@@ -712,7 +712,7 @@ There are certain statistics that help have an overview over the health of the c
     -   It is good to only have one assertion per test, but it is encouraged to add more to tell a story when there is Temporal Coupling.
         -   Try to separate by logical units (e.g.: activity indicator is shown _when_).
 
-#### 30. Effectively Test-driving MVC UI with Multiple Views/Models/State, Efficiently Loading/Prefetching/Cancelling Image Requests, Inside-Out vs. Outside-In Development, and Identifying the Massive View Controller Anti-pattern by Following Design Principles
+#### 30. Effectively Test-driving MVC UI with Multiple Views/Models/State, Efficiently Loading/Prefetching/Cancelling Image Requests, Inside-Out vs. Outside-In Development, and Identifying the Massive View Controller Anti-pattern by Following Design Principles ✅
 
 -   Inside-Out vs. Outside-In development approaches
     -   **Inside-Out:** You start by implementing Core functionality (Inside) and move to Outer layers (Out).

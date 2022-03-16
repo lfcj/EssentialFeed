@@ -730,6 +730,8 @@ There are certain statistics that help have an overview over the health of the c
 -   Test-driving UI components
 -   Testing UIKit components without mocking
 -   Creating in-memory UIImage representations for fast and reliable tests
+    -   This can be done creating images of 1x1 size of a color with help of `UIGraphicsBeginImageContext`.
+    -   Another good idea is to use `UITableViewDataSourcePrefetching` to prefetch images for rows.
 -   Following the Open Closed, Interface Segregation, and Dependency Inversion Principles
     -   **Open Closed Principle:** A component should be open for extension, but closed for modification. This means one can extend the behaviour of the component without making changes to it.
     -   **Interface Segregation:** Protocols need to be kept concise and not have too many methods.

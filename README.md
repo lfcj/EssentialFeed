@@ -740,6 +740,31 @@ There are certain statistics that help have an overview over the health of the c
 
 > Keep in mind that your components will conform to the Open Closed Principle (OCP) as a result of respecting other principles such as the Interface Segregation (ISP), Liskov Substitution (LSP), Dependency Inversion (DIP) and Single Responsibility (SRP). Making sure to follow these guidelines will give you the freedom to extend your system with the minimum cost for changing it.
 
+#### 31. Refactoring Massive View Controllers Into Multiple Tiny MVCs + Using Composers & Adapters to Reduce Coupling and Eliminate Redundant Dependencies ✅
+
+-   Distributing the responsibilities of a view controller with other controllers to form a multi-MVC design
+    -   It is a good idea to start breaking apart the modular design graph into linear dependencies that one can break apart.
+    -   When a class extracts its logic to a collaborator, it wins two new tasks: create it (in some cases), and communicate with it.
+    -   A factory does not solve this because the factory becomes a dependency of the controller.
+-   Creating Composers to separate usage from creation and decoupling components
+    -   When an instance creates its own helpers/collaborators, it ends up requiring extra dependencies just to create them. DI should be used to eliminate redundant dependencies.
+        -   A class should not need something in its initializer just to be able to instantiate a helper!!
+    -   There are two rules when using composers:
+        -   Composers should only be used in the Composition Root
+        -   Only Composers can use other Composers
+    -   Do not charge instantiators with dependencies to be able to create an instance using the composer!!
+-   Using the Adapter pattern to enable components with incompatible interfaces to work together seamlessly
+    -   The adapter method is mapping structures from one context into another one to keep concerns separated while allowing collaboration.
+
+    >   The purpose of an Adapter, also known as Wrapper, is to convert the interface of a component into another interface a client expects. It enables you to decouple components from complex dependencies.
+
+In other words, the Adapter pattern enables components with incompatible interfaces to work together seamlessly.
+
+- 🤩 The main takeaway is that:
+    -   MVC does not only have one controller, it can have many Controllers
+    -   MPV does not only have one presenter, it can have many presenters.
+    -   MVVM does not only have one model, it can have a lot of different models and views.
+
 [1]: https://www.essentialdeveloper.com/articles/the-minimum-you-should-do-to-prevent-memory-leaks-in-swift
 
 [2]: https://www.essentialdeveloper.com/articles/xctest-swift-setup-teardown-vs-factory-methods

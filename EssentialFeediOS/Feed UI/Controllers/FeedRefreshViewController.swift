@@ -2,7 +2,7 @@ import EssentialFeed
 import Foundation
 import UIKit
 
-public final class FeedRefreshViewController: NSObject {
+final class FeedRefreshViewController: NSObject {
 
     typealias RefreshHandler = ([FeedImage]) -> Void
 

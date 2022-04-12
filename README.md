@@ -769,8 +769,6 @@ In other words, the Adapter pattern enables components with incompatible interfa
 
 -   Improving architectural separation between UI and core components with View Models
 -   Creating a reusable cross-platform Presentation layer with MVVM
--   Implementing Stateful and Stateless View Models
--   Using Generics to create reusable components
 
     The goal of MVVM, created by Microsoft, was to eliminate the synchonisation of view events and model updates that controllers control in MVC.
 
@@ -787,7 +785,8 @@ In other words, the Adapter pattern enables components with incompatible interfa
 
     One **important recommendation** is that view models are platform and framework agnostic so they can be easily re-used on all platforms.
 
-    > You don’t have to choose between MVC or MVVM. You can mix and switch MVC with MVVM to organize your UI layer as needed. We recommend you to use the best option for the problem at hand. For example, if you find yourself duplicating code across View Controllers or performing value transformations in View Controllers, you should think of moving the logic to a reusable platform-agnostic ViewModel. Otherwise, a simple MVC solution would do just fine. Caio & Mike.
+-   Implementing Stateful and Stateless View Models
+-   Using Generics to create reusable components
 
     An example of Dependency Injection together with Swift's generics together to create a modular design is injecting a transformer from Data to Image in order to stay away from having the ViewModel depend on UIKit. Example:
 
@@ -800,6 +799,9 @@ In other words, the Adapter pattern enables components with incompatible interfa
     FeedImageViewModel(model: model, imageLoader: loader, imageTransformer: WKImage.init)
     ```
 
+    > You don’t have to choose between MVC or MVVM. You can mix and switch MVC with MVVM to organize your UI layer as needed. We recommend you to use the best option for the problem at hand. For example, if you find yourself duplicating code across View Controllers or performing value transformations in View Controllers, you should think of moving the logic to a reusable platform-agnostic ViewModel. Otherwise, a simple MVC solution would do just fine. Caio & Mike.
+
+#### 33. MVP: Creating a Reusable and Cross-Platform Presentation Layer, Implementing Service Adapters, and Solving Cyclic Dependencies & Memory Management issues with the Proxy Pattern
 
 [1]: https://www.essentialdeveloper.com/articles/the-minimum-you-should-do-to-prevent-memory-leaks-in-swift
 

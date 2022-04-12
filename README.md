@@ -765,6 +765,42 @@ In other words, the Adapter pattern enables components with incompatible interfa
     -   MPV does not only have one presenter, it can have many presenters.
     -   MVVM does not only have one model, it can have a lot of different models and views.
 
+#### 32. MVVM: Reducing Boilerplate, Shifting Reusable Presentation Logic from Controllers into Cross-Platform (Stateful & Stateless) ViewModels, and Decoupling Presentation from UI Frameworks with Swift Generics
+
+-   Improving architectural separation between UI and core components with View Models
+-   Creating a reusable cross-platform Presentation layer with MVVM
+-   Implementing Stateful and Stateless View Models
+-   Using Generics to create reusable components
+
+    The goal of MVVM, created by Microsoft, was to eliminate the synchonisation of view events and model updates that controllers control in MVC.
+
+    This binding happens automatically with help of a `ViewModel` (for Microsoft). This is a reason why MVVM is also known as MVB (Model-View-Binder). Swift generally uses RxSwift or Combine to make this binding happen.
+
+    Here is a comparison between MVC and MVVM regarding their dependencies and flows:
+
+    ![MVC vs MVVM][10]
+
+    Notice the main difference is that the ViewModel does not hold a reference to the View as the Controller does in MVC.
+    Not making the View and the ViewModel depend on each other makes everything more reusable. They should communicate through a binding mechanism. In UIKit the VC can do that as the app must have at least one.
+
+    There is a lot of needed boilerplate, but view models allow reusability of UI components and a better architectural separation.
+
+    One **important recommendation** is that view models are platform and framework agnostic so they can be easily re-used on all platforms.
+
+    > You don’t have to choose between MVC or MVVM. You can mix and switch MVC with MVVM to organize your UI layer as needed. We recommend you to use the best option for the problem at hand. For example, if you find yourself duplicating code across View Controllers or performing value transformations in View Controllers, you should think of moving the logic to a reusable platform-agnostic ViewModel. Otherwise, a simple MVC solution would do just fine. Caio & Mike.
+
+    An example of Dependency Injection together with Swift's generics together to create a modular design is injecting a transformer from Data to Image in order to stay away from having the ViewModel depend on UIKit. Example:
+
+    For UIKit:
+    ```
+    FeedImageViewModel(model: model, imageLoader: loader, imageTransformer: UIImage.init)
+    ```
+    For WatchKit:
+    ```
+    FeedImageViewModel(model: model, imageLoader: loader, imageTransformer: WKImage.init)
+    ```
+
+
 [1]: https://www.essentialdeveloper.com/articles/the-minimum-you-should-do-to-prevent-memory-leaks-in-swift
 
 [2]: https://www.essentialdeveloper.com/articles/xctest-swift-setup-teardown-vs-factory-methods
@@ -782,3 +818,5 @@ In other words, the Adapter pattern enables components with incompatible interfa
 [8]: https://www.essentialdeveloper.com/articles/how-safe-are-swift-structs
 
 [9]:  https://martinfowler.com/bliki/InversionOfControl.html
+
+[10]: /summary-images/mvc-vs-mvvm.png

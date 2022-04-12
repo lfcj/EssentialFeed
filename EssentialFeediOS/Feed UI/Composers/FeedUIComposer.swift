@@ -20,7 +20,11 @@ public final class FeedUIComposer {
         loader: FeedImageDataLoader
     ) -> FeedViewModel.Observer<[FeedImage]> {
         { [weak controller] feed in
-            controller?.tableModel = feed.map { FeedImageCellController(model: $0, imageLoader: loader)}
+            controller?.tableModel = feed.map { model in
+                FeedImageCellController(
+                    viewModel: FeedImageViewModel(model: model, imageLoader: loader, imageTransformer: UIImage.init)
+                )
+            }
         }
     }
 }

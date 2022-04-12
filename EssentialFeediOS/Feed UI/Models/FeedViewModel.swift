@@ -4,20 +4,14 @@ final class FeedViewModel {
 
     // MARK: - Nested Types
 
-    typealias ChangeHandler = (FeedViewModel) -> Void
+    typealias ChangeHandler = (Bool) -> Void
     typealias RefreshHandler = ([FeedImage]) -> Void
 
 
     // MARK: - Properties
 
-    var onChange: ChangeHandler?
+    var onLoadingStateChange: ChangeHandler?
     var onFeedLoad: RefreshHandler?
-
-    var isLoading: Bool = false {
-        didSet {
-            onChange?(self)
-        }
-    }
 
     private let feedLoader: FeedLoader
 
@@ -30,12 +24,12 @@ final class FeedViewModel {
     // MARK: - Feed Loading
 
     func loadFeed() {
-        isLoading = true
+        onLoadingStateChange?(true)
         feedLoader.load { [weak self] result in
             if let feed = try? result.get() {
                 self?.onFeedLoad?(feed)
             }
-            self?.isLoading = false
+            self?.onLoadingStateChange?(false)
         }
     }
 

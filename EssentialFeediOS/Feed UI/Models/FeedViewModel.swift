@@ -4,14 +4,12 @@ final class FeedViewModel {
 
     // MARK: - Nested Types
 
-    typealias ChangeHandler = (Bool) -> Void
-    typealias RefreshHandler = ([FeedImage]) -> Void
-
+    typealias Observer<T> = (T) -> Void
 
     // MARK: - Properties
 
-    var onLoadingStateChange: ChangeHandler?
-    var onFeedLoad: RefreshHandler?
+    var onLoadingStateChange: Observer<Bool>?
+    var onFeedLoad: Observer<[FeedImage]>?
 
     private let feedLoader: FeedLoader
 

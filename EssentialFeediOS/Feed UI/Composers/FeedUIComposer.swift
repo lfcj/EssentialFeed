@@ -18,7 +18,7 @@ public final class FeedUIComposer {
     private static func adaptFeedToCellControllers(
         forwardingTo controller: FeedViewController,
         loader: FeedImageDataLoader
-    ) -> FeedViewModel.RefreshHandler {
+    ) -> FeedViewModel.Observer<[FeedImage]> {
         { [weak controller] feed in
             controller?.tableModel = feed.map { FeedImageCellController(model: $0, imageLoader: loader)}
         }

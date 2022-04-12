@@ -765,7 +765,7 @@ In other words, the Adapter pattern enables components with incompatible interfa
     -   MPV does not only have one presenter, it can have many presenters.
     -   MVVM does not only have one model, it can have a lot of different models and views.
 
-#### 32. MVVM: Reducing Boilerplate, Shifting Reusable Presentation Logic from Controllers into Cross-Platform (Stateful & Stateless) ViewModels, and Decoupling Presentation from UI Frameworks with Swift Generics
+#### 32. MVVM: Reducing Boilerplate, Shifting Reusable Presentation Logic from Controllers into Cross-Platform (Stateful & Stateless) ViewModels, and Decoupling Presentation from UI Frameworks with Swift Generics ✅
 
 -   Improving architectural separation between UI and core components with View Models
 -   Creating a reusable cross-platform Presentation layer with MVVM

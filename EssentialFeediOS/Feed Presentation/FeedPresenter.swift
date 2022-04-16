@@ -12,7 +12,7 @@ final class FeedPresenter {
     // MARK: - Properties
 
     var feedView: FeedView?
-    weak var loadingView: FeedLoadingView?
+    var loadingView: FeedLoadingView?
 
     private let feedLoader: FeedLoader
 

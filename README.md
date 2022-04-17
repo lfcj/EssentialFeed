@@ -801,7 +801,7 @@ In other words, the Adapter pattern enables components with incompatible interfa
 
     > You don’t have to choose between MVC or MVVM. You can mix and switch MVC with MVVM to organize your UI layer as needed. We recommend you to use the best option for the problem at hand. For example, if you find yourself duplicating code across View Controllers or performing value transformations in View Controllers, you should think of moving the logic to a reusable platform-agnostic ViewModel. Otherwise, a simple MVC solution would do just fine. Caio & Mike.
 
-#### 33. MVP: Creating a Reusable and Cross-Platform Presentation Layer, Implementing Service Adapters, and Solving Cyclic Dependencies & Memory Management issues with the Proxy Pattern
+#### 33. MVP: Creating a Reusable and Cross-Platform Presentation Layer, Implementing Service Adapters, and Solving Cyclic Dependencies & Memory Management issues with the Proxy Pattern ✅
 
 -   Creating a reusable cross-platform Presentation Layer with MVP
     MVP is like MVC, but with a Presenter instead of a Controller. MVP allows, besides a cross-platform and reusable presentation layer, a clear separation between UI and presentation logic. In MVP the View holds a reference to the Presenter and sends events to it. The Presenter then updates an `AbstractView` protocol that the View implements.

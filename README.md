@@ -803,6 +803,40 @@ In other words, the Adapter pattern enables components with incompatible interfa
 
 #### 33. MVP: Creating a Reusable and Cross-Platform Presentation Layer, Implementing Service Adapters, and Solving Cyclic Dependencies & Memory Management issues with the Proxy Pattern
 
+-   Creating a reusable cross-platform Presentation Layer with MVP
+    MVP is like MVC, but with a Presenter instead of a Controller. MVP allows, besides a cross-platform and reusable presentation layer, a clear separation between UI and presentation logic. In MVP the View holds a reference to the Presenter and sends events to it. The Presenter then updates an `AbstractView` protocol that the View implements.
+    ![MVC vs MVP][11]
+-   Improving architectural separation between UI and core components with Presenters
+    And important separation is that teh `AbstractView` belogs inside the presentaion layer. That helps the implementation of the presenter to not depend on the UI layer.
+
+    🧯☣️ The two-way communication view -> presenter, presenter -> view creates a **potential retain cycle**. It is important to watch out for memory management when using MVP.
+
+    📚 The `<AbstractView>` can be several protocols as different views may be in charge of different tasks and in ordre to maintain Interface Segregation Principle, we do not want one protocol with all methods.
+
+    One important difference to MVVM is that the ViewModels only hold data, not a beheaviour. The Presenter merely passes data to the view via the ViewModel, but it takes care of transforming the data itself.
+-   Implementing various MVP solutions
+    The most typical way is having a bi-directional Presenter <-> View communication where the `View` holds a reference to the `Presenter` and the `Presenter` a (weak) reference to the `<Abstract View>`.
+
+    -   Option 1: A UIKit view subclasses `<AbstractView>`. It sends the events to the Presenter.
+    -   Option 2: A UIKit `UIViewController` subclasses `<AbstractView>`, it translates the protocol methods into actions for its view and sends the view's events to the Presenter
+    -   Option 3: Same as in option 2, but the `View` does not hold a strong reference to the presenter directly, instead it holds a reference to a `<PresenterProtocol>`
+    -   Option 4: Using an Adapter and injecting dependencies in the composer the Presenter is leaner and everything is more re-usable. The Adapter translates events into `<Service>` methods and delegates state changes and responses to the presenter.
+    > “An ADAPTER is a wrapper that allows a client to use a different protocol than that understood by the implementer of the behavior. When a client sends a message to an ADAPTER, it is converted to a semantically equivalent message and sent on to the “adaptee.” The response is converted and passed back[…]
+
+    > For each SERVICE we define, we need an ADAPTER that supports the SERVICE’S interface and knows how to make equivalent requests of the other system[…]
+
+    > The ADAPTER’S job is to know how to make a request. The actual conversion of conceptual objects or data is a distinct, complex task that can be placed in its own object, making them both much easier to understand. A translator can be a lightweight object that is instantiated when needed."—Eric Evans “Domain-Driven Design: Tackling Complexity in the Heart of Software
+
+    All of them are good to use, Option 1, 2 being the easiest ones, 3 and 4 being more reusable in exchange. Using 3 and 4 also has more levels of indirection, so less quick readability.
+
+-   Differences between ViewModels in MVVM, MVC, and MVP
+    A ViewModel in MVP is called `ViewData`, meaning it only holds data, it has no behaviours.
+-   Implementing the Proxy design pattern
+    It is possible to move the memory management concerns to the composition layer (instead of just marking a variable as `weak`). Using the proxy pattern. This proxy is not weak, but it holds a weak reference to the final object (in this case the presenter). The proxy can implement the protocol and pass all requests to the objects it holds, but the caller has the impression it is dealing with the real implementation.
+-   Identifying and solving Cyclic Dependencies
+    A Presenter having a weak optional view that needs to be injected introduces temporal coupling as there is a time when the presenter does not have all its dependencies available. We can solve this by moving it into the Composition Layer and using the proxy design pattern to wrap the View.
+-   Dealing with Memory Management in the Composer layer to prevent leaking composition details into components
+
 [1]: https://www.essentialdeveloper.com/articles/the-minimum-you-should-do-to-prevent-memory-leaks-in-swift
 
 [2]: https://www.essentialdeveloper.com/articles/xctest-swift-setup-teardown-vs-factory-methods
@@ -822,3 +856,5 @@ In other words, the Adapter pattern enables components with incompatible interfa
 [9]:  https://martinfowler.com/bliki/InversionOfControl.html
 
 [10]: /summary-images/mvc-vs-mvvm.png
+
+[11]: summary-images/mvc_vs_mvp.png

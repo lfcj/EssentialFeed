@@ -837,6 +837,8 @@ In other words, the Adapter pattern enables components with incompatible interfa
     A Presenter having a weak optional view that needs to be injected introduces temporal coupling as there is a time when the presenter does not have all its dependencies available. We can solve this by moving it into the Composition Layer and using the proxy design pattern to wrap the View.
 -   Dealing with Memory Management in the Composer layer to prevent leaking composition details into components
 
+#### 34. Storyboard vs. Code: Layout, DI and Composition, Identifying the Constrained Construction DI Anti-pattern, and Optimizing Performance by Reusing Cells
+
 [1]: https://www.essentialdeveloper.com/articles/the-minimum-you-should-do-to-prevent-memory-leaks-in-swift
 
 [2]: https://www.essentialdeveloper.com/articles/xctest-swift-setup-teardown-vs-factory-methods

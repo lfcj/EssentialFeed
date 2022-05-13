@@ -7,17 +7,11 @@ public final class FeedViewController: UITableViewController {
             tableView.reloadData()
         }
     }
-    var refreshController: FeedRefreshViewController?
-
-    convenience init(refreshController: FeedRefreshViewController) {
-        self.init()
-        self.refreshController = refreshController
-    }
+    @IBOutlet var refreshController: FeedRefreshViewController?
 
     public override func viewDidLoad() {
         super.viewDidLoad()
 
-        refreshControl = refreshController?.view
         tableView.prefetchDataSource = self
         refreshController?.refresh()
     }

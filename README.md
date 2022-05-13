@@ -839,6 +839,19 @@ In other words, the Adapter pattern enables components with incompatible interfa
 
 #### 34. Storyboard vs. Code: Layout, DI and Composition, Identifying the Constrained Construction DI Anti-pattern, and Optimizing Performance by Reusing Cells
 
+-   Trade-offs of creating the app layout in storyboards vs. programmatically.
+    Code is the most efficient, reusable and flexible option. But storyboards make it easier to create simple layouts.
+    Storyboards are good to start, but do not scale well because they mix too many things (Layout, Navigation, Compsition, etc.). They are recommended only for Layout purposes.
+
+-   Dependency Injection and component composition with storyboards
+    One big downside is that all storyboard views need to be instantiated using the same constructor: `init?(coder: NSCoder)`. This makes it impossible to use DI through the constructor. It needs to be Property Injection. A consequence of this is that the properties cannot be private in order to allow injection.
+
+    > When you move object instantiation and composition to a centralized place, Dependency Injection becomes much easier, simpler, and safer. Additionally, you minimize the shortcomings of DI with Storyboards.
+
+-   Optimizing UITableView performance by reusing cells
+    Re-used cells can be modified by other controllers when they are already out of screen, causing faulty behaviours. This can be tested against in order for the test to fail. Once the faulty behaviour is fixed, the test starts passing.
+    The fix can happen setting the cell to `nil` inside `tableView(:didEndDisplaying cell`
+
 [1]: https://www.essentialdeveloper.com/articles/the-minimum-you-should-do-to-prevent-memory-leaks-in-swift
 
 [2]: https://www.essentialdeveloper.com/articles/xctest-swift-setup-teardown-vs-factory-methods

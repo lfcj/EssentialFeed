@@ -10,13 +10,19 @@ protocol FeedImageCellControllerDelegate {
 final class FeedImageCellController: FeedImageView {
 
     private let delegate: FeedImageCellControllerDelegate
-
-    private let view: FeedImageCell
+    private var cell: FeedImageCell?
 
     init(delegate: FeedImageCellControllerDelegate) {
         self.delegate = delegate
-        self.view = FeedImageCell()
         prepareCellForReuse()
+    }
+
+    func view(in tableView: UITableView) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "FeedImageCell") as! FeedImageCell
+        self.cell = cell
+        cell.onRetry = delegate.didRequestImageDataLoad
+        delegate.didRequestImageDataLoad()
+        return cell
     }
 
     func preload() {
@@ -24,23 +30,18 @@ final class FeedImageCellController: FeedImageView {
     }
 
     func cancelLoad() {
+        releaseCellForReuse()
         delegate.didRequestCancellingImageDataLoad()
-    }
-
-    func cell() -> UITableViewCell {
-        view.onRetry = delegate.didRequestImageDataLoad
-        delegate.didRequestImageDataLoad()
-        return view
     }
 
     // MARK: - FeedImageView
 
     func display(_ viewModel: FeedImageViewModel<UIImage>) {
-        view.display(viewModel)
+        cell?.display(viewModel)
     }
 
     private func prepareCellForReuse() {
-        view.display(
+        cell?.display(
             FeedImageViewModel(
                 isLocationContainerHidden: true,
                 location: nil,
@@ -50,6 +51,10 @@ final class FeedImageCellController: FeedImageView {
                 isRetryButtonHidden: true
             )
         )
+    }
+
+    private func releaseCellForReuse() {
+        cell = nil
     }
 
     deinit {

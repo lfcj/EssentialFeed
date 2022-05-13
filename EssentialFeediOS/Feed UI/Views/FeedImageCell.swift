@@ -23,8 +23,9 @@ public final class FeedImageCell: UITableViewCell, FeedImageView {
         locationContainer.isHidden = viewModel.isLocationContainerHidden
         locationLabel.text = viewModel.location
         descriptionLabel.text = viewModel.description
-        feedImageView.image = viewModel.feedImage
+        feedImageView.setImageAnimated(viewModel.feedImage)
         feedImageRetryButton.isHidden = viewModel.isRetryButtonHidden
     }
     
 }
+

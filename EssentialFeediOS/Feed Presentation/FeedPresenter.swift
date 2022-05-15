@@ -15,6 +15,8 @@ protocol FeedView {
 
 final class FeedPresenter {
 
+    static let title = "My Feed"
+
     private let feedView: FeedView
     private let loadingView: FeedLoadingView
 

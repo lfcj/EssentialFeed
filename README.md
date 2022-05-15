@@ -852,6 +852,21 @@ In other words, the Adapter pattern enables components with incompatible interfa
     Re-used cells can be modified by other controllers when they are already out of screen, causing faulty behaviours. This can be tested against in order for the test to fail. Once the faulty behaviour is fixed, the test starts passing.
     The fix can happen setting the cell to `nil` inside `tableView(:didEndDisplaying cell`
 
+#### 35.  Creating, Localizing, and Testing Customer Facing Strings in the Presentation Layer + NSLocalizedString Best Practices
+
+-   Localizing strings within various UI design patterns (MVC, MVVM, MVP)
+    -   In **MVC** the Controller is the String creator.
+    -   In **MVP** the Presenter is the String creator.
+    -   In **MVP** the ViewModel is the String creator.
+-   NSLocalizedString best practices
+    -   Write tests for the keys of the strings, not for the values as tests can run in different countries.
+    -   The `key` should not be the default value as it can be buggy.
+    -   `NSLocalizedString` uses the underlying bundle, so it is the same as `Bundle(for: SomeClass.self).localizedString(...)`
+-   Creating and managing customer-facing strings in the Presentation Layer (away from Business Logic!)
+-   Testing customer-facing strings
+    -   To test the values use snapshot/screenshot tests.
+    -   Test that all keys used across the project have values for each supported language. This is possible by accessing each bundle and treating the `.strings` files as keys-values dictionaries.
+
 [1]: https://www.essentialdeveloper.com/articles/the-minimum-you-should-do-to-prevent-memory-leaks-in-swift
 
 [2]: https://www.essentialdeveloper.com/articles/xctest-swift-setup-teardown-vs-factory-methods

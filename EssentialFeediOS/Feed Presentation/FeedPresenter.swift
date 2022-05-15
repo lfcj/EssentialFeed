@@ -1,4 +1,5 @@
 import EssentialFeed
+import Foundation
 
 struct FeedLoadingViewModel {
     let isLoading: Bool
@@ -15,7 +16,12 @@ protocol FeedView {
 
 final class FeedPresenter {
 
-    static let title = "My Feed"
+    static let title = NSLocalizedString(
+        "FEED_VIEW_TITLE",
+        tableName: "Feed",
+        bundle: Bundle(for: FeedPresenter.self),
+        comment: "Title for the feed view"
+    )
 
     private let feedView: FeedView
     private let loadingView: FeedLoadingView

@@ -18,37 +18,6 @@ public final class FeedUIComposer {
     }
 }
 
-private final class MainQueueDispatchDecorator<T> {
-    private let decoratee: T
-
-    init(decoratee: T) {
-        self.decoratee = decoratee
-    }
-
-    private func distach(_ block: @escaping () -> Void) {
-        guard Thread.isMainThread else {
-            return DispatchQueue.main.async(execute: block)
-        }
-        block()
-    }
-}
-
-extension MainQueueDispatchDecorator: FeedLoader where T == FeedLoader {
-    func load(completion: @escaping (Result<[FeedImage], Error>) -> Void) {
-        decoratee.load { [weak self] result in
-            self?.distach { completion(result) }
-        }
-    }
-}
-
-extension MainQueueDispatchDecorator: FeedImageDataLoader where T == FeedImageDataLoader {
-    func loadImageData(from url: URL, completion: @escaping (Result<Data, Error>) -> Void) -> FeedImageDataLoaderTask {
-        decoratee.loadImageData(from: url) { [weak self] result in
-            self?.distach { completion(result) }
-        }
-    }
-}
-
 private extension FeedViewController {
     static func makeWith(delegate: FeedViewControllerDelegate, title: String) -> FeedViewController {
         let bundle = Bundle(for: FeedViewController.self)

@@ -10,7 +10,7 @@ public final class FeedViewController: UITableViewController, FeedLoadingView {
         didSet {
             tableView.reloadData()
         }
-    }
+    } 
     var delegate: FeedViewControllerDelegate?
 
     public override func viewDidLoad() {

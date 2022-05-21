@@ -837,7 +837,7 @@ In other words, the Adapter pattern enables components with incompatible interfa
     A Presenter having a weak optional view that needs to be injected introduces temporal coupling as there is a time when the presenter does not have all its dependencies available. We can solve this by moving it into the Composition Layer and using the proxy design pattern to wrap the View.
 -   Dealing with Memory Management in the Composer layer to prevent leaking composition details into components
 
-#### 34. Storyboard vs. Code: Layout, DI and Composition, Identifying the Constrained Construction DI Anti-pattern, and Optimizing Performance by Reusing Cells
+#### 34. Storyboard vs. Code: Layout, DI and Composition, Identifying the Constrained Construction DI Anti-pattern, and Optimizing Performance by Reusing Cells ✅
 
 -   Trade-offs of creating the app layout in storyboards vs. programmatically.
     Code is the most efficient, reusable and flexible option. But storyboards make it easier to create simple layouts.
@@ -852,7 +852,7 @@ In other words, the Adapter pattern enables components with incompatible interfa
     Re-used cells can be modified by other controllers when they are already out of screen, causing faulty behaviours. This can be tested against in order for the test to fail. Once the faulty behaviour is fixed, the test starts passing.
     The fix can happen setting the cell to `nil` inside `tableView(:didEndDisplaying cell`
 
-#### 35.  Creating, Localizing, and Testing Customer Facing Strings in the Presentation Layer + NSLocalizedString Best Practices
+#### 35.  Creating, Localizing, and Testing Customer Facing Strings in the Presentation Layer + NSLocalizedString Best Practices ✅
 
 -   Localizing strings within various UI design patterns (MVC, MVVM, MVP)
     -   In **MVC** the Controller is the String creator.
@@ -866,6 +866,28 @@ In other words, the Adapter pattern enables components with incompatible interfa
 -   Testing customer-facing strings
     -   To test the values use snapshot/screenshot tests.
     -   Test that all keys used across the project have values for each supported language. This is possible by accessing each bundle and treating the `.strings` files as keys-values dictionaries.
+
+#### 36. Decorator Pattern: Decoupling UIKit Components From Threading Details, Removing Duplication, and Implementing Cross-Cutting Concerns In a Clean & SOLID Way ✅
+
+-   Decoupling UIKit components (and any other client) from threading details
+    -   Decorating the behavior of objects, should make the components lighter, reduce duplication, and contribute to their open/closed nature.
+-   Removing duplication and centralizing threading logic in the composition layer
+    -   If the UI or Presentation layer dispatch UI changes in the main thread (UIKit needs it), we'd be disclosing info on how the Business happened in background threads and we do not want that. To avoid this, the dispatching can be moved to the composition layer and/or using a decorator.
+-   Decorator pattern: Extending behavior of individual objects without changing its implementation or subclassing (Liskov Substitution + Open/Closed Principles)
+    -   The decorator implements the protocol of the decoratee so it can be passed as if it were the decoratee itself:
+    ```
+    class Decorator: T {
+      let decoratee: T
+    }
+    extension Decorator: SomeProtocol where SomeProtocol == T {
+      func someMethodFromSomeProtocol(...) {
+        // Extra implementation details go here!
+        decoratee.someMethodFromSomeProtocol(...)
+      }
+    }
+    ```
+-   Decorator pattern: Implementing Cross-Cutting concerns (Single Responsibility Principle)
+    -   When capturing `self` inside of `async`, since it is not run immediately, the strong reference will not be deallocated when it needs to be and it can cause a memory leak => **ALWAYS WEAKIFY**.
 
 [1]: https://www.essentialdeveloper.com/articles/the-minimum-you-should-do-to-prevent-memory-leaks-in-swift
 

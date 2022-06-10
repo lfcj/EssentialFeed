@@ -949,6 +949,54 @@ In other words, the Adapter pattern enables components with incompatible interfa
 -   Extracting cross-platform components from a platform-specific module
 -   Test-driven approach to testing components that have been implemented already (test-after)
 
+#### Recommendation on how to implement MVC
+
+```
+|MODEL| - - observer/callback- - -> |CONTROLLER| -----updates----->|VIEW|
+|MODEL| <---------manages---------- |CONTROLLER| <- - events - - - |VIEW|
+```
+-   The **model** is platform-agnostic and represents services and domain data. The are decoupled from the controller and from the view.
+-   The **view** is decoupled from the controller and, at its best, also from the model. It represents what the user can interact with.
+-   The **controller** is the middleman between the model and the view. It receives events from the View and gives commands to the model depending on the action/event. In the other direction it is notified on model changes and it makes sure the view is updated.
+
+The controller should be lean and should not transform data, nor should the model. So the controller should have _collaborators_ to translate data from the model to displayable data for the view. An _adapter_ can also take care of transforming model data into view viewModels.
+
+Also, very important, in MVC the model **does not have a behaviour**, it only holds data.
+
+#### Recommendation on how to implement MVVM
+
+```
+|MODEL| - - observer/callback- - -> |VIEW MODEL|- - -notifies on state changes- - -> |VIEW|
+|MODEL| <---------manages---------- |VIEW MODEL| <- - - - - - - events - - - - - - - |VIEW|
+                                    |VIEW MODEL| <----binds----|BINDER|----binds>----|VIEW|
+```
+-   The **model** is platform-agnostic and represents services and domain data. The are decoupled from the ViewModel and from the View.
+-   The **view** is decoupled from the domain models and represents what the user can interact with.
+-   The **viewModel** is the communicating bridge between the Model and the View and is _binded_ by a Binder component. The view model translates model data into displayable data for the view. It is important to notice that these view models have both dependencies and behaviours.
+
+The VCs are usually good places to make the binding happen. In UIKit, since the view is inside the `UIViewController`
+, the controller is considered part of the View.
+
+#### Recommendation on how to implement MVP
+
+```
+|MODEL| - - observer/callback- - -> |PRESENTER|<---- events ---- |VIEW| - - - -> |ABSTRACT VIEW|
+|MODEL| <---------manages---------- |PRESENTER|------------ updates------------> |ABSTRACT VIEW|
+
+```
+
+-   The **model** is platform-agnostic and represents services and domain data. The are decoupled from the Presenter and from the View.
+-   The **view** is decoupled from the domain models and represents what the user can interact with. The presenter does not know which one is the view, it only holds a reference to the protocol (Abstract View) and the View conforms to this protocol.
+-   The **presenter** manages the model and receives data from the model. It transforms this data into displayable data for the Abstract View
+-   The **view model** (also known as Presentable Model or ViewData) only holds representable data, no behaviour.
+
+Just like in MVVM, the UIViewController is considered part of the View. It is then typical that the VCs implement the Abstract View protocols.
+
+> Regardless of the pattern you choose, focus on the goal: simple, testable, and loosely coupled components. When you achieve this goal, you are free to easily develop, maintain, extend, and test your modules in isolation.
+
+-   Avoid Frankestein Architectures by keeping transparent and clear communication, pairing development, having good training and effecting refactoring and codebase maintenance.
+
+
 #### 38. Feed Image Data Loading and Caching with URLSession/CoreData + Composing Modules Into a Running iOS Application with Xcode Workspaces
 
 

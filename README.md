@@ -889,6 +889,10 @@ In other words, the Adapter pattern enables components with incompatible interfa
 -   Decorator pattern: Implementing Cross-Cutting concerns (Single Responsibility Principle)
     -   When capturing `self` inside of `async`, since it is not run immediately, the strong reference will not be deallocated when it needs to be and it can cause a memory leak => **ALWAYS WEAKIFY**.
 
+#### 37. Test-driven Approach to Effectively Dealing with Legacy Code (Code With No Tests!) + Extracting Cross-platform Components From a Platform-specific Module
+
+-   One method is to re-write a piece of logic into a slightly differently named class/struct. Re-write using TDD and copy-paste the solutions from the legacy code.
+
 [1]: https://www.essentialdeveloper.com/articles/the-minimum-you-should-do-to-prevent-memory-leaks-in-swift
 
 [2]: https://www.essentialdeveloper.com/articles/xctest-swift-setup-teardown-vs-factory-methods

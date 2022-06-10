@@ -14,8 +14,12 @@ class RemoteFeedImageDataLoader {
     func loadImageData(from url: URL, completion: @escaping (FeedImageDataLoader.Result) -> Void) {
         client.get(from: url) { result in
             switch result {
-            case .success:
-                completion(.failure(Error.invalidData))
+            case let .success((data, response)):
+                if data.isEmpty || response.statusCode != 200 {
+                    completion(.failure(Error.invalidData))
+                } else {
+                    completion(.success(data))
+                }
             case .failure(let error):
                 completion(.failure(error))
             }
@@ -63,14 +67,12 @@ class RemoteFeedImageDataLoaderTests: XCTestCase {
 
     func test_loadImageDataFromURL_deliversInvalidDataErrorOnNon200HTTPResponse() {
         let (sut, client) = makeSUT()
-        let expectedResult = FeedImageDataLoader.Result.failure(RemoteFeedImageDataLoader.Error.invalidData)
-
         let samples = [199, 201, 300, 400, 500]
 
         samples.enumerated().forEach { index, code in
             expect(
                 sut,
-                toCompleteWith: expectedResult,
+                toCompleteWith: .failure(RemoteFeedImageDataLoader.Error.invalidData),
                 when: { client.complete(withStatusCode: code, data: anyData(), at: index) }
             )
         }
@@ -78,13 +80,23 @@ class RemoteFeedImageDataLoaderTests: XCTestCase {
 
     func test_loadImageDataFromURL_deliversInvalidDataErrorOn200HTTPResponseWithEmptyData() {
         let (sut, client) = makeSUT()
-        let expectedResult = FeedImageDataLoader.Result.failure(RemoteFeedImageDataLoader.Error.invalidData)
         let emptyData = Data()
 
         expect(
             sut,
-            toCompleteWith: expectedResult,
+            toCompleteWith: .failure(RemoteFeedImageDataLoader.Error.invalidData),
             when: { client.complete(withStatusCode: 200, data: emptyData) }
+        )
+    }
+
+    func test_loadImageDataFromURL_deliversReceivedNonEmptyDataOn200HTTPResponse() {
+        let (sut, client) = makeSUT()
+        let nonEmptyData = Data("non-empty-data".utf8)
+
+        expect(
+            sut,
+            toCompleteWith: .success(nonEmptyData),
+            when: { client.complete(withStatusCode: 200, data: nonEmptyData) }
         )
     }
 
@@ -111,6 +123,8 @@ class RemoteFeedImageDataLoaderTests: XCTestCase {
         sut.loadImageData(from: url) { receivedResult in
             exp.fulfill()
             switch (receivedResult, expectedResult) {
+            case let (.success(receivedData), .success(expectedData)):
+                XCTAssertEqual(receivedData, expectedData, file: file, line: line)
             case let (.failure(receivedError as NSError), .failure(expectedError as NSError)):
                 XCTAssertEqual(receivedError, expectedError, file: file, line: line)
             default:

@@ -44,6 +44,21 @@ class LocalFeedImageDataLoaderTests: XCTestCase {
         })
     }
 
+    func test_loadImageDataFromURL_doesNotDeliverResultAfterCancellingTask() {
+        let (sut, store) = makeSUT()
+        let foundData = anyData()
+
+        var receivedResults = [FeedImageDataLoader.Result]()
+        let task = sut.loadImageData(from: anyURL()) { receivedResults.append($0) }
+        task.cancel()
+
+        store.complete(with: foundData)
+        store.complete(with: .none)
+        store.complete(with: anyError())
+
+        XCTAssertTrue(receivedResults.isEmpty)
+    }
+
     // MARK: - Helpers
     
     private func makeSUT(currentDate: @escaping () -> Date = Date.init, file: StaticString = #file, line: UInt = #line) -> (sut: LocalFeedImageDataLoader, store: StoreSpy) {
@@ -60,6 +75,10 @@ class LocalFeedImageDataLoaderTests: XCTestCase {
 
     private func notFound() -> FeedImageDataLoader.Result {
         return .failure(LocalFeedImageDataLoader.Error.notFound)
+    }
+
+    private func anyError() -> NSError {
+        NSError(domain: "any error", code: 0)
     }
     
     private func expect(

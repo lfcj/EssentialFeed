@@ -12,8 +12,20 @@ public final class LocalFeedImageDataLoader: FeedImageDataLoader {
         case notFound
     }
 
-    private struct Task: FeedImageDataLoaderTask {
-        func cancel() {}
+    private final class Task: FeedImageDataLoaderTask {
+        private var completion: ((FeedImageDataLoader.Result) -> Void)?
+        
+        init(completion: @escaping (FeedImageDataLoader.Result) -> Void) {
+            self.completion = completion
+        }
+
+        func complete(with result: FeedImageDataLoader.Result) {
+            completion?(result)
+        }
+
+        func cancel() {
+            completion = nil
+        }
     }
 
     private let store: FeedImageDataStore
@@ -23,8 +35,9 @@ public final class LocalFeedImageDataLoader: FeedImageDataLoader {
     }
 
     public func loadImageData(from url: URL, completion: @escaping (FeedImageDataLoader.Result) -> Void) -> FeedImageDataLoaderTask {
+        let task = Task(completion: completion)
         store.retrieve(dataForURL: url) { result in
-            completion(result
+            task.complete(with: result
                 .mapError { _ in Error.failed }
                 .flatMap { data in
                     if let data = data, !data.isEmpty {
@@ -35,6 +48,6 @@ public final class LocalFeedImageDataLoader: FeedImageDataLoader {
                 }
             )
         }
-        return Task()
+        return task
     }
 }

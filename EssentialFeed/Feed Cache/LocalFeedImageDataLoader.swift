@@ -7,7 +7,7 @@ public final class LocalFeedImageDataLoader: FeedImageDataLoader {
         case notFound
     }
 
-    private final class Task: FeedImageDataLoaderTask {
+    private final class LoadImageDataTask: FeedImageDataLoaderTask {
         private var completion: ((FeedImageDataLoader.Result) -> Void)?
         
         init(completion: @escaping (FeedImageDataLoader.Result) -> Void) {
@@ -30,7 +30,7 @@ public final class LocalFeedImageDataLoader: FeedImageDataLoader {
     }
 
     public func loadImageData(from url: URL, completion: @escaping (FeedImageDataLoader.Result) -> Void) -> FeedImageDataLoaderTask {
-        let task = Task(completion: completion)
+        let task = LoadImageDataTask(completion: completion)
         store.retrieve(dataForURL: url) { result in
             task.complete(with: result
                 .mapError { _ in Error.failed }

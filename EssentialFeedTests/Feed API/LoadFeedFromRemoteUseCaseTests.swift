@@ -5,23 +5,20 @@ class LoadFeedFromRemoteUseCaseTests: XCTestCase {
 
     func test_init_doesNotRequestDataFromURL() {
         let (_, client) = makeSUT()
-        XCTAssertNil(client.requestedURL)
-        XCTAssertTrue(client.requestURLs.isEmpty)
+        XCTAssertTrue(client.requestedURLs.isEmpty)
     }
 
     func test_load_requestsDataFromURL() {
         let (sut, client) = makeSUT(url: URL(string: "https://www.another-url.com")!)
         sut.load { _ in }
-        XCTAssertNotNil(client.requestedURL)
-        XCTAssertEqual(client.requestURLs.count, 1)
+        XCTAssertEqual(client.requestedURLs.count, 1)
     }
 
     func test_loadTwice_requestsDataFromURLTwice() {
         let (sut, client) = makeSUT(url: URL(string: "https://www.another-url.com")!)
         sut.load { _ in }
         sut.load { _ in }
-        XCTAssertEqual(client.requestURLs.count, 2)
-        XCTAssertNotNil(client.requestedURL)
+        XCTAssertEqual(client.requestedURLs.count, 2)
     }
 
     func test_load_deliversErrorOnClientError() {
@@ -156,41 +153,6 @@ class LoadFeedFromRemoteUseCaseTests: XCTestCase {
         action()
 
         wait(for: [exp], timeout: 1)
-    }
-
-    private class HTTPClientSpy: HTTPClient {
-        private struct Task: HTTPClientTask {
-            func cancel() {}
-        }
-
-        private(set) var requestedURL: URL?
-
-        private var messages = [(url: URL, completion: (HTTPClient.Result) -> Void)]()
-
-        var requestURLs: [URL] {
-            messages.map { $0.url }
-        }
-
-        func get(from url: URL, completion: @escaping (HTTPClient.Result) -> Void) -> HTTPClientTask {
-            messages.append((url: url, completion: completion))
-            self.requestedURL = url
-            return Task()
-        }
-    
-        func complete(with error: Error, at index: Int = 0) {
-            messages[index].completion(.failure(error))
-        }
-
-        func complete(withStatusCode code: Int, data: Data, at index: Int = 0) {
-            let response = HTTPURLResponse(
-                url: requestURLs[index],
-                statusCode: code,
-                httpVersion: nil,
-                headerFields: nil
-            )!
-            messages[index].completion(.success((data, response)))
-        }
-
     }
 
 }

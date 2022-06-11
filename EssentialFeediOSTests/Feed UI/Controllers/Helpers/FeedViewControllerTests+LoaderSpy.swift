@@ -46,6 +46,7 @@ extension FeedUIIntegrationTests {
                 self?.cancelledImageURLs.append(url)
             }
         }
+        func save(_ data: Data, for url: URL, completion: @escaping (SaveResult) -> Void) {}
 
         func completeImageLoading(with imageData: Data = Data(), at index: Int = 0) {
             imageRequests[index].completion(.success(imageData))

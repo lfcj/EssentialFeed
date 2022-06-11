@@ -9,6 +9,7 @@ public final class LocalFeedImageDataLoader: FeedImageDataLoader {
 
     public enum Error: Swift.Error {
         case failed
+        case notFound
     }
 
     private struct Task: FeedImageDataLoaderTask {
@@ -23,7 +24,10 @@ public final class LocalFeedImageDataLoader: FeedImageDataLoader {
 
     public func loadImageData(from url: URL, completion: @escaping (FeedImageDataLoader.Result) -> Void) -> FeedImageDataLoaderTask {
         store.retrieve(dataForURL: url) { result in
-            completion(.failure(Error.failed))
+            completion(result
+                .mapError { _ in Error.failed }
+                .flatMap { _ in .failure(Error.notFound) }
+            )
         }
         return Task()
     }

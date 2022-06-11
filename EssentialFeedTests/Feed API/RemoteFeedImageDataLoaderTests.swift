@@ -205,10 +205,6 @@ class RemoteFeedImageDataLoaderTests: XCTestCase {
         wait(for: [exp], timeout: 1)
     }
 
-    private func anyData() -> Data {
-        return Data("any data".utf8)
-    }
-
     private class HTTPClientSpy: HTTPClient {
         private struct Task: HTTPClientTask {
             let completion: () -> Void

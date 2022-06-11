@@ -1000,6 +1000,16 @@ Just like in MVVM, the UIViewController is considered part of the View. It is th
 #### 38. Feed Image Data Loading and Caching with URLSession/CoreData + Composing Modules Into a Running iOS Application with Xcode Workspaces
 
 
+-   Breaking responsibilities into multiple protocols (Interface Segregation Principle) to achieve flexible, composable and modular components.
+    -   Good abstractions should contain methods the clients need, not methods that are put together because they are related -> (ISP) Interface Segregation Principle.
+    >  Single Responsibility Principle: a component should have only one reason to change
+
+-   Combining Xcode projects into a workspace and embedding frameworks to compose modules into a running iOS app.
+    > Allows External Storage […] lets Core Data decide whether it stores binary data within SQLite or as external files, based on the size of the data. The underlying SQLite database can efficiently store binary data up to roughly 100 kilobytes directly in the database. This option should generally be enabled.
+
+
+
+
 [1]: https://www.essentialdeveloper.com/articles/the-minimum-you-should-do-to-prevent-memory-leaks-in-swift
 
 [2]: https://www.essentialdeveloper.com/articles/xctest-swift-setup-teardown-vs-factory-methods

@@ -52,7 +52,7 @@ public final class LocalFeedImageDataLoader: FeedImageDataLoader {
 
     public func save(_ data: Data, for url: URL, completion: @escaping (SaveResult) -> Void) {
         store.insert(data, for: url) { result in
-            completion(.failure(SaveError.failed))
+            completion(result.mapError { _ in SaveError.failed })
         }
     }
 

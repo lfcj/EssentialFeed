@@ -71,8 +71,8 @@ class LoadFeedImageDataFromCacheUseCaseTests: XCTestCase {
 
     // MARK: - Helpers
     
-    private func makeSUT(currentDate: @escaping () -> Date = Date.init, file: StaticString = #file, line: UInt = #line) -> (sut: LocalFeedImageDataLoader, store: StoreSpy) {
-        let store = StoreSpy()
+    private func makeSUT(currentDate: @escaping () -> Date = Date.init, file: StaticString = #file, line: UInt = #line) -> (sut: LocalFeedImageDataLoader, store: FeedImageDataStoreSpy) {
+        let store = FeedImageDataStoreSpy()
         let sut = LocalFeedImageDataLoader(store: store)
         trackForMemoryLeaks(store, file: file, line: line)
         trackForMemoryLeaks(sut, file: file, line: line)
@@ -118,33 +118,6 @@ class LoadFeedImageDataFromCacheUseCaseTests: XCTestCase {
 
         action()
         wait(for: [exp], timeout: 1.0)
-    }
-
-    private class StoreSpy: FeedImageDataStore {
-        enum Message: Equatable {
-            case insert(data: Data, for: URL)
-            case retrieve(dataFor: URL)
-        }
-
-        private var completions = [(FeedImageDataStore.RetrievalResult) -> Void]()
-        private(set) var receivedMessages = [Message]()
-
-        func retrieve(dataForURL url: URL, completion: @escaping (FeedImageDataStore.RetrievalResult) -> Void) {
-            completions.append(completion)
-            receivedMessages.append(.retrieve(dataFor: url))
-        }
-
-        func insert(_ data: Data, for url: URL, completion: @escaping (InsertionResult) -> Void) {
-            receivedMessages.append(.insert(data: data, for: url))
-        }
-
-        func complete(with error: Error, at index: Int = 0) {
-            completions[index](.failure(error))
-        }
-
-        func complete(with data: Data?, at index: Int = 0) {
-            completions[index](.success(data))
-        }
     }
 
 }

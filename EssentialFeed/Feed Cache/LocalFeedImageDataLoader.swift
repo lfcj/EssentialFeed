@@ -26,7 +26,13 @@ public final class LocalFeedImageDataLoader: FeedImageDataLoader {
         store.retrieve(dataForURL: url) { result in
             completion(result
                 .mapError { _ in Error.failed }
-                .flatMap { _ in .failure(Error.notFound) }
+                .flatMap { data in
+                    if let data = data, !data.isEmpty {
+                        return .success(data)
+                    } else {
+                        return .failure(Error.notFound)
+                    }
+                }
             )
         }
         return Task()

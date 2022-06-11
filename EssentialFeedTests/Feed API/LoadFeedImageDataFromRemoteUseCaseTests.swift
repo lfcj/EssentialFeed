@@ -1,7 +1,7 @@
 import XCTest
 import EssentialFeed
 
-final class LoadFeedImageDataFromRemoteUseCaseTests: XCTestCase {
+final class  CaseTests: XCTestCase {
 
     func test_init_doesNotPerformAnyURLRequest() {
         let (_, client) = makeSUT()

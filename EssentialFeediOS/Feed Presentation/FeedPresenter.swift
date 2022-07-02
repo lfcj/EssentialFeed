@@ -1,6 +1,20 @@
 import EssentialFeed
 import Foundation
 
+protocol FeedErrorView: AnyObject {
+    func display(_ viewModel: FeedErrorViewModel)
+}
+struct FeedErrorViewModel {
+    let message: String?
+
+    static var noError: FeedErrorViewModel {
+        FeedErrorViewModel(message: nil)
+    }
+
+    static func error(message: String) -> FeedErrorViewModel {
+        FeedErrorViewModel(message: message)
+    }
+}
 struct FeedLoadingViewModel {
     let isLoading: Bool
 }
@@ -25,13 +39,16 @@ final class FeedPresenter {
 
     private let feedView: FeedView
     private let loadingView: FeedLoadingView
+    private let errorView: FeedErrorView
 
-    init(feedView: FeedView, loadingView: FeedLoadingView) {
+    init(feedView: FeedView, loadingView: FeedLoadingView, feedErrorView: FeedErrorView) {
         self.feedView = feedView
         self.loadingView = loadingView
+        self.errorView = feedErrorView
     }
 
     func didStartLoadingFeed() {
+        errorView.display(.noError)
         loadingView.display(FeedLoadingViewModel(isLoading: true))
     }
 

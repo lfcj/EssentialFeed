@@ -45,14 +45,7 @@ final class FeedPresenterTests: XCTestCase {
         XCTAssertTrue(view.messages.isEmpty, "Expected no messages")
     }
 
-    func test_feedPresenter_displaysNoErrorMessageWhenItStartsLoading() {
-        let (presenter, view) = makeSUT()
-
-        presenter.didStartLoadingFeed()
-        XCTAssertEqual(view.messages, [.display(errorMessage: .none), .display(isLoading: true)])
-    }
-
-    func test_feedPresenter_sendsMessageWhenItStartsLoadingFeed() {
+    func test_feedPresenter_displaysNoErrorAndStartsLoadingWhenItStartsLoading() {
         let (presenter, view) = makeSUT()
 
         presenter.didStartLoadingFeed()

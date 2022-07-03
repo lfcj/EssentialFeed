@@ -6,6 +6,8 @@ struct FeedImageViewModel<Image> {
     let location: String?
     let description: String?
     let feedImage: Image?
+    let isLoading: Bool
+    let isRetryButtonHidden: Bool
 }
 
 protocol FeedImageView {
@@ -23,17 +25,22 @@ final class FeedImagePresenter<View: FeedImageView, Image> where View.Image == I
     func didStartLoadingImage(for model: FeedImage) {
         feedImageView.display(
             makeFeedImageViewModel(
-                model: model
+                model: model,
+                feedImage: nil,
+                isLoading: true,
+                isRetryButtonHidden: true
             )
         )
     }
 
-    private func makeFeedImageViewModel(model: FeedImage) -> FeedImageViewModel<Image> {
+    private func makeFeedImageViewModel(model: FeedImage, feedImage: Image?, isLoading: Bool, isRetryButtonHidden: Bool) -> FeedImageViewModel<Image> {
         FeedImageViewModel(
             isLocationContainerHidden: model.location == nil,
             location: model.location,
             description: model.description,
-            feedImage: nil
+            feedImage: feedImage,
+            isLoading: isLoading,
+            isRetryButtonHidden: isRetryButtonHidden
         )
     }
 
@@ -77,6 +84,13 @@ final class FeedImagePresenterTests: XCTestCase {
         XCTAssertTrue(view.messages.contains(.display(feedImage: nil)))
     }
 
+    func test_feedImagePresenter_displaysIsLoadingMessageAndHidesRetryButtonWhenItStartsLoading() {
+        let (presenter, view) = makeSUT()
+
+        presenter.didStartLoadingImage(for: makeFakeFeedImage())
+        XCTAssertTrue(view.messages.contains(.display(isLoading: true, isRetryButtonHidden: true)))
+    }
+
     // MARK: - Helpers
 
     private func makeSUT(
@@ -102,6 +116,7 @@ final class FeedImagePresenterTests: XCTestCase {
             case display(location: String?)
             case display(description: String?)
             case display(feedImage: Image?)
+            case display(isLoading: Bool, isRetryButtonHidden: Bool)
         }
         private(set) var messages: Set<Message> = []
 
@@ -109,7 +124,8 @@ final class FeedImagePresenterTests: XCTestCase {
             messages.insert(.display(isLocationContainerHidden: viewModel.isLocationContainerHidden))
             messages.insert(.display(location: viewModel.location))
             messages.insert(.display(description: viewModel.description))
-            messages.insert(.display(feedImage: nil))
+            messages.insert(.display(feedImage: viewModel.feedImage))
+            messages.insert(.display(isLoading: viewModel.isLoading, isRetryButtonHidden: viewModel.isRetryButtonHidden))
         }
     }
     private struct FakeImage: Hashable {}

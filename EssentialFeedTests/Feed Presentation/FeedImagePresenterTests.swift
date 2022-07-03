@@ -33,6 +33,17 @@ final class FeedImagePresenter<View: FeedImageView, Image> where View.Image == I
         )
     }
 
+    func didFinishLoadingImageData(_ imageData: Data, with model: FeedImage) {
+        feedImageView.display(
+            makeFeedImageViewModel(
+                model: model,
+                feedImage: nil,
+                isLoading: false,
+                isRetryButtonHidden: true
+            )
+        )
+    }
+
     private func makeFeedImageViewModel(model: FeedImage, feedImage: Image?, isLoading: Bool, isRetryButtonHidden: Bool) -> FeedImageViewModel<Image> {
         FeedImageViewModel(
             isLocationContainerHidden: model.location == nil,
@@ -84,11 +95,18 @@ final class FeedImagePresenterTests: XCTestCase {
         XCTAssertTrue(view.messages.contains(.display(feedImage: nil)))
     }
 
-    func test_feedImagePresenter_displaysIsLoadingMessageAndHidesRetryButtonWhenItStartsLoading() {
+    func test_feedImagePresenter_sendsIsLoadingMessageAndHidesRetryButtonWhenItStartsLoading() {
         let (presenter, view) = makeSUT()
 
         presenter.didStartLoadingImage(for: makeFakeFeedImage())
         XCTAssertTrue(view.messages.contains(.display(isLoading: true, isRetryButtonHidden: true)))
+    }
+
+    func test_feedImagePresenter_stopsLoadingAndHidesRetryButtonWhenItFinishesLoading() {
+        let (presenter, view) = makeSUT()
+
+        presenter.didFinishLoadingImageData(Data(), with: makeFakeFeedImage())
+        XCTAssertTrue(view.messages.contains(.display(isLoading: false, isRetryButtonHidden: true)))
     }
 
     // MARK: - Helpers

@@ -1,20 +1,22 @@
 import EssentialFeed
 import XCTest
 
-struct FeedImageViewModel {
+struct FeedImageViewModel<Image> {
     let isLocationContainerHidden: Bool
     let location: String?
     let description: String?
+    let feedImage: Image?
 }
 
 protocol FeedImageView {
-    func display(_ viewModel: FeedImageViewModel)
+    associatedtype Image
+    func display(_ viewModel: FeedImageViewModel<Image>)
 }
 
-final class FeedImagePresenter {
+final class FeedImagePresenter<View: FeedImageView, Image> where View.Image == Image {
 
-    private let feedImageView: FeedImageView
-    init(feedImageView: FeedImageView) {
+    private let feedImageView: View
+    init(feedImageView: View) {
         self.feedImageView = feedImageView
     }
 
@@ -26,11 +28,12 @@ final class FeedImagePresenter {
         )
     }
 
-    private func makeFeedImageViewModel(model: FeedImage) -> FeedImageViewModel {
+    private func makeFeedImageViewModel(model: FeedImage) -> FeedImageViewModel<Image> {
         FeedImageViewModel(
             isLocationContainerHidden: model.location == nil,
             location: model.location,
-            description: model.description
+            description: model.description,
+            feedImage: nil
         )
     }
 
@@ -67,12 +70,21 @@ final class FeedImagePresenterTests: XCTestCase {
         XCTAssertTrue(view.messages.contains(.display(description: "any description")))
     }
 
+    func test_feedImagePresenter_displayNilFeedImageWhenItStartsLoading() {
+        let (presenter, view) = makeSUT()
+
+        presenter.didStartLoadingImage(for: makeFakeFeedImage())
+        XCTAssertTrue(view.messages.contains(.display(feedImage: nil)))
+    }
 
     // MARK: - Helpers
 
-    private func makeSUT(file: StaticString = #file, line: UInt = #line) -> (FeedImagePresenter, ViewSpy) {
+    private func makeSUT(
+        file: StaticString = #file,
+        line: UInt = #line
+    ) -> (FeedImagePresenter<FeedImagePresenterTests.ViewSpy, FakeImage>, ViewSpy) {
         let view = ViewSpy()
-        let presenter = FeedImagePresenter(feedImageView: view)
+        let presenter = FeedImagePresenter<FeedImagePresenterTests.ViewSpy, FakeImage>(feedImageView: view)
         trackForMemoryLeaks(view, file: file, line: line)
         trackForMemoryLeaks(presenter, file: file, line: line)
         return (presenter, view)
@@ -83,17 +95,22 @@ final class FeedImagePresenterTests: XCTestCase {
     }
 
     private class ViewSpy: FeedImageView {
+        typealias Image = FakeImage
+
         enum Message: Hashable {
             case display(isLocationContainerHidden: Bool)
             case display(location: String?)
             case display(description: String?)
+            case display(feedImage: Image?)
         }
         private(set) var messages: Set<Message> = []
 
-        func display(_ viewModel: FeedImageViewModel) {
+        func display(_ viewModel: FeedImageViewModel<FakeImage>) {
             messages.insert(.display(isLocationContainerHidden: viewModel.isLocationContainerHidden))
             messages.insert(.display(location: viewModel.location))
             messages.insert(.display(description: viewModel.description))
+            messages.insert(.display(feedImage: nil))
         }
     }
+    private struct FakeImage: Hashable {}
 }

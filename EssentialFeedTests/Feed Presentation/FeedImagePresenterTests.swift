@@ -19,6 +19,8 @@ final class FeedImagePresenter<View: FeedImageView, Image> where View.Image == I
 
     typealias ImageTransformer = (Data) -> Image?
 
+    private struct InvalidImageDataError: Error {}
+
     private let feedImageView: View
     private let imageTransformer: ImageTransformer
 
@@ -40,6 +42,7 @@ final class FeedImagePresenter<View: FeedImageView, Image> where View.Image == I
 
     func didFinishLoadingImageData(_ imageData: Data, with model: FeedImage) {
         guard let image = imageTransformer(imageData) else {
+            didFinishLoadingImageData(with: InvalidImageDataError(), model: model)
             return
         }
         feedImageView.display(
@@ -48,6 +51,17 @@ final class FeedImagePresenter<View: FeedImageView, Image> where View.Image == I
                 feedImage: image,
                 isLoading: false,
                 isRetryButtonHidden: true
+            )
+        )
+    }
+
+    func didFinishLoadingImageData(with error: Error, model: FeedImage) {
+        feedImageView.display(
+            makeFeedImageViewModel(
+                model: model,
+                feedImage: nil,
+                isLoading: false,
+                isRetryButtonHidden: false
             )
         )
     }
@@ -118,6 +132,14 @@ final class FeedImagePresenterTests: XCTestCase {
         XCTAssertTrue(view.messages.contains(.display(feedImage: FakeImage(data: anyData))))
     }
 
+    func test_feedImagePresenter_sendsNilFeedImageAndShowsRetryButtonAfterItFinishesLoadingAndDataFailedtoBeTransformedToImage() {
+        let (presenter, view) = makeSUT(imageTransformer: { _ in nil })
+
+        presenter.didFinishLoadingImageData(Data(), with: makeFakeFeedImage())
+        XCTAssertTrue(view.messages.contains(.display(isLoading: false, isRetryButtonHidden: false)))
+        XCTAssertTrue(view.messages.contains(.display(feedImage: nil)))
+    }
+
     // MARK: - Helpers
 
     private func makeSUT(
@@ -144,6 +166,7 @@ final class FeedImagePresenterTests: XCTestCase {
             case display(feedImage: Image?)
             case display(isLoading: Bool, isRetryButtonHidden: Bool)
             case display(transformedImage: Image)
+            case display(error: NSError)
         }
         private(set) var messages: Set<Message> = []
 

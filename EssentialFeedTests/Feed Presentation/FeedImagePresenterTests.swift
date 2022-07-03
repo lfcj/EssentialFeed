@@ -3,6 +3,7 @@ import XCTest
 
 struct FeedImageViewModel {
     let isLocationContainerHidden: Bool
+    let location: String?
 }
 
 protocol FeedImageView {
@@ -26,7 +27,8 @@ final class FeedImagePresenter {
 
     private func makeFeedImageViewModel(model: FeedImage) -> FeedImageViewModel {
         FeedImageViewModel(
-            isLocationContainerHidden: model.location == nil
+            isLocationContainerHidden: model.location == nil,
+            location: model.location
         )
     }
 
@@ -40,20 +42,20 @@ final class FeedImagePresenterTests: XCTestCase {
         XCTAssertTrue(view.messages.isEmpty)
     }
 
-    func test_feedImagePresenter_hidesLocationContainerWhenLocationIsEmpty() {
+    func test_feedImagePresenter_hidesLocationContainerWhenEmptyAndPassesItWhenItStartsLoading() {
         let (presenter, view) = makeSUT()
 
-        let expectedFeedImage = makeFakeFeedImage(location: nil)
-        presenter.didStartLoadingImage(for: expectedFeedImage)
+        presenter.didStartLoadingImage(for: makeFakeFeedImage(location: nil))
         XCTAssertTrue(view.messages.contains(.display(isLocationContainerHidden: true)))
+        XCTAssertTrue(view.messages.contains(.display(location: nil)))
     }
 
-    func test_feedImagePresenter_showsLocationContainerWhenLocationIsNotEmpty() {
+    func test_feedImagePresenter_showsLocationContainerNotEmptyAndPassesITWhenItStartsLoading() {
         let (presenter, view) = makeSUT()
 
-        let expectedFeedImage = makeFakeFeedImage(location: "not nil")
-        presenter.didStartLoadingImage(for: expectedFeedImage)
+        presenter.didStartLoadingImage(for: makeFakeFeedImage(location: "not nil"))
         XCTAssertTrue(view.messages.contains(.display(isLocationContainerHidden: false)))
+        XCTAssertTrue(view.messages.contains(.display(location: "not nil")))
     }
 
     // MARK: - Helpers
@@ -73,11 +75,13 @@ final class FeedImagePresenterTests: XCTestCase {
     private class ViewSpy: FeedImageView {
         enum Message: Hashable {
             case display(isLocationContainerHidden: Bool)
+            case display(location: String?)
         }
         private(set) var messages: Set<Message> = []
 
         func display(_ viewModel: FeedImageViewModel) {
             messages.insert(.display(isLocationContainerHidden: viewModel.isLocationContainerHidden))
+            messages.insert(.display(location: viewModel.location))
         }
     }
 }

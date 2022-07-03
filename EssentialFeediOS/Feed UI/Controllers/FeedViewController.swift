@@ -1,10 +1,13 @@
+import EssentialFeed
 import UIKit
 
 protocol FeedViewControllerDelegate: AnyObject {
     func didRequestFeedRefresh()
 }
 
-public final class FeedViewController: UITableViewController, FeedLoadingView {
+public final class FeedViewController: UITableViewController, FeedLoadingView, FeedErrorView {
+
+    @IBOutlet private(set) public var errorView: ErrorView?
 
     var tableModel = [FeedImageCellController]() {
         didSet {
@@ -37,11 +40,21 @@ public final class FeedViewController: UITableViewController, FeedLoadingView {
 
     // MARK: - FeedLoadingView
 
-    func display(_ viewModel: FeedLoadingViewModel) {
+    public func display(_ viewModel: FeedLoadingViewModel) {
         if viewModel.isLoading {
             refreshControl?.beginRefreshing()
         } else {
             refreshControl?.endRefreshing()
+        }
+    }
+
+    // MARK: - FeedErrorView
+
+    public func display(_ viewModel: FeedErrorViewModel) {
+        if let errorMessage = viewModel.message {
+            errorView?.show(message: errorMessage)
+        } else {
+            errorView?.hideMessage()
         }
     }
 

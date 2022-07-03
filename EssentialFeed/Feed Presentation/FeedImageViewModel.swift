@@ -1,14 +1,14 @@
 import Foundation
 
-struct FeedImageViewModel<Image> {
-    let isLocationContainerHidden: Bool
-    let location: String?
-    let description: String?
-    let feedImage: Image?
-    let isLoading: Bool
-    let isRetryButtonHidden: Bool
+public struct FeedImageViewModel<Image> {
+    public let isLocationContainerHidden: Bool
+    public let location: String?
+    public let description: String?
+    public let feedImage: Image?
+    public let isLoading: Bool
+    public let isRetryButtonHidden: Bool
 
-    init(
+    public init(
         isLocationContainerHidden: Bool = true,
         location: String? = nil,
         description: String? = nil,

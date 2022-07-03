@@ -1,23 +1,25 @@
-import EssentialFeed
 import Foundation
 
-protocol FeedImageView {
+public protocol FeedImageView {
     associatedtype Image
     func display(_ viewModel: FeedImageViewModel<Image>)
 }
-final class FeedImagePresenter<View: FeedImageView, Image> where View.Image == Image {
 
-    typealias ImageTransformer = (Data) -> Image?
+public final class FeedImagePresenter<View: FeedImageView, Image> where View.Image == Image {
+
+    public typealias ImageTransformer = (Data) -> Image?
+
+    private struct InvalidImageDataError: Error {}
 
     private let feedImageView: View
     private let imageTransformer: ImageTransformer
-    
-    init(feedImageView: View, imageTransformer: @escaping ImageTransformer) {
+
+    public init(feedImageView: View, imageTransformer: @escaping ImageTransformer) {
         self.feedImageView = feedImageView
         self.imageTransformer = imageTransformer
     }
 
-    func didStartLoadingImage(for model: FeedImage) {
+    public func didStartLoadingImage(for model: FeedImage) {
         feedImageView.display(
             makeFeedImageViewModel(
                 model: model,
@@ -28,9 +30,7 @@ final class FeedImagePresenter<View: FeedImageView, Image> where View.Image == I
         )
     }
 
-    private struct InvalidImageDataError: Error {}
-
-    func didFinishLoadingImageData(_ imageData: Data, with model: FeedImage) {
+    public func didFinishLoadingImageData(_ imageData: Data, with model: FeedImage) {
         guard let image = imageTransformer(imageData) else {
             didFinishLoadingImageData(with: InvalidImageDataError(), model: model)
             return
@@ -45,7 +45,7 @@ final class FeedImagePresenter<View: FeedImageView, Image> where View.Image == I
         )
     }
 
-    func didFinishLoadingImageData(with error: Error, model: FeedImage) {
+    public func didFinishLoadingImageData(with error: Error, model: FeedImage) {
         feedImageView.display(
             makeFeedImageViewModel(
                 model: model,

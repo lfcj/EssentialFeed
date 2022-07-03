@@ -4,6 +4,7 @@ import XCTest
 struct FeedImageViewModel {
     let isLocationContainerHidden: Bool
     let location: String?
+    let description: String?
 }
 
 protocol FeedImageView {
@@ -28,7 +29,8 @@ final class FeedImagePresenter {
     private func makeFeedImageViewModel(model: FeedImage) -> FeedImageViewModel {
         FeedImageViewModel(
             isLocationContainerHidden: model.location == nil,
-            location: model.location
+            location: model.location,
+            description: model.description
         )
     }
 
@@ -58,6 +60,14 @@ final class FeedImagePresenterTests: XCTestCase {
         XCTAssertTrue(view.messages.contains(.display(location: "not nil")))
     }
 
+    func test_feedImagePresenter_passesDescriptionWhenItStartsLoading() {
+        let (presenter, view) = makeSUT()
+
+        presenter.didStartLoadingImage(for: makeFakeFeedImage(description: "any description"))
+        XCTAssertTrue(view.messages.contains(.display(description: "any description")))
+    }
+
+
     // MARK: - Helpers
 
     private func makeSUT(file: StaticString = #file, line: UInt = #line) -> (FeedImagePresenter, ViewSpy) {
@@ -68,20 +78,22 @@ final class FeedImagePresenterTests: XCTestCase {
         return (presenter, view)
     }
 
-    private func makeFakeFeedImage(location: String? = nil) -> FeedImage {
-        FeedImage(id: UUID(), description: "any", location: location, url: URL(string: "https://some-url.com")!)
+    private func makeFakeFeedImage(location: String? = nil, description: String? = nil) -> FeedImage {
+        FeedImage(id: UUID(), description: description, location: location, url: URL(string: "https://some-url.com")!)
     }
 
     private class ViewSpy: FeedImageView {
         enum Message: Hashable {
             case display(isLocationContainerHidden: Bool)
             case display(location: String?)
+            case display(description: String?)
         }
         private(set) var messages: Set<Message> = []
 
         func display(_ viewModel: FeedImageViewModel) {
             messages.insert(.display(isLocationContainerHidden: viewModel.isLocationContainerHidden))
             messages.insert(.display(location: viewModel.location))
+            messages.insert(.display(description: viewModel.description))
         }
     }
 }

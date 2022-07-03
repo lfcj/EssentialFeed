@@ -43,9 +43,17 @@ final class FeedImagePresenterTests: XCTestCase {
     func test_feedImagePresenter_hidesLocationContainerWhenLocationIsEmpty() {
         let (presenter, view) = makeSUT()
 
-        let expectedFeedImage = makeFakeFeedImage()
+        let expectedFeedImage = makeFakeFeedImage(location: nil)
         presenter.didStartLoadingImage(for: expectedFeedImage)
-        XCTAssertEqual(view.messages, [.display(isLocationContainerHidden: true)])
+        XCTAssertTrue(view.messages.contains(.display(isLocationContainerHidden: true)))
+    }
+
+    func test_feedImagePresenter_showsLocationContainerWhenLocationIsNotEmpty() {
+        let (presenter, view) = makeSUT()
+
+        let expectedFeedImage = makeFakeFeedImage(location: "not nil")
+        presenter.didStartLoadingImage(for: expectedFeedImage)
+        XCTAssertTrue(view.messages.contains(.display(isLocationContainerHidden: false)))
     }
 
     // MARK: - Helpers

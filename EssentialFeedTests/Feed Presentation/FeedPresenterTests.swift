@@ -30,6 +30,15 @@ protocol FeedView {
 
 final class FeedPresenter {
 
+    private var feedLoadError: String {
+        NSLocalizedString(
+            "FEED_VIEW_CONNECTION_ERROR",
+            tableName: "Feed",
+            bundle: Bundle(for: FeedPresenter.self),
+            comment: "Error message displayed when we cannot load the feed from server"
+        )
+    }
+
     private let loadingView: FeedLoadingView
     private let errorView: FeedErrorView
     private let feedView: FeedView
@@ -47,6 +56,11 @@ final class FeedPresenter {
 
     func didFinishLoadingFeed(with feed: [FeedImage]) {
         feedView.display(FeedViewModel(feed: feed))
+        loadingView.display(FeedLoadingViewModel(isLoading: false))
+    }
+
+    func didFinishLoadingFeed(with error: Error) {
+        errorView.display(.error(message: feedLoadError))
         loadingView.display(FeedLoadingViewModel(isLoading: false))
     }
 
@@ -73,6 +87,14 @@ final class FeedPresenterTests: XCTestCase {
         XCTAssertEqual(view.messages, [.display(feed: []), .display(isLoading: false)])
     }
 
+    func test_feedPresenter_displaysErrorMessageAndStopsLoadingWhenFeedFinishes() {
+        let (presenter, view) = makeSUT()
+
+        let error = NSError(domain: "any", code: 0)
+        presenter.didFinishLoadingFeed(with: error)
+        XCTAssertEqual(view.messages, [.display(errorMessage: localized("FEED_VIEW_CONNECTION_ERROR")), .display(isLoading: false)])
+    }
+
     // MARK: - Helpers
 
     private func makeSUT(file: StaticString = #file, line: UInt = #line) -> (FeedPresenter, ViewSpy) {
@@ -81,6 +103,17 @@ final class FeedPresenterTests: XCTestCase {
         trackForMemoryLeaks(view, file: file, line: line)
         trackForMemoryLeaks(presenter, file: file, line: line)
         return (presenter, view)
+    }
+
+    private func localized(_ key: String, file: StaticString = #file, line: UInt = #line) -> String {
+        let table = "Feed"
+        let bundle = Bundle(for: FeedPresenter.self)
+        let value = bundle.localizedString(forKey: key, value: nil, table: table)
+        if value == key {
+            XCTFail("Missing value for key: \(key) in table: \(table)", file: file, line: line)
+        }
+
+        return value
     }
 
     private class ViewSpy: FeedLoadingView, FeedErrorView, FeedView {

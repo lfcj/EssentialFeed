@@ -75,27 +75,18 @@ final class FeedImagePresenterTests: XCTestCase {
         XCTAssertTrue(view.messages.isEmpty)
     }
 
-    func test_feedImagePresenter_hidesLocationContainerWhenEmptyAndPassesItWhenItStartsLoading() {
+    func test_feedImagePresenter_usesEnteredModelHideLocationAndPassesBothLocationAndDescriptionWhenItStartsLoading() {
         let (presenter, view) = makeSUT()
 
-        presenter.didStartLoadingImage(for: makeFakeFeedImage(location: nil))
-        XCTAssertTrue(view.messages.contains(.display(isLocationContainerHidden: true)))
-        XCTAssertTrue(view.messages.contains(.display(location: nil)))
+        presenter.didStartLoadingImage(for: makeFakeFeedImage(location: nil, description: nil))
+        XCTAssertTrue(view.messages.contains(.display(isLocationContainerHidden: true, location: nil, description: nil)))
     }
 
-    func test_feedImagePresenter_showsLocationContainerNotEmptyAndPassesITWhenItStartsLoading() {
+    func test_feedImagePresenter_usesEnteredModelShowLocationAndPassesBothLocationAndDescriptionWhenItStartsLoading() {
         let (presenter, view) = makeSUT()
 
-        presenter.didStartLoadingImage(for: makeFakeFeedImage(location: "not nil"))
-        XCTAssertTrue(view.messages.contains(.display(isLocationContainerHidden: false)))
-        XCTAssertTrue(view.messages.contains(.display(location: "not nil")))
-    }
-
-    func test_feedImagePresenter_passesDescriptionWhenItStartsLoading() {
-        let (presenter, view) = makeSUT()
-
-        presenter.didStartLoadingImage(for: makeFakeFeedImage(description: "any description"))
-        XCTAssertTrue(view.messages.contains(.display(description: "any description")))
+        presenter.didStartLoadingImage(for: makeFakeFeedImage(location: "not nil", description: "any"))
+        XCTAssertTrue(view.messages.contains(.display(isLocationContainerHidden: false, location: "not nil", description: "any")))
     }
 
     func test_feedImagePresenter_displayNilFeedImageWhenItStartsLoading() {
@@ -149,9 +140,7 @@ final class FeedImagePresenterTests: XCTestCase {
         typealias Image = FakeImage
 
         enum Message: Hashable {
-            case display(isLocationContainerHidden: Bool)
-            case display(location: String?)
-            case display(description: String?)
+            case display(isLocationContainerHidden: Bool, location: String?, description: String?)
             case display(feedImage: Image?)
             case display(isLoading: Bool, isRetryButtonHidden: Bool)
             case display(transformedImage: Image)
@@ -159,9 +148,13 @@ final class FeedImagePresenterTests: XCTestCase {
         private(set) var messages: Set<Message> = []
 
         func display(_ viewModel: FeedImageViewModel<FakeImage>) {
-            messages.insert(.display(isLocationContainerHidden: viewModel.isLocationContainerHidden))
-            messages.insert(.display(location: viewModel.location))
-            messages.insert(.display(description: viewModel.description))
+            messages.insert(
+                .display(
+                    isLocationContainerHidden: viewModel.isLocationContainerHidden,
+                    location: viewModel.location,
+                    description: viewModel.description
+                )
+            )
             messages.insert(.display(feedImage: viewModel.feedImage))
             messages.insert(.display(isLoading: viewModel.isLoading, isRetryButtonHidden: viewModel.isRetryButtonHidden))
         }

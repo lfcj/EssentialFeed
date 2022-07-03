@@ -4,25 +4,8 @@ import Foundation
 protocol FeedErrorView: AnyObject {
     func display(_ viewModel: FeedErrorViewModel)
 }
-struct FeedErrorViewModel {
-    let message: String?
-
-    static var noError: FeedErrorViewModel {
-        FeedErrorViewModel(message: nil)
-    }
-
-    static func error(message: String) -> FeedErrorViewModel {
-        FeedErrorViewModel(message: message)
-    }
-}
-struct FeedLoadingViewModel {
-    let isLoading: Bool
-}
 protocol FeedLoadingView: AnyObject {
     func display(_ viewModel: FeedLoadingViewModel)
-}
-struct FeedViewModel {
-    let feed: [FeedImage]
 }
 protocol FeedView {
     func display(_ viewModel: FeedViewModel)

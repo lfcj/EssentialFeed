@@ -140,6 +140,18 @@ final class FeedImagePresenterTests: XCTestCase {
         XCTAssertTrue(view.messages.contains(.display(feedImage: nil)))
     }
 
+    func test_feedImagePresenter_completesEquallyWhenFailingToTransformDataToImageAsWhenItFinishesLoadingWithError() {
+        let (presenterWithDataToNilTransformer, viewWithDataToNilTransformer) = makeSUT(imageTransformer: { _ in nil })
+        let (presenterThatWillCompleteWithError, viewThatWillCompleteWithError) = makeSUT()
+
+        struct FakeError: Error {}
+
+        presenterWithDataToNilTransformer.didFinishLoadingImageData(Data(), with: makeFakeFeedImage())
+        presenterThatWillCompleteWithError.didFinishLoadingImageData(with: FakeError(), model: makeFakeFeedImage())
+
+        XCTAssertEqual(viewWithDataToNilTransformer.messages, viewThatWillCompleteWithError.messages)
+    }
+
     // MARK: - Helpers
 
     private func makeSUT(

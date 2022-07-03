@@ -892,6 +892,9 @@ In other words, the Adapter pattern enables components with incompatible interfa
 #### 37. Test-driven Approach to Effectively Dealing with Legacy Code (Code With No Tests!) + Extracting Cross-platform Components From a Platform-specific Module
 
 -   One method is to re-write a piece of logic into a slightly differently named class/struct. Re-write using TDD and copy-paste the solutions from the legacy code.
+-   Copy the least to make things work.
+-   Make sure that the constructor does not do any work, start with the most simple behaviours.
+-   A code needs to fail before one starts copy-pasting code.
 
 #### UI + Presentation Module Learning Outcome ✅
 

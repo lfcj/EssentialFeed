@@ -17,9 +17,14 @@ protocol FeedImageView {
 
 final class FeedImagePresenter<View: FeedImageView, Image> where View.Image == Image {
 
+    typealias ImageTransformer = (Data) -> Image?
+
     private let feedImageView: View
-    init(feedImageView: View) {
+    private let imageTransformer: ImageTransformer
+
+    init(feedImageView: View, imageTransformer: @escaping ImageTransformer) {
         self.feedImageView = feedImageView
+        self.imageTransformer = imageTransformer
     }
 
     func didStartLoadingImage(for model: FeedImage) {
@@ -34,10 +39,13 @@ final class FeedImagePresenter<View: FeedImageView, Image> where View.Image == I
     }
 
     func didFinishLoadingImageData(_ imageData: Data, with model: FeedImage) {
+        guard let image = imageTransformer(imageData) else {
+            return
+        }
         feedImageView.display(
             makeFeedImageViewModel(
                 model: model,
-                feedImage: nil,
+                feedImage: image,
                 isLoading: false,
                 isRetryButtonHidden: true
             )
@@ -58,6 +66,8 @@ final class FeedImagePresenter<View: FeedImageView, Image> where View.Image == I
 }
 
 final class FeedImagePresenterTests: XCTestCase {
+
+    private typealias ImageTransformer = FeedImagePresenter<FeedImagePresenterTests.ViewSpy, FakeImage>.ImageTransformer
 
     func test_feedImagePresenter_doesNotSendMessagesWhenInstantiated() {
         let (_, view) = makeSUT()
@@ -109,14 +119,23 @@ final class FeedImagePresenterTests: XCTestCase {
         XCTAssertTrue(view.messages.contains(.display(isLoading: false, isRetryButtonHidden: true)))
     }
 
+    func test_feedImagePresenter_transformsImageDataToImageWhenItFinishesLoading() {
+        let (presenter, view) = makeSUT(imageTransformer: { FakeImage(data: $0) })
+
+        let anyData = Data()
+        presenter.didFinishLoadingImageData(anyData, with: makeFakeFeedImage())
+        XCTAssertTrue(view.messages.contains(.display(feedImage: FakeImage(data: anyData))))
+    }
+
     // MARK: - Helpers
 
     private func makeSUT(
+        imageTransformer: @escaping ImageTransformer = { FakeImage(data: $0) },
         file: StaticString = #file,
         line: UInt = #line
     ) -> (FeedImagePresenter<FeedImagePresenterTests.ViewSpy, FakeImage>, ViewSpy) {
         let view = ViewSpy()
-        let presenter = FeedImagePresenter<FeedImagePresenterTests.ViewSpy, FakeImage>(feedImageView: view)
+        let presenter = FeedImagePresenter<FeedImagePresenterTests.ViewSpy, FakeImage>(feedImageView: view, imageTransformer: imageTransformer)
         trackForMemoryLeaks(view, file: file, line: line)
         trackForMemoryLeaks(presenter, file: file, line: line)
         return (presenter, view)
@@ -135,6 +154,7 @@ final class FeedImagePresenterTests: XCTestCase {
             case display(description: String?)
             case display(feedImage: Image?)
             case display(isLoading: Bool, isRetryButtonHidden: Bool)
+            case display(transformedImage: Image)
         }
         private(set) var messages: Set<Message> = []
 
@@ -146,5 +166,9 @@ final class FeedImagePresenterTests: XCTestCase {
             messages.insert(.display(isLoading: viewModel.isLoading, isRetryButtonHidden: viewModel.isRetryButtonHidden))
         }
     }
-    private struct FakeImage: Hashable {}
+
+    private struct FakeImage: Hashable {
+        let data: Data
+    }
+
 }

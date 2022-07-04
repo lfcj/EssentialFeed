@@ -3,13 +3,17 @@ import UIKit
 
 extension FeedViewController {
 
+    var errorMessage: String? {
+        errorView?.message
+    }
+
     var isShowingLoadingIndicator: Bool {
         refreshControl?.isRefreshing == true
     }
 
     var feedImagesSection: Int { 0 }
 
-    func simulatedUserInitiatedFeedReload() {
+    func simulateUserInitiatedFeedReload() {
         refreshControl?.simulatePullToRefresh()
     }
 

@@ -2,7 +2,7 @@ import Foundation
 
 public final class LocalFeedImageDataLoader: FeedImageDataLoader {
 
-    public enum Error: Swift.Error {
+    public enum LoadError: Swift.Error {
         case failed
         case notFound
     }
@@ -36,13 +36,13 @@ public final class LocalFeedImageDataLoader: FeedImageDataLoader {
     public func loadImageData(from url: URL, completion: @escaping (FeedImageDataLoader.Result) -> Void) -> FeedImageDataLoaderTask {
         let task = LoadImageDataTask(completion: completion)
         store.retrieve(dataForURL: url) { result in
-            task.complete(with: result
-                .mapError { _ in Error.failed }
+            task .complete(with: result
+                .mapError { _ in LoadError.failed }
                 .flatMap { data in
                     if let data = data, !data.isEmpty {
                         return .success(data)
                     } else {
-                        return .failure(Error.notFound)
+                        return .failure(LoadError.notFound)
                     }
                 }
             )

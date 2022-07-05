@@ -5,18 +5,42 @@ class CoreDataFeedImageDataStoreTests: XCTestCase {
 
     func test_retrieveImageData_deliversNotFoundWhenEmpty() {
         let sut = makeSUT()
+        let storedData = anyData()
+        let matchingURL = URL(string: "http://a-url.com")!
 
-        expect(sut, toCompleteRetrievalWith: notFound(), for: anyURL())
+        insert(storedData, for: matchingURL, into: sut)
+
+        expect(sut, toCompleteRetrievalWith: found(storedData), for: matchingURL)
     }
 
-    func test_retrieveImageData_deliversNotFoundWhenStoredDataURLDoesNotMatch() {
+    func test_retrieveImageData_deliversLastInsertedValue() {
         let sut = makeSUT()
+        let firstStoredData = Data("first".utf8)
+        let lastStoredData = Data("last".utf8)
         let url = URL(string: "http://a-url.com")!
-        let nonMatchingURL = URL(string: "http://another-url.com")!
 
-        insert(anyData(), for: url, into: sut)
+        insert(firstStoredData, for: url, into: sut)
+        insert(lastStoredData, for: url, into: sut)
 
-        expect(sut, toCompleteRetrievalWith: notFound(), for: nonMatchingURL)
+        expect(sut, toCompleteRetrievalWith: found(lastStoredData), for: url)
+    }
+
+    func test_sideEffects_runSerially() {
+        let sut = makeSUT()
+        let url = anyURL()
+
+        let op1 = expectation(description: "Operation 1")
+        sut.insert([localImage(url: url)], timestamp: Date()) { _ in
+            op1.fulfill()
+        }
+
+        let op2 = expectation(description: "Operation 2")
+        sut.insert(anyData(), for: url) { _ in    op2.fulfill() }
+
+        let op3 = expectation(description: "Operation 3")
+        sut.insert(anyData(), for: url) { _ in op3.fulfill() }
+
+        wait(for: [op1, op2, op3], timeout: 5.0, enforceOrder: true)
     }
 
     // - MARK: Helpers
@@ -30,6 +54,10 @@ class CoreDataFeedImageDataStoreTests: XCTestCase {
 
     private func notFound() -> FeedImageDataStore.RetrievalResult {
         .success(.none)
+    }
+
+    private func found(_ data: Data) -> FeedImageDataStore.RetrievalResult {
+        return .success(data)
     }
 
     private func localImage(url: URL) -> LocalFeedImage {

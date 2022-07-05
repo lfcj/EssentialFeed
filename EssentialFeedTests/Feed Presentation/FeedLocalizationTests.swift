@@ -18,9 +18,7 @@ final class FeedLocalizationTests: XCTestCase {
                     XCTFail("Missing \(language) \(localization) localized string for key: '\(key)' in table '\(table)'")
                 }
             }
-            
         }
-        
     }
 
     // MARK: - Helpers

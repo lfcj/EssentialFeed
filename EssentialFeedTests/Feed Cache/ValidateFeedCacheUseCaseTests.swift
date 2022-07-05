@@ -129,7 +129,7 @@ class ValidateFeedCacheUseCaseTests: XCTestCase {
         let store = FeedStoreSpy()
         var sut: LocalFeedLoader? = LocalFeedLoader(store: store, currentDate: Date.init)
 
-        sut.validateCache { _ in }
+        sut?.validateCache { _ in }
 
         sut = nil
         store.completeRetrieval(with: anyNSError())

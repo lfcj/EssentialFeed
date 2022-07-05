@@ -67,7 +67,7 @@ class LoadFeedImageDataFromCacheUseCaseTests: XCTestCase {
         _ = sut?.loadImageData(from: anyURL()) { received.append($0) }
 
         sut = nil
-        store.completeRetrieval(with: anyData())
+        store.complete(with: anyData())
 
         XCTAssertTrue(received.isEmpty, "Expected no received results after instance has been deallocated")
     }

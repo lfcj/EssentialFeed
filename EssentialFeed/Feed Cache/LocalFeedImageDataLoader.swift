@@ -35,8 +35,11 @@ public final class LocalFeedImageDataLoader: FeedImageDataLoader {
 
     public func loadImageData(from url: URL, completion: @escaping (FeedImageDataLoader.Result) -> Void) -> FeedImageDataLoaderTask {
         let task = LoadImageDataTask(completion: completion)
-        store.retrieve(dataForURL: url) { result in
-            task .complete(with: result
+        store.retrieve(dataForURL: url) { [weak self] result in
+            guard self != nil else {
+                return
+            }
+            task.complete(with: result
                 .mapError { _ in LoadError.failed }
                 .flatMap { data in
                     if let data = data, !data.isEmpty {

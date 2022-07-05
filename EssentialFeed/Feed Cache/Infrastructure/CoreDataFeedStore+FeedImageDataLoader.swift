@@ -15,7 +15,6 @@ extension CoreDataFeedStore: FeedImageDataStore {
     }
 
     public func retrieve(dataForURL url: URL, completion: @escaping (FeedImageDataStore.RetrievalResult) -> Void) {
-        completion(.success(.none))
         perform { context in
             completion(
                 Result {

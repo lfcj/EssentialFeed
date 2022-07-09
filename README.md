@@ -889,7 +889,7 @@ In other words, the Adapter pattern enables components with incompatible interfa
 -   Decorator pattern: Implementing Cross-Cutting concerns (Single Responsibility Principle)
     -   When capturing `self` inside of `async`, since it is not run immediately, the strong reference will not be deallocated when it needs to be and it can cause a memory leak => **ALWAYS WEAKIFY**.
 
-#### 37. Test-driven Approach to Effectively Dealing with Legacy Code (Code With No Tests!) + Extracting Cross-platform Components From a Platform-specific Module
+#### 37. Test-driven Approach to Effectively Dealing with Legacy Code (Code With No Tests!) + Extracting Cross-platform Components From a Platform-specific Module ✅
 
 -   One method is to re-write a piece of logic into a slightly differently named class/struct. Re-write using TDD and copy-paste the solutions from the legacy code.
 -   Copy the least to make things work.
@@ -952,7 +952,7 @@ In other words, the Adapter pattern enables components with incompatible interfa
 -   Extracting cross-platform components from a platform-specific module
 -   Test-driven approach to testing components that have been implemented already (test-after)
 
-#### Recommendation on how to implement MVC
+#### Recommendation on how to implement MVC ✅
 
 ```
 |MODEL| - - observer/callback- - -> |CONTROLLER| -----updates----->|VIEW|
@@ -980,7 +980,7 @@ Also, very important, in MVC the model **does not have a behaviour**, it only ho
 The VCs are usually good places to make the binding happen. In UIKit, since the view is inside the `UIViewController`
 , the controller is considered part of the View.
 
-#### Recommendation on how to implement MVP
+#### Recommendation on how to implement MVP ✅
 
 ```
 |MODEL| - - observer/callback- - -> |PRESENTER|<---- events ---- |VIEW| - - - -> |ABSTRACT VIEW|
@@ -1000,16 +1000,20 @@ Just like in MVVM, the UIViewController is considered part of the View. It is th
 -   Avoid Frankestein Architectures by keeping transparent and clear communication, pairing development, having good training and effecting refactoring and codebase maintenance.
 
 
-#### 38. Feed Image Data Loading and Caching with URLSession/CoreData + Composing Modules Into a Running iOS Application with Xcode Workspaces
+#### 38. Feed Image Data Loading and Caching with URLSession/CoreData + Composing Modules Into a Running iOS Application with Xcode Workspaces ✅
 
 
 -   Breaking responsibilities into multiple protocols (Interface Segregation Principle) to achieve flexible, composable and modular components.
-    -   Good abstractions should contain methods the clients need, not methods that are put together because they are related -> (ISP) Interface Segregation Principle.
+    -   **Good abstractions should contain methods the clients need, not methods that are put together because they are related** -> (ISP) Interface Segregation Principle.
     >  Single Responsibility Principle: a component should have only one reason to change
 
 -   Combining Xcode projects into a workspace and embedding frameworks to compose modules into a running iOS app.
     > Allows External Storage […] lets Core Data decide whether it stores binary data within SQLite or as external files, based on the size of the data. The underlying SQLite database can efficiently store binary data up to roughly 100 kilobytes directly in the database. This option should generally be enabled.
 
+-   Create workspace
+    Drag and drop the projects into the final project that will put them all together. Create the workspace file under that folder. Close Xcode with all other projects and re-open the workspace to have access to all projects in Xcode.
+    In order to use frameworks, embed them under `Embed Frameworks`
+    Workspace can be found here: https://github.com/lfcj/EssentialApp. To get this one to work, make sure to close this EssentialFeed project paralel to the EssentialApp one.
 
 
 

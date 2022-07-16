@@ -1015,6 +1015,88 @@ Just like in MVVM, the UIViewController is considered part of the View. It is th
     In order to use frameworks, embed them under `Embed Frameworks`
     Workspace can be found here: https://github.com/lfcj/EssentialApp. To get this one to work, make sure to close this EssentialFeed project paralel to the EssentialApp one.
 
+#### 39. Composite Pattern: Implementing a Flexible & Composable Strategy for Loading Data with Fallback Logic ✅
+
+-   Testing component behavior with the Stub test-double
+    A Stub does not capture values like the Spy does. It only has predefined behaviours.
+-   Creating a flexible and modular strategy for loading data from remote with fallback logic without altering the services or the clients (Open/Closed Principle).
+    ```
+    class RealType1: Interface { ... }
+    class RealType2: Interface { ... }
+    ```
+    -   **Composition with concrete types**: The Composite conforms to the common protocol, but depends on the actual types involved.
+    ```
+    class Composite: Interface {
+      init(type1: RealType1, type2: RealType2) { ... }
+    }
+    ```
+    -   Compile-time type checks for composing the correct objects.
+    -   The composite is coupled with the concrete types.
+    -   Testing the composite would be done in integration with the concrete types instead of in isolation. Any change in the public interfaces of the concrete Types would potentially break the composite tests. It converts the unit tests to an integration tests cuz the dependencies need to be setup.
+
+    -   **Composition with abstract types:** The Composite conforms to the common protocol and depends on the same protocol for its dependencies.
+    ```
+    class Composite: Interface {
+      init(type1: Interface, type2: Interface) { ... }
+    }
+    ```
+    -   Working with abstractions as dependencies instead of concrete types increases our flexibility.
+    -   Can test the Composite in isolation as opposed to integration.
+    -   Can't enforce compile-time checks for passing the dependencies in the correct order, meaning one can do both:
+    ```
+    Composite(type1: RealType2(), type2: RealType1())
+    Composite(type1: RealType1(), type2: RealType2())
+    ```
+
+    -   **Composition with custom protocol abstractions:** The Composite conforms to the protocol and its dependencies depend on protocol extensions.
+    ```
+    protocol Dependency1: Interface {}
+    protocol Dependency2: Interface {}
+    extension RealType1: Dependency1 {}
+    extension RealType2: Dependency2 {}
+    class Composite: Interface {
+      init(type1: Dependency1, type2: Dependency2) { ... }
+    }
+    ```
+    -   Compile-time type checks for composing the correct objects.
+    -   The composite is coupled with the concrete types.
+    -   Can test the composite in isolation.
+    -   End up with more types and more complexity.
+
+    -   **Composition without remote or local notions:** The Composite conforms to the protocol and just depends on a primary and fallback dependencies that both conform to the protocol as well.
+    ```
+    class Composite: Inteface { // A good name is "<Interface>WithFallbackComposite"
+      init(primary: Interface, fallback: Interface) { ... }
+    }
+    ```
+    -   Working with abstractions as dependencies instead of concrete types increases our flexibility.
+    -   Can test the composite in isolation.
+    -   Working with abstractions that can be composed infinitely.
+    -   Flexible strategy not constrained to a remote/local paradigm.
+-   Composing objects that share a common interface with the Composite Design Pattern
+
+-   📚 The Composite design pattern allows you to compose objects into tree structures to represent part or whole hierarchies. A Composite enables its clients to treat individual objects and compositions of objects uniformly, through a single interface. Clients using a Composite then do not care if they are treating a final implementation or another layer that wraps a protocol implementation itself.
+
+**Patterns**
+
+**Strategy Design Pattern**
+>  “Define a family of algorithms, encapsulate each one, and make them interchangeable. Strategy lets the algorithm vary independently from clients that use it.
+
+> Use the Strategy pattern when:
+
+> • many related classes differ only in their behavior. Strategies provide a way to configure a class with one of many behaviors.
+> • you need different variants of an algorithm. For example, you might define algorithms reflecting different space/time trade-offs. Strategies can > be used when these variants are implemented as a class hierarchy of algorithms.
+> • an algorithm uses data that clients shouldn’t know about. Use the Strategy pattern to avoid exposing complex, algorithm-specific data structures.
+> • a class defines many behaviors, and these appear as multiple conditional statements in its operations. Instead of many conditionals, move related conditional branches into their own Strategy class.”— Gamma, Johnson, Vlissides, Helm, “Design Patterns”
+
+**Chain of Responsibility Design Pattern**
+> “Avoid coupling the sender of a request to its receiver by giving more than one object a chance to handle the request. Chain the receiving objects and pass the request along the chain until an object handles it.
+
+> Use Chain of Responsibility when:
+
+> • more than one object may handle a request, and the handler isn’t known a priori. The handler should be ascertained automatically.
+> • you want to issue a request to one of several objects without specifying the receiver explicitly.
+> • the set of objects that can handle a request should be specified dynamically.”— Gamma, Johnson, Vlissides, Helm, “Design Patterns”
 
 
 [1]: https://www.essentialdeveloper.com/articles/the-minimum-you-should-do-to-prevent-memory-leaks-in-swift

@@ -1098,7 +1098,38 @@ Just like in MVVM, the UIViewController is considered part of the View. It is th
 > • you want to issue a request to one of several objects without specifying the receiver explicitly.
 > • the set of objects that can handle a request should be specified dynamically.”— Gamma, Johnson, Vlissides, Helm, “Design Patterns”
 
+#### 40. Interception: An Effective, Modular and Composable Way of Injecting Behavior and Side-effects in the App Composition
 
+-   Isolating side-effects to create simple, testable, and composable operations (Command-Query Separation Principle).
+    1.  We have a module Feed API to communicate with the backend and, to keep the Single Responsability Principle, we want to keep it that way. We'd break this if it learns about the caching use case.
+    2.  When we fetch information with Queries (`load`), we do not want them to make changes in the system (Command-Query Separation Principle), so the only way to support caching/saving is injecting that behaviour.
+    3.  If we add a `save` method to the main protocol, we'd break the Liskov Substitution Principle because not all implementations could conform to this method. Moreover, not every client needs the behaviuor, so we'd also break the Interface Segregation Principle.
+    4.  Using the Open/Close Principle we want to inject the `save` logic and the idea is to find a composable solution that does not need inheritance in order to keep the Interface Segregation Principle intact.
+
+    The solution to fulfil adding the `save` behaviour while maintaining the good principles is using **Decorator**.
+-   Using the Decorator Design Pattern to intercept and inject side-effects in the system composition, supporting single-purpose, testable, and modular components.
+
+    A **Decorator** can be used to easily inject/extend/alter behaviour in a single-purpose abstraction.
+    In our case the Decorator maintains the main logic and extends it to support saving.
+-   Using the Decorator Design Pattern to extend the behavior of a component without altering it (Open/Closed Principle).
+
+    > A Decorator works by wrapping one implementation of an Abstraction in another implementation of the same Abstraction. This wrapper delegates operations to the contained implementation, while adding behavior before and/or after invoking the wrapped object.
+
+    > The ability to attach responsibilities dynamically means that you can make the decision to apply a Decorator at runtime rather than having this relationship baked into the program at compile time, which is what you’d do with subclassing.
+
+    > A Decorator can wrap another Decorator, which wraps another Decorator, and so on, providing a “pipeline” of interception.” – Dependency Injection: Principles, Practices, Patterns by Mark Seemann and Steven van Deursen
+
+-   If we have extensions that are not interesting to all test cases, then an easy route is to create a class with that extension alone:
+    ```
+    class <Protocol>TextCase: XCTestCase {
+      func reusableMethod(...)
+    }
+    ```
+    And all tests that will need that extensio can inherit from `<Protocol>TestCase`.
+
+    On the other hand, in order to make it composable, it is better to make `<Protocol>TextCase` a protocol itself.
+
+-   A good reason to prefer protocols per implementation is to make testability higher when objects are coupled, that allows us to inject fake objects rather quickly without having to configure the object from scratch.    
 [1]: https://www.essentialdeveloper.com/articles/the-minimum-you-should-do-to-prevent-memory-leaks-in-swift
 
 [2]: https://www.essentialdeveloper.com/articles/xctest-swift-setup-teardown-vs-factory-methods

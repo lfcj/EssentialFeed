@@ -329,10 +329,10 @@
 			children = (
 				4079C0FD28868A8300A67A49 /* FeedCache.swift */,
 				080EDF0B21B6DAE800813479 /* FeedImage.swift */,
+				8400A79828874BDE00EE9C46 /* FeedImageDataCache.swift */,
 				40CAFB9D27EBB96D00F6226C /* FeedImageDataLoader.swift */,
 				080EDF0D21B6DCB600813479 /* FeedLoader.swift */,
 				846F31262885488A0024C230 /* FeedCache.swift */,
-				8400A79828874BDE00EE9C46 /* FeedImageDataCache.swift */,
 			);
 			path = "Feed Feature";
 			sourceTree = "<group>";

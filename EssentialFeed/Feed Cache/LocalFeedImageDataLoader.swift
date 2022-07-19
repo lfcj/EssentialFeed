@@ -1,6 +1,6 @@
 import Foundation
 
-public final class LocalFeedImageDataLoader: FeedImageDataLoader {
+public final class LocalFeedImageDataLoader: FeedImageDataLoader, FeedImageDataCache {
 
     public enum LoadError: Swift.Error {
         case failed

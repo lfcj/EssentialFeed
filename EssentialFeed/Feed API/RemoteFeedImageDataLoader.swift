@@ -53,6 +53,4 @@ public final class RemoteFeedImageDataLoader: FeedImageDataLoader {
         return task
     }
 
-    public func save(_ data: Data, for url: URL, completion: @escaping (SaveResult) -> Void) {}
-
 }

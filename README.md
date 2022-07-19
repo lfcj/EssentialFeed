@@ -1098,7 +1098,7 @@ Just like in MVVM, the UIViewController is considered part of the View. It is th
 > • you want to issue a request to one of several objects without specifying the receiver explicitly.
 > • the set of objects that can handle a request should be specified dynamically.”— Gamma, Johnson, Vlissides, Helm, “Design Patterns”
 
-#### 40. Interception: An Effective, Modular and Composable Way of Injecting Behavior and Side-effects in the App Composition
+#### 40. Interception: An Effective, Modular and Composable Way of Injecting Behavior and Side-effects in the App Composition ✅
 
 -   Isolating side-effects to create simple, testable, and composable operations (Command-Query Separation Principle).
     1.  We have a module Feed API to communicate with the backend and, to keep the Single Responsability Principle, we want to keep it that way. We'd break this if it learns about the caching use case.

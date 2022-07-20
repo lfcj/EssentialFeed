@@ -1129,7 +1129,35 @@ Just like in MVVM, the UIViewController is considered part of the View. It is th
 
     On the other hand, in order to make it composable, it is better to make `<Protocol>TextCase` a protocol itself.
 
--   A good reason to prefer protocols per implementation is to make testability higher when objects are coupled, that allows us to inject fake objects rather quickly without having to configure the object from scratch.    
+-   A good reason to prefer protocols per implementation is to make testability higher when objects are coupled, that allows us to inject fake objects rather quickly without having to configure the object from scratch.
+
+#### 41. Validating Acceptance Criteria with High-Level UI Tests, Controlling Network and App State in UI tests with Launch Arguments and Conditional Compilation Directives
+
+-   Validating your app’s acceptance criteria with high-level UI tests.
+    -   It is important to utilize the accessibility identifiers in order to test UI.
+    -   Even if they are executed randomly, they still keep a state, so it is important to reset data at the beginning of every test.
+    -   UI tests should test the bare minimum. Testing too many details can produce flaky scenarios. We want to test **Acceptance Criteria**, very high level conditions or business requirements.
+
+    > In teams following BDD or similar processes, the acceptance criteria and tests are written by business folks (e.g., business analysts), and they are implemented by QA engineers.
+
+-   Replacing and controlling flow logic and state in black-box UI tests.
+    -   Every UI test starts with `XCUIApplication`, a proxy for an app that can be started, killed, and interacted with.
+    -   The way to control states is the same one as when you see the app: with taps, gestures, etc. To change states it is necessary to do the same as the user would do, e.g.: To sign in, you need to use username and password and so on.
+    -   The main way to pass on "UI test only" data is using the `launchArguments`, e.g.:
+    ```
+    let app = XCUIApplication()
+    app.launchArguments = ["-connectivity", "offline"]
+    ```
+    Access these arguments through the [`CommandLine.arguments`][12] or (parsing them) through `UserDefaults.standard`.
+    -   These arguments can be used to inject data/states into the launched app.
+-   Utilizing conditional compilation directives to safeguard your app from debug- and test-specific details.
+    -   It is important to pay attention to not mixing test and production code, and **very important**, not to leak testing code to production. This can make that hackers take control of the state of our app via command line arguments.
+    -   Use compiler macros ([compilation directives][13]) such as `#if DEBUG` or `#if TESTING` to not put test-only code in production.
+-   Subclassing and extending components to remove conditional logic resulting in clean, decoupled, maintainable, and testable components.
+    -   We do not want a bunch of macros `#if` inside of our production code, so one way is to use subclasses or extension to replace components with test-only ones when testing. That way the definition of the components can be wrapped in a macro itself.
+-   Use stubbed data in order not to depend on network connectivity and diminish the level of flakiness.
+
+
 [1]: https://www.essentialdeveloper.com/articles/the-minimum-you-should-do-to-prevent-memory-leaks-in-swift
 
 [2]: https://www.essentialdeveloper.com/articles/xctest-swift-setup-teardown-vs-factory-methods
@@ -1151,3 +1179,7 @@ Just like in MVVM, the UIViewController is considered part of the View. It is th
 [10]: /summary-images/mvc-vs-mvvm.png
 
 [11]: summary-images/mvc_vs_mvp.png
+
+[12]: https://developer.apple.com/documentation/swift/commandline/2294816-arguments
+
+[13]: https://docs.swift.org/swift-book/ReferenceManual/Statements.html11

@@ -3,7 +3,7 @@ import UIKit
 
 public final class FeedImageCell: UITableViewCell, FeedImageView {
     public typealias Image = UIImage
-    
+
     @IBOutlet private(set) public var feedImageContainer: UIView!
     @IBOutlet private(set) public var locationContainer: UIView!
     @IBOutlet private(set) public var locationLabel: UILabel!
@@ -15,6 +15,12 @@ public final class FeedImageCell: UITableViewCell, FeedImageView {
 
     @IBAction private func retryButtonTapped() {
         onRetry?()
+    }
+
+    public override func awakeFromNib() {
+        super.awakeFromNib()
+        accessibilityIdentifier = "feed-image-cell"
+        feedImageView.accessibilityIdentifier = "feed-image-view"
     }
     
     // MARK: - FeedImageView

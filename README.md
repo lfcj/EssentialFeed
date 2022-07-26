@@ -1157,6 +1157,8 @@ Just like in MVVM, the UIViewController is considered part of the View. It is th
     -   We do not want a bunch of macros `#if` inside of our production code, so one way is to use subclasses or extension to replace components with test-only ones when testing. That way the definition of the components can be wrapped in a macro itself.
 -   Use stubbed data in order not to depend on network connectivity and diminish the level of flakiness.
 
+-   Avoid using the queries such as `cells` or `images`. Instead use `.matching(identifier:)`. This is less flaky
+    So avoid `app.cells` alone and do `app.cells.matching(identifier:)`, for example.
 
 [1]: https://www.essentialdeveloper.com/articles/the-minimum-you-should-do-to-prevent-memory-leaks-in-swift
 

@@ -1131,7 +1131,7 @@ Just like in MVVM, the UIViewController is considered part of the View. It is th
 
 -   A good reason to prefer protocols per implementation is to make testability higher when objects are coupled, that allows us to inject fake objects rather quickly without having to configure the object from scratch.
 
-#### 41. Validating Acceptance Criteria with High-Level UI Tests, Controlling Network and App State in UI tests with Launch Arguments and Conditional Compilation Directives
+#### 41. Validating Acceptance Criteria with High-Level UI Tests, Controlling Network and App State in UI tests with Launch Arguments and Conditional Compilation Directives ✅
 
 -   Validating your app’s acceptance criteria with high-level UI tests.
     -   It is important to utilize the accessibility identifiers in order to test UI.
@@ -1148,7 +1148,7 @@ Just like in MVVM, the UIViewController is considered part of the View. It is th
     let app = XCUIApplication()
     app.launchArguments = ["-connectivity", "offline"]
     ```
-    Access these arguments through the [`CommandLine.arguments`][12] or (parsing them) through `UserDefaults.standard`.
+    Access these arguments through the [`CommandLine.arguments`][12] or (parsing them) through `UserDefaults.standard`. The first ones are good when there is no value for an option, e.g: `--no-edit`, but if one has `-option value` and wants to get `value`, use the `UserDefaults.standard` to convert to String, boolean or what is expected.
     -   These arguments can be used to inject data/states into the launched app.
 -   Utilizing conditional compilation directives to safeguard your app from debug- and test-specific details.
     -   It is important to pay attention to not mixing test and production code, and **very important**, not to leak testing code to production. This can make that hackers take control of the state of our app via command line arguments.
@@ -1159,6 +1159,9 @@ Just like in MVVM, the UIViewController is considered part of the View. It is th
 
 -   Avoid using the queries such as `cells` or `images`. Instead use `.matching(identifier:)`. This is less flaky
     So avoid `app.cells` alone and do `app.cells.matching(identifier:)`, for example.
+    
+-   UI tests need to be reset because they keep a state, so it is important to clean the state before running any tests.
+-   Never interfere with business logic to run UI tests, only change infrastructure details like the network client.
 
 [1]: https://www.essentialdeveloper.com/articles/the-minimum-you-should-do-to-prevent-memory-leaks-in-swift
 

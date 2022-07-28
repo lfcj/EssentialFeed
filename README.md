@@ -1163,7 +1163,7 @@ Just like in MVVM, the UIViewController is considered part of the View. It is th
 -   UI tests need to be reset because they keep a state, so it is important to clean the state before running any tests.
 -   Never interfere with business logic to run UI tests, only change infrastructure details like the network client.
 
-#### 42. Validating Acceptance Criteria with Fast Integration Tests, Composition Root, and Simulating App Launch & State Transitions
+#### 42. Validating Acceptance Criteria with Fast Integration Tests, Composition Root, and Simulating App Launch & State Transitions ✅
 
 -   Validating acceptance criteria with Integration Tests.
 -   Replacing UI Tests with significantly faster and thorough Integration Tests.
@@ -1178,7 +1178,7 @@ Just like in MVVM, the UIViewController is considered part of the View. It is th
     Since the Composition Root depends on other modules and none depend on it, this is the correct place to import the modules it depends on using the `@testable` modifier.
     This is because the Composition Root logic does not need to be `public` at all (again, no other module should depend on it). 
 -   Simulating app launch and state transitions during tests
-    It is possible to insantiate a `SceneDelegate` or an `AppDelegate` and call the entry methods to simulate launching the app.
+    It is possible to instantiate a `SceneDelegate` or an `AppDelegate` and call the entry methods to simulate launching the app. So it is good to try and not use UI tests, but integration tests whenever possible as they can easily be 100 times faster.
 -   Testing methods you cannot invoke
     A workaround is to create a method that is invoked when calling a different method that is "hard" to call. So if one needs to inject a window or similar in order to test something, one can separate the logic into a new method and only call that method.
 

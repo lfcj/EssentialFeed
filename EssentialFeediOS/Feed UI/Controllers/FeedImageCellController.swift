@@ -2,17 +2,17 @@ import EssentialFeed
 import Foundation
 import UIKit
 
-protocol FeedImageCellControllerDelegate {
+public protocol FeedImageCellControllerDelegate {
     func didRequestImageDataLoad()
     func didRequestCancellingImageDataLoad()
 }
 
-final class FeedImageCellController: FeedImageView {
+public final class FeedImageCellController: FeedImageView {
 
     private let delegate: FeedImageCellControllerDelegate
     private var cell: FeedImageCell?
 
-    init(delegate: FeedImageCellControllerDelegate) {
+    public init(delegate: FeedImageCellControllerDelegate) {
         self.delegate = delegate
         prepareCellForReuse()
     }
@@ -35,7 +35,7 @@ final class FeedImageCellController: FeedImageView {
 
     // MARK: - FeedImageView
 
-    func display(_ viewModel: FeedImageViewModel<UIImage>) {
+    public func display(_ viewModel: FeedImageViewModel<UIImage>) {
         cell?.display(viewModel)
     }
 

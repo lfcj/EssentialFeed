@@ -9,7 +9,7 @@ final class FeedSnapshotTests: XCTestCase {
 
         sut.display(emptyFeed())
 
-        record(snapshot: sut.snapshot(), name: "FEED_EMPTY")
+        record(snapshot: sut.snapshot(), named: "FEED_EMPTY")
     }
 
     func test_feedWithContent() {
@@ -17,7 +17,7 @@ final class FeedSnapshotTests: XCTestCase {
 
         sut.display(feedWithContent())
 
-        record(snapshot: sut.snapshot(), name: "FEED_WITH_CONTENT")
+        record(snapshot: sut.snapshot(), named: "FEED_WITH_CONTENT")
     }
 
     func test_feedWithErrorMessage() {
@@ -25,7 +25,15 @@ final class FeedSnapshotTests: XCTestCase {
 
         sut.display(.error(message: "This is\na multiline\nerror"))
 
-        record(snapshot: sut.snapshot(), name: "FEED_WITH_ERROR")
+        record(snapshot: sut.snapshot(), named: "FEED_WITH_ERROR")
+    }
+
+    func test_feedWithFailedImageLoading() {
+        let sut = makeSUT()
+
+        sut.display(feedWithFailedImageLoading())
+
+        record(snapshot: sut.snapshot(), named: "FEED_WITH_FAILED_IMAGE_LOADING")
     }
 
 }
@@ -62,7 +70,27 @@ private extension FeedSnapshotTests {
         ]
     }
 
-    func record(snapshot: UIImage, name: String, file: StaticString = #file, line: UInt = #line) {
+    func feedWithFailedImageLoading() -> [ImageStub] {
+        [
+            ImageStub(
+                description: "Awesome place",
+                location: "Berlin",
+                image: nil
+            ),
+            ImageStub(
+                description: "Different place",
+                location: "London",
+                image: nil
+            )
+        ]
+    }
+
+    func record(
+        snapshot: UIImage,
+        named name: String,
+        file: StaticString = #file,
+        line: UInt = #line
+    ) {
         guard let snapshotData = snapshot.pngData() else {
             XCTFail("Failed to get PNG image from \(name).", file: file, line: line)
             return

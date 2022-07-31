@@ -1,3 +1,4 @@
+import EssentialFeed
 import EssentialFeediOS
 import XCTest
 
@@ -9,6 +10,14 @@ final class FeedSnapshotTests: XCTestCase {
         sut.display(emptyFeed())
 
         record(snapshot: sut.snapshot(), name: "FEED_EMPTY")
+    }
+
+    func test_feedWithContent() {
+        let sut = makeSUT()
+
+        sut.display(feedWithContent())
+
+        record(snapshot: sut.snapshot(), name: "FEED_WITH_CONTENT")
     }
 
 }
@@ -28,6 +37,21 @@ private extension FeedSnapshotTests {
 
     func emptyFeed() -> [FeedImageCellController] {
         []
+    }
+
+    func feedWithContent() -> [ImageStub] {
+        [
+            ImageStub(
+                description: "Awesome place",
+                location: "Berlin",
+                image: UIImage.make(color: .red)
+            ),
+            ImageStub(
+                description: "Different place",
+                location: "London",
+                image: UIImage.make(color: .green)
+            )
+        ]
     }
 
     func record(snapshot: UIImage, name: String, file: StaticString = #file, line: UInt = #line) {
@@ -61,6 +85,54 @@ extension UIViewController {
         return renderer.image { action in
             view.layer.render(in: action.cgContext)
         }
+    }
+
+}
+
+private extension FeedViewController {
+    func display(_ stubs: [ImageStub]) {
+        let cells: [FeedImageCellController] = stubs.map { stub in
+            let cellController = FeedImageCellController(delegate: stub)
+            stub.controller = cellController
+            return cellController
+        }
+        display(cells)
+    }
+}
+
+private final class ImageStub: FeedImageCellControllerDelegate {
+    let viewModel: FeedImageViewModel<UIImage>
+    weak var controller: FeedImageCellController?
+
+    init(description: String?, location: String?, image: UIImage?) {
+        self.viewModel = FeedImageViewModel(
+            isLocationContainerHidden: location == nil,
+            location: location,
+            description: description,
+            feedImage: image,
+            isLoading: false,
+            isRetryButtonHidden: image != nil
+        )
+    }
+
+    func didRequestImageDataLoad() {
+        controller?.display(viewModel)
+    }
+    func didRequestCancellingImageDataLoad() {}
+
+}
+
+extension UIImage {
+
+    static func make(color: UIColor) -> UIImage {
+        let rect = CGRect(x: 0, y: 0, width: 1, height: 1)
+        UIGraphicsBeginImageContext(rect.size)
+        let context = UIGraphicsGetCurrentContext()
+        context?.setFillColor(color.cgColor)
+        context?.fill(rect)
+        let image = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return image!
     }
 
 }

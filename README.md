@@ -1182,6 +1182,35 @@ Just like in MVVM, the UIViewController is considered part of the View. It is th
 -   Testing methods you cannot invoke
     A workaround is to create a method that is invoked when calling a different method that is "hard" to call. So if one needs to inject a window or similar in order to test something, one can separate the logic into a new method and only call that method.
 
+#### 43. Validating the UI with Snapshot Tests + Dark Mode Support
+
+-   Validating the app’s UI with Snapshot Testing
+    The idea of snapshot testing is that we take a snapshot/screenshot of the UI at a point when we are happy with it. We then save it in the file system.
+    Our snapshot tests then consist of taking new snapshots and comparing them to the ones saved.
+    
+    -   A good usage is reviewing PRs as the image is saved automatically.
+    -   They are a better alternative than UI tests.
+    -   Good to test multi-line screens.
+    
+    Here how to take a snapshot:
+    ```
+    func snapshot() -> UIImage {
+        let renderer = UIGraphicsImageRenderer(bounds: view.bounds)
+        return renderer.image { action in
+            view.layer.render(in: action.cgContext)
+        }
+    }
+    ```
+
+    ##### Downsides
+    -   Reliability on a specific device.
+    -   Runtime is faster than UI tests, but slower than Unit tests. Writing and reading from the file system is also a bottleneck.
+    -   The error is not precise, it is needed that a dev takes a look at the two images to see what is wrong and start investigating.
+
+-   Supporting Dark Mode
+-   Rendering views without running the app
+
+-   📚 Table header views do not play nicely with autolayout, so headers need to be resized manually.
 [1]: https://www.essentialdeveloper.com/articles/the-minimum-you-should-do-to-prevent-memory-leaks-in-swift
 
 [2]: https://www.essentialdeveloper.com/articles/xctest-swift-setup-teardown-vs-factory-methods

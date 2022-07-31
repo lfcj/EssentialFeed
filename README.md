@@ -1272,6 +1272,30 @@ Just like in MVVM, the UIViewController is considered part of the View. It is th
     This is great to pass designers rendered UI in a quick way.
 
 -   📚 Table header views do not play nicely with autolayout, so headers need to be resized manually.
+
+#### 44. Preventing a Crash when Invalidating Work Based on UITableViewDelegate events ✅
+
+-   Fixing bugs and preventing regressions following the TDD process
+    -   To fix a bug, first create test that fails because of it.
+    -   Fix the bug, check how test passes.
+-   UITableViewCell reuse cycle
+    -   When `didEndDisplaying` cell is called, it is possible the data used for the table view has changed.
+    If we are accessing the model to run logic, such as cancelling getting images for a cell, then it may happen that we run into a crash. See example:
+    ```
+    model has 2 items
+    willDisplay is called for 2 items. Fetching of 2 images start for each cell
+    
+    model changes right then, it now has 0 items.
+    didEndDisplaying is being called for the 2 items -> we access the model to cancel fetching the image. Crash is model has 0 elements. 
+    ```
+-   Invalidating work based on UITableViewDelegate events
+-   Enforcing UITableView delegate events in Integration Tests
+    In order to test these kind of scenarios it is important to force update the tableView when we change the model:
+    ```
+    tableView.layoutIfNeeded()
+    Runloop.main.run(until: Date())
+    ```
+
 [1]: https://www.essentialdeveloper.com/articles/the-minimum-you-should-do-to-prevent-memory-leaks-in-swift
 
 [2]: https://www.essentialdeveloper.com/articles/xctest-swift-setup-teardown-vs-factory-methods

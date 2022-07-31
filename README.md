@@ -1182,7 +1182,7 @@ Just like in MVVM, the UIViewController is considered part of the View. It is th
 -   Testing methods you cannot invoke
     A workaround is to create a method that is invoked when calling a different method that is "hard" to call. So if one needs to inject a window or similar in order to test something, one can separate the logic into a new method and only call that method.
 
-#### 43. Validating the UI with Snapshot Tests + Dark Mode Support
+#### 43. Validating the UI with Snapshot Tests + Dark Mode Support ✅
 
 -   Validating the app’s UI with Snapshot Testing
     The idea of snapshot testing is that we take a snapshot/screenshot of the UI at a point when we are happy with it. We then save it in the file system.
@@ -1191,6 +1191,7 @@ Just like in MVVM, the UIViewController is considered part of the View. It is th
     -   A good usage is reviewing PRs as the image is saved automatically.
     -   They are a better alternative than UI tests.
     -   Good to test multi-line screens.
+    -   Snapshot tests just test the rendering, they do not test logic.
     
     Here how to take a snapshot:
     ```
@@ -1208,7 +1209,67 @@ Just like in MVVM, the UIViewController is considered part of the View. It is th
     -   The error is not precise, it is needed that a dev takes a look at the two images to see what is wrong and start investigating.
 
 -   Supporting Dark Mode
+    For this it makes sense to create a `SnapshotWindow` that takes on any possible `SnapshotConfiguration` so one can pack the view or the view controller insider the window (configured as one wants), and take the screenshot:
+    ```
+    struct SnapshotConfiguration {
+        let size: CGSize
+        let safeAreaInsets: UIEdgeInsets
+        let layoutMargins: UIEdgeInsets
+        let traitCollection: UITraitCollection
+
+        static func iPhone8(style: UIUserInterfaceStyle) -> SnapshotConfiguration {
+            SnapshotConfiguration(
+                size: CGSize(width: 375, height: 667),
+                safeAreaInsets: UIEdgeInsets(top: 20, left: 0, bottom: 0, right: 0),
+                layoutMargins: UIEdgeInsets(top: 20, left: 16, bottom: 0, right: 16),
+                traitCollection: UITraitCollection(
+                    traitsFrom: [
+                        .init(forceTouchCapability: .available),
+                        .init(layoutDirection: .leftToRight),
+                        .init(preferredContentSizeCategory: .medium),
+                        .init(userInterfaceIdiom: .phone),
+                        .init(horizontalSizeClass: .compact),
+                        .init(verticalSizeClass: .regular),
+                        .init(displayScale: 2),
+                        .init(displayGamut: .P3),
+                        .init(userInterfaceStyle: style)
+                    ]
+                )
+            )
+        }
+    }
+
+    final class SnapshotWindow: UIWindow {
+        private var configuration: SnapshotConfiguration = .iPhone8(style: .light)
+
+        convenience init(configuration: SnapshotConfiguration, root: UIViewController) {
+            self.init(frame: CGRect(origin: .zero, size: configuration.size))
+            self.configuration = configuration
+            self.layoutMargins = configuration.layoutMargins
+            self.rootViewController = root
+            self.isHidden = false
+            root.view.layoutMargins = configuration.layoutMargins
+        }
+
+        override var safeAreaInsets: UIEdgeInsets {
+            configuration.safeAreaInsets
+        }
+
+        override var traitCollection: UITraitCollection {
+            UITraitCollection(traitsFrom: [super.traitCollection, configuration.traitCollection])
+        }
+
+        func snapshot() -> UIImage {
+            let renderer = UIGraphicsImageRenderer(bounds: bounds, format:  UIGraphicsImageRendererFormat(for: traitCollection))
+            return renderer.image { action in
+                layer.render(in: action.cgContext)
+            }
+        }
+
+    }
+```
 -   Rendering views without running the app
+    This is great to pass designers rendered UI in a quick way.
 
 -   📚 Table header views do not play nicely with autolayout, so headers need to be resized manually.
 [1]: https://www.essentialdeveloper.com/articles/the-minimum-you-should-do-to-prevent-memory-leaks-in-swift

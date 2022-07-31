@@ -11,6 +11,8 @@ public final class FeedViewController: UITableViewController, FeedLoadingView, F
 
     @IBOutlet private(set) public var errorView: ErrorView?
 
+    private var loadingControllersByIndexPath: [IndexPath: FeedImageCellController] = [:]
+
     private var tableModel = [FeedImageCellController]() {
         didSet {
             tableView.reloadData()
@@ -48,6 +50,7 @@ public final class FeedViewController: UITableViewController, FeedLoadingView, F
     // MARK: - FeedLoadingView
 
     public func display(_ tableModel: [FeedImageCellController]) {
+        loadingControllersByIndexPath = [:]
         self.tableModel = tableModel
     }
 
@@ -72,7 +75,9 @@ public final class FeedViewController: UITableViewController, FeedLoadingView, F
     // MARK: - Private Logic
 
     private func cellController(forRowAt indexPath: IndexPath) -> FeedImageCellController {
-        tableModel[indexPath.row]
+        let controller = tableModel[indexPath.row]
+        loadingControllersByIndexPath[indexPath] = controller
+        return controller
     }
 
 }
@@ -92,7 +97,8 @@ extension FeedViewController: UITableViewDataSourcePrefetching {
     }
 
     private func cancellCellControllerLoad(at rowIndexPath: IndexPath) {
-        cellController(forRowAt: rowIndexPath).cancelLoad()
+        loadingControllersByIndexPath[rowIndexPath]?.cancelLoad()
+        loadingControllersByIndexPath[rowIndexPath] = nil
     }
 
 }

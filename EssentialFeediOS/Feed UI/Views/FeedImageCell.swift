@@ -22,7 +22,7 @@ public final class FeedImageCell: UITableViewCell, FeedImageView {
         accessibilityIdentifier = "feed-image-cell"
         feedImageView.accessibilityIdentifier = "feed-image-view"
     }
-    
+
     // MARK: - FeedImageView
 
     public func display(_ viewModel: FeedImageViewModel<Image>) {

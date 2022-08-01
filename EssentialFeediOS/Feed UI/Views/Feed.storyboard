@@ -65,8 +65,8 @@
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ri3-8f-kK8" userLabel="Pin Container">
                                                             <rect key="frame" x="0.0" y="0.0" width="10" height="37"/>
                                                             <subviews>
-                                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="location.circle.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="UZj-uM-i30">
-                                                                    <rect key="frame" x="0.0" y="3.5" width="20" height="13"/>
+                                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="location-marker" translatesAutoresizingMaskIntoConstraints="NO" id="UZj-uM-i30">
+                                                                    <rect key="frame" x="0.0" y="3" width="25" height="14"/>
                                                                     <color key="tintColor" systemColor="secondaryLabelColor"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="height" constant="14" id="cJr-cy-3So"/>
@@ -179,7 +179,7 @@ Location</string>
         </scene>
     </scenes>
     <resources>
-        <image name="location.circle.fill" catalog="system" width="128" height="121"/>
+        <image name="location-marker" width="25" height="25"/>
         <systemColor name="secondaryLabelColor">
             <color red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>

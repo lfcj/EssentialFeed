@@ -137,7 +137,7 @@ private extension FeedSnapshotTests {
 
             XCTFail(
                 "Snapshot \(name) is not equal stored one. New URL: \(temporarySnapshotURL). Stored one: \(snapshotURL)"
-                + "Stored one size: \(storedSnapshotData.count). New one size: \(String(describing: snapshotData?.count))",
+                + " Stored one size: \(storedSnapshotData.count). New one size: \(String(describing: snapshotData?.count))",
                 file: file,
                 line: line
             )

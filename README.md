@@ -1278,7 +1278,7 @@ Just like in MVVM, the UIViewController is considered part of the View. It is th
 -   Fixing bugs and preventing regressions following the TDD process
     -   To fix a bug, first create test that fails because of it.
     -   Fix the bug, check how test passes.
--   UITableViewCell reuse cycle
+-   UITableViewCell reuse cycle: `didEndDisplaying` is also called when one calls `tableView.reloadData()`
     -   When `didEndDisplaying` cell is called, it is possible the data used for the table view has changed.
     If we are accessing the model to run logic, such as cancelling getting images for a cell, then it may happen that we run into a crash. See example:
     ```

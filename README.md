@@ -1296,6 +1296,31 @@ Just like in MVVM, the UIViewController is considered part of the View. It is th
     Runloop.main.run(until: Date())
     ```
 
+#### 45. Organizing Modular Codebases with Horizontal and Vertical Slicing ✅
+
+-   Monolith: only valid for very small projects. The problem is that it is very hard to scale because all modules live within the same structure.
+-   Horizontal modular slicing by layers
+    -   **Higher level modules do not depend on lower level modules** -> This means that lower level capabilities are abstracted and available through the
+    Dependency Inversion Principle.
+    -   Lower levels only know about the direct module/level above.
+    -   Layers are separated physically and it is normally used by dev teams that work on all features. The challenge is keeping features modular as they share 
+    space.
+-   Vertical modular slicing by features
+    -   Common for "feature teams" within the main team. Each team develops a feature in isolation. Since modules are not separated within the feature,
+    it can be hard to keep order within the feature code.
+-   Organizing the codebase into independent frameworks and projects
+-   Horizontal slicing within Feature vertical slicing
+    -   Features do not share a common space and do not know about each other. And the layers inside are horizontally separated and connected using DIP.
+    -   This allows to maintain features and layer separatedly and to compose them as one needs/wants, e.g.: iOS can have some features that watchOS will not.
+-   Horizontal modular slicing within Feature vertical slicing
+    -   The horizontal slices can become different modules within a feature.
+    -   This can be an overkill for small projects, but it pays off for bigger ones.
+-   Packages
+    -   In all the cases above the code lives within the same repo. Using packages, however, it is not necessary. The problem of using SPM, submodules,
+    cocoapods, carthage or similar is that every update takes synchronisation and further steps that can make integrations break (between package and main code).
+-   A good starting point is to separate platform-specific logic from platform-independent logic.
+
+
 [1]: https://www.essentialdeveloper.com/articles/the-minimum-you-should-do-to-prevent-memory-leaks-in-swift
 
 [2]: https://www.essentialdeveloper.com/articles/xctest-swift-setup-teardown-vs-factory-methods

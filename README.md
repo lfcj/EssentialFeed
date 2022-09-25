@@ -1320,6 +1320,47 @@ Just like in MVVM, the UIViewController is considered part of the View. It is th
     cocoapods, carthage or similar is that every update takes synchronisation and further steps that can make integrations break (between package and main code).
 -   A good starting point is to separate platform-specific logic from platform-independent logic.
 
+#### 46. Continuous Delivery and Deployment: Automating the App Deploy to App Store Connect ✅
+
+-   Differences and Relations between Continuous Integration, Delivery, and Deployment
+
+    ```
+    Continuous Integration is the practice of merging working versions of the code into the main branch with great speed and frequency (several times a day).
+    ```
+
+    -   To make this happen the team will need to have a CI pipeline per branch to make sure that everything pushed passes tests. If this happens, whatever is 
+    pushed to `master` will then be ready to deploy. This is how **Continous Delivery** is achieved.
+    -   Unfinished features can be behind flags.
+    -   **Continous Deployment** means having a system in place to automatically approve builds that pass all tests and pushing a build to production.  
+
+-   Guidelines for uploading builds to App Store Connect
+    -   App has an icon
+    -   App has bundle ID – unique one and same one as in Xcode.
+    -   App has build version number, e.g.: 1.0, 1.1, etc.
+    -   App complies with compliance export regulations.
+
+-   Not using Main.storyboard
+    Not always necessary when building the app from scratch.
+    -   Delete `Main` from the app target
+    -   Delete from the Info.plist
+    -   Create a window from the `SceneDelegate` -> Test that the window configuration marks it as key and makes it visible -> `makeKeyAndVisible`.
+
+-   Launchscreen Best Pracises.
+    -   A good idea is to mark the launch screen similar to what the user will see in the first screen. That way the feeling is that it loads faster.
+-   Deploying builds to App Store Connect manually
+-   Deploying builds to App Store Connect automatically with a Continuous Delivery pipeline
+
+    The provisioning files and the certificate are tools to sign the bundle and let the system know you are a known developer. This data is private and should be
+    strongly encryped when pushed to the CI server for continous deployment.
+
+    `fastlane` is a tool that does the job very well, here an example of how to upload a build to ASC:
+    ```
+    lane :deploy do
+    build_app(scheme: "EssentialApp", workspace: "EssentialApp.xcworkspace")
+    upload_to_testflight
+    end
+    ```
+
 
 [1]: https://www.essentialdeveloper.com/articles/the-minimum-you-should-do-to-prevent-memory-leaks-in-swift
 

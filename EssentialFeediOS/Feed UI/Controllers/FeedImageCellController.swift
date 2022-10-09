@@ -3,7 +3,7 @@ import Foundation
 import UIKit
 
 public protocol FeedImageCellControllerDelegate {
-    func didRequestImageDataLoad()
+    func didRequestImageData()
     func didRequestCancellingImageDataLoad()
 }
 
@@ -19,13 +19,13 @@ public final class FeedImageCellController: FeedImageView {
 
     func view(in tableView: UITableView) -> UITableViewCell {
         cell = tableView.dequeueReusableCell()
-        cell?.onRetry = delegate.didRequestImageDataLoad
-        delegate.didRequestImageDataLoad()
+        cell?.onRetry = delegate.didRequestImageData
+        delegate.didRequestImageData()
         return cell!
     }
 
     func preload() {
-        delegate.didRequestImageDataLoad()
+        delegate.didRequestImageData()
     }
 
     func cancelLoad() {

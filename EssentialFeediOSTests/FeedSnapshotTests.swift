@@ -265,7 +265,7 @@ private final class ImageStub: FeedImageCellControllerDelegate {
         )
     }
 
-    func didRequestImageDataLoad() {
+    func didRequestImageData() {
         controller?.display(viewModel)
     }
     func didRequestCancellingImageDataLoad() {}

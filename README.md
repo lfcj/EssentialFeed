@@ -1553,6 +1553,15 @@ extension DispatchQueue {
 -   **Acceptance Testing:** In teams with BDD this is usually written by business folks and implemented by either developers or QA engineers. They can be costly when run from the UI, but they can be optimized by using `XCTest` for them.
 -   **Snapshot Testing:** A snapshot is a comparing the current UI state of the app with a recorded one from the past. They should be avoided to validate logic or behaviour as it can be costly to figure out why a test is failing. A unit tests is 34 faster (on average) than a snapshot test, however, a snapshot test is faster than a UI test. 
 
+## [Bonus Lives] Adding a new Feature
+
+#### 001 - [Image Comments API] From Dependency Injection to Dependency Rejection
+
+-   How to refactor code backed by tests and the compiler
+-   How to decouple feature-specific modules without introducing duplication
+-   How to create reusable generic Services
+-   The object-oriented and functional way of composing components
+-   How to use built-in Combine operators to compose modules
 
 [1]: https://www.essentialdeveloper.com/articles/the-minimum-you-should-do-to-prevent-memory-leaks-in-swift
 

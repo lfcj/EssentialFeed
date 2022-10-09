@@ -1362,7 +1362,145 @@ final class SnapshotWindow: UIWindow {
     end
     ```
 
+#### 47. From Design Patterns to Universal Abstractions Using the Combine Framework ✅
 
+    Some design patterns are equivalent to universal abstractions that are built-in and can hence be replaced.
+
+-   Correlations between SOLID components, Design Patterns, and Universal Abstractions from Category Theory
+
+    >   "Abstraction is the elimination of the irrelevant and the amplification of the essential" — Robert C. Martin, Agile Principles, Patterns, and Practices in C#
+    
+    An abstraction...
+    -   ...supports **Single Responsibility Principle** when it represents a specific service.
+    -   ...supports **Open/Close Principle** when it allows extending behaviour without altering existing code.
+    -   ...supports **Liskov Substitution Principle** when it is a polyphormic interface that allows composing, replacing and injecting different implementations.
+    -   ...supports **Interface Segregation Principle** when it represents a single-purpose abstraction.
+    -   ...supports **Dependency Inversion Priciples** when it hides low-level implementation details.
+
+-   Using Combine to compose your application in the Composition Root
+    `Future`, `Deferred`, and `AnyPublisher` publishers
+    `map`, `handleEvents`, `catch`, `eraseToAnyPublisher`, `sink`, and `receive(on:)` operators
+    `Cancellable
+
+-   Injecting side-effects: From `Decorator` to `map/handleEvents`
+
+    Our decorator allowed us caching a result aftering loading it like this:
+```
+public func load(completion: @escaping (FeedLoader.Result) -> Void) {
+    decoratee.load { [weak self] result in
+        completion(result.map { feed in
+            self?.cache.saveIgnoringResult(feed)
+            return feed
+        })
+    }
+}
+```
+    This is supported by `Combine` like this:
+```
+extension Publisher where Output == [FeedImage] {
+    func caching(to cache: FeedCache) -> AnyPublisher<Output, Failure> {
+        map { feed in
+            cache.saveIgnoringResult(feed)
+            return feed
+        }.eraseToAnyPublisher()
+    }
+}
+```
+    `handleEvents` was built-in specifically to handle side-effects, so it is perfect to replace a decorator pattern. 
+
+-   Fallback logic: From `Composite` to `catch`
+
+    The composite also allowed us to use a primary behaviour and then a fallback one like this:
+```
+public func load(completion: @escaping (FeedLoader.Result) -> Void) {
+    primaryLoader.load { result in
+        switch result {
+        case .success:
+            completion(result)
+        case .failure:
+            self.fallback.load(completion: completion)
+        }
+    }
+}
+```
+
+    `Combine` allows doing this like this:
+```
+extension Publisher {
+    func fallback(to fallbackPublisher: @escaping () -> AnyPublisher<Output, Failure>) -> AnyPublisher<Output, Failure> {
+        self.catch { _ in fallbackPublisher() }.eraseToAnyPublisher()
+    }
+}
+```
+
+-   `Future`, `Deferred`, and `AnyPublisher`
+    A publisher can be eager or lazy. An eager one starts work as soon as it is scheduled. A lazy one starts work when a subscriber subscribes to it.
+    
+    1. A `Future` is an eager publisher that produces a value and then it finishes or fails. It can be completed inmediately or sometime in the future.
+    This one completes right away:
+```
+Future<String, Never> { completion in 
+    completion(.success(“Finished immediately upon creation (eager).”))
+}
+```
+    This one completes 5 seconds after being created:
+```
+Future<String, Never> { completion in 
+    DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
+        completion(.success(“Finished 5 seconds after creation (eager).”))
+    }
+}
+```
+    2. A `Defer` publisher is a lazy one that can be used to wrap an eager one. It starts when there is a subscriber for it.
+```
+Deferred {
+    Future<String, Never> { completion in 
+        completion(.success(“Finished immediately upon subscription (lazy).”))
+    }
+} 
+```
+    3. `AnyPublisher` wraps another publisher to hide what kind it is and make it more generic.
+    
+One way to hide implementation details from `Future`s or `Defer`s is by calling `eraseToAnyPublisher`, that way they are passed as `AnyPublisher`.
+
+```
+func loadPublisher() -> AnyPublisher<[FeedImage], Error> {
+    Deferred {
+        Future(self.load)
+    }
+    .eraseToAnyPublisher()
+}
+``` 
+
+    If we want to replace the decorator to always dispatch on the main thread, we can use Combine's built in `receive(on:)`. We did this like this:
+
+```
+func dispatchOnMainQueue(_ block: @escaping () -> Void) {
+    guard Thread.isMainThread else {
+        return DispatchQueue.main.async { block() } 
+    }
+    block()
+}
+```
+    One way to do it is to wrap the `block` like this: `receive(on: block)`, but this always dispatches the `block` to the main queue, it does not check if we are already on it. In order to first check if we are on the main thread before scheduling, we can create a scheduler:
+    
+```
+extension DispatchQueue {
+    static var inmmediateWhenOnMainQueueScheduler: InmediateWhenOnMainQueueScheduler { InmediateWhenOnMainQueueScheduler() }
+    struct InmediateWhenOnMainQueueScheduler: Scheduler {
+        // all needed variables and methods are equal to values and behaviour from `DispatchQueue.main`, the only different is this one:
+        func schedule(options: DispatchQueue.SchedulerOptions?, _ action: @escaping () -> Void) {
+            guard Thread.isMainThread else {
+                return DispatchQueue.main.schedule(options: options, action)
+            }
+            action()
+        }
+    }
+}
+```
+    and then use `receive(on: DispatchQueue.inmmediateWhenOnMainQueueScheduler)`.
+
+    
 [1]: https://www.essentialdeveloper.com/articles/the-minimum-you-should-do-to-prevent-memory-leaks-in-swift
 
 [2]: https://www.essentialdeveloper.com/articles/xctest-swift-setup-teardown-vs-factory-methods

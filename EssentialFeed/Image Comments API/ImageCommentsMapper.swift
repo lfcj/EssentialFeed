@@ -2,6 +2,10 @@ import Foundation
 
 public final class ImageCommentsMapper {
 
+    public enum Error: Swift.Error {
+        case invalidData
+    }
+
     private struct FeedItemResult: Decodable {
         var comments: [ImageComment] {
             items.map { ImageComment(id: $0.id, message: $0.message, createdDate: $0.created_at, username: $0.author.username) }
@@ -23,7 +27,7 @@ public final class ImageCommentsMapper {
         let decoder = JSONDecoder()
         decoder.dateDecodingStrategy = .iso8601
         guard isOK(response), let result = try? decoder.decode(FeedItemResult.self, from: data) else {
-            throw RemoteImageCommentsLoader.Error.invalidData
+            throw Error.invalidData
         }
 
         return result.comments

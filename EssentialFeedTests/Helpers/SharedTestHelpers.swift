@@ -12,3 +12,6 @@ func anyData() -> Data {
     Data("any data".utf8)
 }
 
+func makeHTTPURLResponse(statusCode: Int) -> HTTPURLResponse {
+    HTTPURLResponse(url: anyURL(), statusCode: statusCode, httpVersion: nil, headerFields: nil)!
+}

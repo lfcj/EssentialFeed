@@ -10,7 +10,7 @@ public final class LoadResourcePresenter<Resource, View: ResourceView> {
 
     private let mapper: Mapper
     private let loadingView: ResourceLoadingView
-    private let errorView: FeedErrorView
+    private let errorView: ResourceErrorView
     private let resourceView: View
 
     public static var loadError: String {
@@ -26,7 +26,7 @@ public final class LoadResourcePresenter<Resource, View: ResourceView> {
         mapper: @escaping Mapper,
         resourceView: View,
         loadingView: ResourceLoadingView,
-        errorView: FeedErrorView
+        errorView: ResourceErrorView
     ) {
         self.mapper = mapper
         self.resourceView = resourceView

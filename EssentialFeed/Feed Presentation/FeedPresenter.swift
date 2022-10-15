@@ -1,8 +1,5 @@
 import Foundation
 
-public protocol FeedErrorView: AnyObject {
-    func display(_ viewModel: FeedErrorViewModel)
-}
 public protocol FeedView {
     func display(_ viewModel: FeedViewModel)
 }
@@ -24,10 +21,10 @@ public final class FeedPresenter {
     )
 
     private let loadingView: ResourceLoadingView
-    private let errorView: FeedErrorView
+    private let errorView: ResourceErrorView
     private let feedView: FeedView
 
-    public init(feedView: FeedView, loadingView: ResourceLoadingView, errorView: FeedErrorView) {
+    public init(feedView: FeedView, loadingView: ResourceLoadingView, errorView: ResourceErrorView) {
         self.feedView = feedView
         self.loadingView = loadingView
         self.errorView = errorView

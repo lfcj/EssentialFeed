@@ -3,11 +3,6 @@ import XCTest
 
 final class FeedPresenterTests: XCTestCase {
 
-    func test_feedPresenter_doesNotSendAnythingOnInitialisation() {
-        let (_, view) = makeSUT()
-        XCTAssertTrue(view.messages.isEmpty, "Expected no messages")
-    }
-
     func test_title_isLocalized() {
         XCTAssertEqual(FeedPresenter.title, localized("FEED_VIEW_TITLE"))
     }
@@ -18,42 +13,7 @@ final class FeedPresenterTests: XCTestCase {
         XCTAssertEqual(FeedPresenter.map(feed).feed, feed)
     }
 
-    func test_feedPresenter_displaysNoErrorAndStartsLoadingWhenItStartsLoading() {
-        let (presenter, view) = makeSUT()
-
-        presenter.didStartLoadingFeed()
-        XCTAssertEqual(view.messages, [.display(errorMessage: .none), .display(isLoading: true)])
-    }
-
-    func test_feedPresenter_displaysFeedAndStopsLoadingWhenLoadingFeedFinishes() {
-        let (presenter, view) = makeSUT()
-
-        presenter.didFinishLoadingFeed(with: [])
-        XCTAssertEqual(view.messages, [.display(feed: []), .display(isLoading: false)])
-    }
-
-    func test_feedPresenter_displaysErrorMessageAndStopsLoadingWhenFeedFinishes() {
-        let (presenter, view) = makeSUT()
-
-        let error = NSError(domain: "any", code: 0)
-        presenter.didFinishLoadingFeed(with: error)
-        XCTAssertEqual(
-            view.messages,
-            [
-                .display(errorMessage: localized("GENERIC_CONNECTION_ERROR", table: "Shared")),
-                .display(isLoading: false)]
-        )
-    }
-
     // MARK: - Helpers
-
-    private func makeSUT(file: StaticString = #file, line: UInt = #line) -> (FeedPresenter, ViewSpy) {
-        let view = ViewSpy()
-        let presenter = FeedPresenter(feedView: view, loadingView: view, errorView: view)
-        trackForMemoryLeaks(view, file: file, line: line)
-        trackForMemoryLeaks(presenter, file: file, line: line)
-        return (presenter, view)
-    }
 
     private func localized(_ key: String, table: String = "Feed", file: StaticString = #file, line: UInt = #line) -> String {
         let bundle = Bundle(for: FeedPresenter.self)
@@ -63,28 +23,6 @@ final class FeedPresenterTests: XCTestCase {
         }
 
         return value
-    }
-
-    private class ViewSpy: ResourceLoadingView, ResourceErrorView, FeedView {
-        enum Message: Hashable {
-            case display(errorMessage: String?)
-            case display(isLoading: Bool)
-            case display(feed: [FeedImage])
-        }
-
-        private(set) var messages: Set<Message> = []
-
-        func display(_ viewModel: ResourceLoadingViewModel) {
-            messages.insert(.display(isLoading: viewModel.isLoading))
-        }
-
-        func display(_ viewModel: ResourceErrorViewModel) {
-            messages.insert(.display(errorMessage: viewModel.message))
-        }
-
-        func display(_ viewModel: FeedViewModel) {
-            messages.insert(.display(feed: viewModel.feed))
-        }
     }
 
 }

@@ -1,25 +1,6 @@
 import EssentialFeed
 import XCTest
 
-public struct ResourceViewModel {
-}
-
-public struct ResourceLoadingViewModel {
-    public let isLoading: Bool
-}
-
-public protocol ResourceLoadingView {
-    func display(_ viewModel: ResourceLoadingViewModel)
-}
-
-public struct ResourceErrorViewModel {
-    public let message: String?
-}
-
-public protocol ResourceErrorView: AnyObject {
-    func display(_ viewModel: ResourceErrorViewModel)
-}
-
 final class LoadResourcePresenterTests: XCTestCase {
 
     func test_presenter_doesNotSendAnythingOnInitialisation() {
@@ -77,7 +58,7 @@ final class LoadResourcePresenterTests: XCTestCase {
     }
 
     private func localized(_ key: String, file: StaticString = #file, line: UInt = #line) -> String {
-        let table = "Feed"
+        let table = "Shared"
         let bundle = Bundle(for: SUT.self)
         let value = bundle.localizedString(forKey: key, value: nil, table: table)
         if value == key {

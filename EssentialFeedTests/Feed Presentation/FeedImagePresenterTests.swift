@@ -11,38 +11,47 @@ final class FeedImagePresenterTests: XCTestCase {
         XCTAssertTrue(view.messages.isEmpty)
     }
 
+    func test_map_createsViewModel()  {
+        let image =  uniqueImage()
+
+        let viewModel = FeedImagePresenter<ViewSpy, FakeImage>.map(image)
+
+        XCTAssertEqual(viewModel.location, image.location)
+        XCTAssertEqual(viewModel.description, image.description)
+    }
+
     func test_feedImagePresenter_usesEnteredModelHideLocationAndPassesBothLocationAndDescriptionWhenItStartsLoading() {
         let (presenter, view) = makeSUT()
 
-        presenter.didStartLoadingImage(for: makeFakeFeedImage(location: nil, description: nil))
+        presenter.didStartLoadingImage(for: uniqueImage(location: nil, description: nil))
         XCTAssertTrue(view.messages.contains(.display(isLocationContainerHidden: true, location: nil, description: nil)))
     }
 
     func test_feedImagePresenter_usesEnteredModelShowLocationAndPassesBothLocationAndDescriptionWhenItStartsLoading() {
         let (presenter, view) = makeSUT()
 
-        presenter.didStartLoadingImage(for: makeFakeFeedImage(location: "not nil", description: "any"))
+        presenter.didStartLoadingImage(for: uniqueImage(location: "not nil", description: "any"))
         XCTAssertTrue(view.messages.contains(.display(isLocationContainerHidden: false, location: "not nil", description: "any")))
     }
 
     func test_feedImagePresenter_displayNilFeedImageWhenItStartsLoading() {
         let (presenter, view) = makeSUT()
 
-        presenter.didStartLoadingImage(for: makeFakeFeedImage())
+        presenter.didStartLoadingImage(for: uniqueImage())
         XCTAssertTrue(view.messages.contains(.display(feedImage: nil)))
     }
 
     func test_feedImagePresenter_sendsIsLoadingMessageAndHidesRetryButtonWhenItStartsLoading() {
         let (presenter, view) = makeSUT()
 
-        presenter.didStartLoadingImage(for: makeFakeFeedImage())
+        presenter.didStartLoadingImage(for: uniqueImage())
         XCTAssertTrue(view.messages.contains(.display(isLoading: true, isRetryButtonHidden: true)))
     }
 
     func test_feedImagePresenter_stopsLoadingAndHidesRetryButtonWhenItFinishesLoading() {
         let (presenter, view) = makeSUT()
 
-        presenter.didFinishLoadingImageData(Data(), with: makeFakeFeedImage())
+        presenter.didFinishLoadingImageData(Data(), with: uniqueImage())
         XCTAssertTrue(view.messages.contains(.display(isLoading: false, isRetryButtonHidden: true)))
     }
 
@@ -50,14 +59,14 @@ final class FeedImagePresenterTests: XCTestCase {
         let (presenter, view) = makeSUT(imageTransformer: { FakeImage(data: $0) })
 
         let anyData = Data()
-        presenter.didFinishLoadingImageData(anyData, with: makeFakeFeedImage())
+        presenter.didFinishLoadingImageData(anyData, with: uniqueImage())
         XCTAssertTrue(view.messages.contains(.display(feedImage: FakeImage(data: anyData))))
     }
 
     func test_feedImagePresenter_sendsNilFeedImageAndShowsRetryButtonAfterItFinishesLoadingAndDataFailedtoBeTransformedToImage() {
         let (presenter, view) = makeSUT(imageTransformer: { _ in nil })
 
-        presenter.didFinishLoadingImageData(Data(), with: makeFakeFeedImage())
+        presenter.didFinishLoadingImageData(Data(), with: uniqueImage())
         XCTAssertTrue(view.messages.contains(.display(isLoading: false, isRetryButtonHidden: false)))
         XCTAssertTrue(view.messages.contains(.display(feedImage: nil)))
     }
@@ -68,8 +77,8 @@ final class FeedImagePresenterTests: XCTestCase {
 
         struct FakeError: Error {}
 
-        presenterWithDataToNilTransformer.didFinishLoadingImageData(Data(), with: makeFakeFeedImage())
-        presenterThatWillCompleteWithError.didFinishLoadingImageData(with: FakeError(), model: makeFakeFeedImage())
+        presenterWithDataToNilTransformer.didFinishLoadingImageData(Data(), with: uniqueImage())
+        presenterThatWillCompleteWithError.didFinishLoadingImageData(with: FakeError(), model: uniqueImage())
 
         XCTAssertEqual(viewWithDataToNilTransformer.messages, viewThatWillCompleteWithError.messages)
     }
@@ -86,10 +95,6 @@ final class FeedImagePresenterTests: XCTestCase {
         trackForMemoryLeaks(view, file: file, line: line)
         trackForMemoryLeaks(presenter, file: file, line: line)
         return (presenter, view)
-    }
-
-    private func makeFakeFeedImage(location: String? = nil, description: String? = nil) -> FeedImage {
-        FeedImage(id: UUID(), description: description, location: location, url: URL(string: "https://some-url.com")!)
     }
 
     private class ViewSpy: FeedImageView {

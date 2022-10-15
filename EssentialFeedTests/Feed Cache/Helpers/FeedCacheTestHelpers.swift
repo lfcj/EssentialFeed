@@ -1,8 +1,8 @@
 import EssentialFeed
 import Foundation
 
-func uniqueImage() -> FeedImage {
-    FeedImage(id: UUID(), description: "any", location: "any", url: anyURL())
+func uniqueImage(location: String? = "any", description: String? = "any") -> FeedImage {
+    FeedImage(id: UUID(), description: description, location: location, url: anyURL())
 }
 
 func uniqueImageFeed() -> (models: [FeedImage], local: [LocalFeedImage]) {

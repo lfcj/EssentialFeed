@@ -19,6 +19,17 @@ public final class FeedImagePresenter<View: FeedImageView, Image> where View.Ima
         self.imageTransformer = imageTransformer
     }
 
+    public static func map(_ feedImage: FeedImage) -> FeedImageViewModel<FeedImage> {
+        FeedImageViewModel( 
+            isLocationContainerHidden: feedImage.location == nil,
+            location: feedImage.location,
+            description: feedImage.description,
+            feedImage: nil,
+            isLoading: false,
+            isRetryButtonHidden: false
+        )
+    }
+
     public func didStartLoadingImage(for model: FeedImage) {
         feedImageView.display(
             makeFeedImageViewModel(

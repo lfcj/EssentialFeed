@@ -1,8 +1,5 @@
 import Foundation
 
-public protocol FeedLoadingView: AnyObject {
-    func display(_ viewModel: FeedLoadingViewModel)
-}
 public protocol FeedErrorView: AnyObject {
     func display(_ viewModel: FeedErrorViewModel)
 }
@@ -26,11 +23,11 @@ public final class FeedPresenter {
         comment: "Error message displayed when we cannot load the feed from server"
     )
 
-    private let loadingView: FeedLoadingView
+    private let loadingView: ResourceLoadingView
     private let errorView: FeedErrorView
     private let feedView: FeedView
 
-    public init(feedView: FeedView, loadingView: FeedLoadingView, errorView: FeedErrorView) {
+    public init(feedView: FeedView, loadingView: ResourceLoadingView, errorView: FeedErrorView) {
         self.feedView = feedView
         self.loadingView = loadingView
         self.errorView = errorView
@@ -38,17 +35,17 @@ public final class FeedPresenter {
 
     public func didStartLoadingFeed() {
         errorView.display(.noError)
-        loadingView.display(FeedLoadingViewModel(isLoading: true))
+        loadingView.display(ResourceLoadingViewModel(isLoading: true))
     }
 
     public func didFinishLoadingFeed(with feed: [FeedImage]) {
         feedView.display(FeedViewModel(feed: feed))
-        loadingView.display(FeedLoadingViewModel(isLoading: false))
+        loadingView.display(ResourceLoadingViewModel(isLoading: false))
     }
 
     public func didFinishLoadingFeed(with error: Error) {
         errorView.display(.error(message: Self.feedLoadError))
-        loadingView.display(FeedLoadingViewModel(isLoading: false))
+        loadingView.display(ResourceLoadingViewModel(isLoading: false))
     }
 
 }

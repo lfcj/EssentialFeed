@@ -8,22 +8,30 @@ final class ImageCommentsPresenterTests: XCTestCase {
     }
 
     func test_map_createsViewModel() {
+        let now = Date()
+        let calendar = Calendar(identifier: .gregorian)
         let comments = [
             ImageComment(
                 id: UUID(),
                 message: "a message",
-                createdDate: Date().adding(seconds: -5),
+                createdDate: now.adding(seconds: -5, calendar: calendar),
                 username: "a user"
             ),
             ImageComment(
                 id: UUID(),
                 message: "another message",
-                createdDate: Date().adding(days: -1),
+                createdDate: now.adding(days: -1, calendar: calendar),
                 username: "another user"
             )
         ]
 
-        let commentViewModels = ImageCommentsPresenter.map(comments)
+        let commentViewModels = ImageCommentsPresenter
+            .map(
+                comments,
+                calendar: calendar,
+                locale: Locale(identifier: "en_US"),
+                currentDate: now
+            )
 
         let firstMessageViewModel = commentViewModels[0]
         XCTAssertEqual(firstMessageViewModel.message, "a message")

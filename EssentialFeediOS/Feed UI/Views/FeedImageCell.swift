@@ -1,7 +1,6 @@
 import EssentialFeed
 import UIKit
 
-public final class FeedImageCell: UITableViewCell, FeedImageView {
     public typealias Image = UIImage
 
     @IBOutlet private(set) public var feedImageContainer: UIView!
@@ -21,17 +20,6 @@ public final class FeedImageCell: UITableViewCell, FeedImageView {
         super.awakeFromNib()
         accessibilityIdentifier = "feed-image-cell"
         feedImageView.accessibilityIdentifier = "feed-image-view"
-    }
-
-    // MARK: - FeedImageView
-
-    public func display(_ viewModel: FeedImageViewModel<Image>) {
-        feedImageContainer.isShimmering = viewModel.isLoading
-        locationContainer.isHidden = viewModel.isLocationContainerHidden
-        locationLabel.text = viewModel.location
-        descriptionLabel.text = viewModel.description
-        feedImageView.setImageAnimated(viewModel.feedImage)
-        feedImageRetryButton.isHidden = viewModel.isRetryButtonHidden
     }
     
 }

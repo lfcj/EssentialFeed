@@ -7,7 +7,6 @@ public protocol FeedImageCellControllerDelegate {
     func didRequestCancellingImageDataLoad()
 }
 
-public final class FeedImageCellController: FeedImageView {
 
     private let delegate: FeedImageCellControllerDelegate
     private var cell: FeedImageCell?
@@ -33,23 +32,10 @@ public final class FeedImageCellController: FeedImageView {
         delegate.didRequestCancellingImageDataLoad()
     }
 
-    // MARK: - FeedImageView
 
-    public func display(_ viewModel: FeedImageViewModel<UIImage>) {
-        cell?.display(viewModel)
     }
 
     private func prepareCellForReuse() {
-        cell?.display(
-            FeedImageViewModel(
-                isLocationContainerHidden: true,
-                location: nil,
-                description: nil,
-                feedImage: nil,
-                isLoading: false,
-                isRetryButtonHidden: true
-            )
-        )
     }
 
     private func releaseCellForReuse() {

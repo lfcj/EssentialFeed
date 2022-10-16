@@ -22,10 +22,8 @@ extension Date {
     func adding(seconds: TimeInterval) -> Date  {
         self + seconds
     }
-}
-extension Date {
 
-    private func adding(days: Int) -> Date {
+    func adding(days: Int) -> Date {
         Calendar(identifier: .gregorian).date(byAdding: .day , value: days, to: self)!
     }
 

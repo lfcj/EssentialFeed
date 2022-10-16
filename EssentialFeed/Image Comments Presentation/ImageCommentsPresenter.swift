@@ -1,5 +1,11 @@
 import Foundation
 
+public struct ImageCommentViewModel {
+    public let message: String
+    public let createAtMessage: String
+    public let username: String
+}
+
 public final class ImageCommentsPresenter {
 
     public static let title = NSLocalizedString(
@@ -14,18 +20,19 @@ public final class ImageCommentsPresenter {
         calendar: Calendar = .current,
         locale: Locale = .current,
         currentDate: Date = Date()
-    ) -> [ImageCommentViewModel] {
+    ) -> ImageCommentsViewModel {
         let formatter = RelativeDateTimeFormatter()
         formatter.calendar = calendar
         formatter.locale = locale
 
-        return comments.map { comment in
+        let commentViewModels = comments.map { comment in
             ImageCommentViewModel(
                 message: comment.message,
                 createAtMessage: formatter.localizedString(for: comment.createdDate, relativeTo: currentDate),
                 username: comment.username
             )
         }
+        return ImageCommentsViewModel(comments: commentViewModels)
     }
 
 }

@@ -14,7 +14,7 @@ final class ImageCommentsPresenterTests: XCTestCase {
             ImageComment(
                 id: UUID(),
                 message: "a message",
-                createdDate: now.adding(seconds: -5, calendar: calendar),
+                createdDate: now.adding(minutes: -5, calendar: calendar),
                 username: "a user"
             ),
             ImageComment(
@@ -31,11 +31,11 @@ final class ImageCommentsPresenterTests: XCTestCase {
                 calendar: calendar,
                 locale: Locale(identifier: "en_US"),
                 currentDate: now
-            )
+            ).comments
 
         let firstMessageViewModel = commentViewModels[0]
         XCTAssertEqual(firstMessageViewModel.message, "a message")
-        XCTAssertEqual(firstMessageViewModel.createAtMessage, "5 seconds ago")
+        XCTAssertEqual(firstMessageViewModel.createAtMessage, "5 minutes ago")
         XCTAssertEqual(firstMessageViewModel.username, "a user")
 
         let secondMessageViewModel = commentViewModels[1]

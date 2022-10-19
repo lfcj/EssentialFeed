@@ -11,7 +11,7 @@ public protocol CellController {
     func cancelLoad()
 }
 
-public final class FeedViewController: UITableViewController, ResourceLoadingView, ResourceErrorView {
+public final class ListViewController: UITableViewController, ResourceLoadingView, ResourceErrorView {
 
     public var delegate: FeedViewControllerDelegate?
 
@@ -90,7 +90,7 @@ public final class FeedViewController: UITableViewController, ResourceLoadingVie
 
 // MARK: - UITableViewDataSourcePrefetching
 
-extension FeedViewController: UITableViewDataSourcePrefetching {
+extension ListViewController: UITableViewDataSourcePrefetching {
 
     public func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
         indexPaths.forEach { indexPath in

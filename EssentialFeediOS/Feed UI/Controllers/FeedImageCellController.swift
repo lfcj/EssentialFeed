@@ -23,7 +23,7 @@ public final class FeedImageCellController: CellController, ResourceView, Resour
 
     public func view(in tableView: UITableView) -> UITableViewCell {
         cell = tableView.dequeueReusableCell()
-        cell?.locationContainer.isHidden = viewModel.isLocationContainerHidden
+        cell?.locationContainer.isHidden = !viewModel.hasLocation
         cell?.locationLabel.text = viewModel.location
         cell?.descriptionLabel.text = viewModel.description
         cell?.onRetry = delegate.didRequestImageData

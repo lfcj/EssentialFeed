@@ -1,10 +1,6 @@
 import EssentialFeed
 import UIKit
 
-public protocol FeedViewControllerDelegate: AnyObject {
-    func didRequestFeedRefresh()
-}
-
 public protocol CellController {
     func view(in tableView: UITableView) -> UITableViewCell
     func preload()
@@ -13,7 +9,9 @@ public protocol CellController {
 
 public final class ListViewController: UITableViewController, ResourceLoadingView, ResourceErrorView {
 
-    public var delegate: FeedViewControllerDelegate?
+    public typealias RefreshHandler = () -> Void
+
+    public var onRefresh: RefreshHandler?
 
     @IBOutlet private(set) public var errorView: ErrorView?
 
@@ -50,7 +48,7 @@ public final class ListViewController: UITableViewController, ResourceLoadingVie
     }
 
     @IBAction private func refresh() {
-        delegate?.didRequestFeedRefresh()
+        onRefresh?()
     }
 
     // MARK: - FeedLoadingView

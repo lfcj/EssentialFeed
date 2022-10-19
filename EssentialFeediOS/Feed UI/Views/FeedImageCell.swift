@@ -2,7 +2,6 @@ import EssentialFeed
 import UIKit
 
 public final class FeedImageCell: UITableViewCell {
-    public typealias Image = UIImage
 
     @IBOutlet private(set) public var feedImageContainer: UIView!
     @IBOutlet private(set) public var locationContainer: UIView!

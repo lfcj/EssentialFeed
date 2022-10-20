@@ -1,14 +1,7 @@
 import EssentialFeed
 import UIKit
 
-public protocol CellController {
-    func view(in tableView: UITableView) -> UITableViewCell
-}
-
-public extension CellController {
-    func preload() {}
-    func cancelLoad() {}
-}
+public typealias CellController = UITableViewDataSource & UITableViewDelegate & UITableViewDataSourcePrefetching
 
 public final class ListViewController: UITableViewController, ResourceLoadingView, ResourceErrorView {
 
@@ -43,11 +36,12 @@ public final class ListViewController: UITableViewController, ResourceLoadingVie
     }
 
     public override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        cellController(forRowAt: indexPath).view(in: tableView)
+        cellController(forRowAt: indexPath).tableView(tableView, cellForRowAt: indexPath)
     }
 
     public override func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        cancellCellControllerLoad(at: indexPath)
+        let controller = removeLoadingController(at: indexPath)
+        controller?.tableView?(tableView, didEndDisplaying: cell, forRowAt: indexPath)
     }
 
     @IBAction private func refresh() {
@@ -95,17 +89,21 @@ extension ListViewController: UITableViewDataSourcePrefetching {
 
     public func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
         indexPaths.forEach { indexPath in
-            cellController(forRowAt: indexPath).preload()
+            cellController(forRowAt: indexPath).tableView(tableView, prefetchRowsAt: indexPaths)
         }
     }
 
     public func tableView(_ tableView: UITableView, cancelPrefetchingForRowsAt indexPaths: [IndexPath]) {
-        indexPaths.forEach(cancellCellControllerLoad)
+        indexPaths.forEach { indexPath in
+            let controller = cellController(forRowAt: indexPath)
+            controller.tableView?(tableView, cancelPrefetchingForRowsAt: [indexPath])
+        }
     }
 
-    private func cancellCellControllerLoad(at rowIndexPath: IndexPath) {
-        loadingControllersByIndexPath[rowIndexPath]?.cancelLoad()
+    private func removeLoadingController(at rowIndexPath: IndexPath) -> CellController? {
+        let controller = loadingControllersByIndexPath[rowIndexPath]
         loadingControllersByIndexPath[rowIndexPath] = nil
+        return controller
     }
 
 }

@@ -57,7 +57,7 @@ private extension ImageCommentsSnapshotTests {
                     username: "User"
                 )
             )
-        ]
+        ].map { CellController($0) }
     }
 
 }

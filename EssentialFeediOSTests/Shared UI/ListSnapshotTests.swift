@@ -42,7 +42,7 @@ private extension ListSnapshotTests {
         return controller
     }
 
-    func emptyFeed() -> [FeedImageCellController] {
+    func emptyFeed() -> [CellController] {
         []
     }
 

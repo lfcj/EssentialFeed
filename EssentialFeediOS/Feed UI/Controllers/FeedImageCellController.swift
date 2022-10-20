@@ -7,7 +7,15 @@ public protocol FeedImageCellControllerDelegate {
     func didRequestCancellingImageDataLoad()
 }
 
-public final class FeedImageCellController: NSObject, CellController, ResourceView, ResourceLoadingView, ResourceErrorView {
+public final class FeedImageCellController:
+    NSObject,
+    UITableViewDataSource,
+    UITableViewDelegate,
+    UITableViewDataSourcePrefetching,
+    ResourceView,
+    ResourceLoadingView,
+    ResourceErrorView
+ {
 
     public typealias ResourceViewModel = UIImage
 

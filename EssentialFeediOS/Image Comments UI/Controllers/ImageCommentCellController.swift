@@ -1,7 +1,7 @@
 import EssentialFeed
 import UIKit
 
-public final class ImageCommentCellController: CellController/*, ResourceView, ResourceLoadingView, ResourceErrorView*/ {
+public final class ImageCommentCellController: CellController {
 
     private let model: ImageCommentViewModel
 
@@ -17,14 +17,6 @@ public final class ImageCommentCellController: CellController/*, ResourceView, R
         cell.dateLabel.text = model.createAtMessage
         cell.usernameLabel.text = model.username
         return cell
-    }
-
-    public func preload() {
-        
-    }
-
-    public func cancelLoad() {
-        
     }
 
 }

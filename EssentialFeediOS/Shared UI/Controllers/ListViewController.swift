@@ -133,6 +133,12 @@ private extension ListViewController {
         ])
 
         tableView.tableHeaderView = containerView
+
+        errorView.onHide = { [weak self] in
+            self?.tableView.beginUpdates()
+            self?.tableView.sizeTableHeaderToFit()
+            self?.tableView.endUpdates()
+        }
     }
 
 }

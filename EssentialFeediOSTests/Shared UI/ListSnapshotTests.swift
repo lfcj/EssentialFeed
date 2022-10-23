@@ -32,11 +32,10 @@ final class ListSnapshotTests: XCTestCase {
 private extension ListSnapshotTests {
 
     func makeSUT(file: StaticString = #file, line: UInt = #line) -> ListViewController {
-        let bundle = Bundle(for: ListViewController.self)
-        let storyboard = UIStoryboard(name: "Feed", bundle: bundle)
-        let controller = storyboard.instantiateInitialViewController() as! ListViewController
+        let controller = ListViewController()
         controller.tableView.showsVerticalScrollIndicator = false
         controller.tableView.showsHorizontalScrollIndicator = false
+        controller.tableView.separatorStyle = .none
         trackForMemoryLeaks(controller)
         controller.loadViewIfNeeded()
         return controller

@@ -41,7 +41,7 @@ public final class FeedImageCellController:
         cell?.locationContainer.isHidden = !viewModel.hasLocation
         cell?.locationLabel.text = viewModel.location
         cell?.descriptionLabel.text = viewModel.description
-        cell?.onRetry = delegate.didRequestImageData
+        cell?.onRetry = { [weak self] in self?.delegate.didRequestImageData() }
         delegate.didRequestImageData()
         return cell!
     }

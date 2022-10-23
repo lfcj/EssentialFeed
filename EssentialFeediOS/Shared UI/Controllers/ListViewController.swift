@@ -72,7 +72,7 @@ public final class ListViewController: UITableViewController, ResourceLoadingVie
         if let errorMessage = viewModel.message {
             errorView.show(message: errorMessage)
         } else {
-            errorView.hideMessage()
+            errorView.hideMessageAnimated()
         }
     }
 

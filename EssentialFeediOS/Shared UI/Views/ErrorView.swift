@@ -46,7 +46,8 @@ public final class ErrorView: UIButton {
         setTitleColor(.white, for: .normal)
         titleLabel?.textAlignment = .center
         titleLabel?.numberOfLines = 0
-        titleLabel?.font = .systemFont(ofSize: 17)
+        titleLabel?.font = .preferredFont(forTextStyle: .body)
+        titleLabel?.adjustsFontForContentSizeCategory = true
         addTarget(self, action: #selector(hideMessageAnimated), for: .touchUpInside)
 
         setTitle(nil, for: .normal)

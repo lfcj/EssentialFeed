@@ -7,7 +7,7 @@ public final class ListViewController: UITableViewController, ResourceLoadingVie
 
     public var onRefresh: RefreshHandler?
 
-    @IBOutlet private(set) public var errorView: ErrorView?
+    private(set) public var errorView = ErrorView()
 
     private var loadingControllersByIndexPath: [IndexPath: CellController] = [:]
 
@@ -20,6 +20,7 @@ public final class ListViewController: UITableViewController, ResourceLoadingVie
     public override func viewDidLoad() {
         super.viewDidLoad()
 
+        configureHeaderView()
         refresh()
     }
 
@@ -69,9 +70,9 @@ public final class ListViewController: UITableViewController, ResourceLoadingVie
 
     public func display(_ viewModel: ResourceErrorViewModel) {
         if let errorMessage = viewModel.message {
-            errorView?.show(message: errorMessage)
+            errorView.show(message: errorMessage)
         } else {
-            errorView?.hideMessage()
+            errorView.hideMessage()
         }
     }
 
@@ -110,6 +111,28 @@ extension ListViewController: UITableViewDataSourcePrefetching {
         let controller = loadingControllersByIndexPath[rowIndexPath]
         loadingControllersByIndexPath[rowIndexPath] = nil
         return controller
+    }
+
+}
+
+// MARK: - Configuration
+
+private extension ListViewController {
+
+    func configureHeaderView() {
+        let containerView = UIView()
+        containerView.backgroundColor = nil
+
+        containerView.addSubview(errorView)
+        errorView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            errorView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
+            errorView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor),
+            errorView.topAnchor.constraint(equalTo: containerView.topAnchor),
+            errorView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor)
+        ])
+
+        tableView.tableHeaderView = containerView
     }
 
 }

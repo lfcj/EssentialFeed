@@ -58,7 +58,7 @@ private extension ImageCommentsSnapshotTests {
                     username: "User"
                 )
             )
-        ].map { CellController($0) }
+        ].map { CellController(id: UUID(), $0) }
     }
 
 }

@@ -6,7 +6,7 @@ public final class ErrorView: UIButton {
 
     public var message: String? {
         get { return isVisible ? title(for: .normal) : nil }
-        set { setMessageAnimated(message) }
+        set { setMessageAnimated(newValue) }
     }
 
     private var isVisible: Bool {

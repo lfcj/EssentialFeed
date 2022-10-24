@@ -62,11 +62,7 @@ public final class ListViewController: UITableViewController, ResourceLoadingVie
     // MARK: - FeedErrorView
 
     public func display(_ viewModel: ResourceErrorViewModel) {
-        if let errorMessage = viewModel.message {
-            errorView.show(message: errorMessage)
-        } else {
-            errorView.hideMessageAnimated()
-        }
+        errorView.message = viewModel.message
     }
 
     // MARK: - Private Logic

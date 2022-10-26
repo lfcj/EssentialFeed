@@ -17,15 +17,18 @@ public final class FeedImageCellController:
     ResourceErrorView
  {
 
+    public typealias SelectionHandler = () -> Void
     public typealias ResourceViewModel = UIImage
 
     private let viewModel: FeedImageViewModel<UIImage>
     private let delegate: FeedImageCellControllerDelegate
+    private let selectionHandler: SelectionHandler
     private var cell: FeedImageCell?
 
-    public init(viewModel: FeedImageViewModel<UIImage>, delegate: FeedImageCellControllerDelegate) {
+    public init(viewModel: FeedImageViewModel<UIImage>, delegate: FeedImageCellControllerDelegate, selectionHandler: @escaping SelectionHandler) {
         self.viewModel = viewModel
         self.delegate = delegate
+        self.selectionHandler = selectionHandler
         super.init()
         prepareCellForReuse()
     }
@@ -60,6 +63,10 @@ public final class FeedImageCellController:
 
     public func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         cancelLoad()
+    }
+
+    public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        selectionHandler()
     }
     
     // MARK: - ResourceView

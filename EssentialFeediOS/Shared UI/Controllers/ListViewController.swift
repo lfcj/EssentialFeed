@@ -31,11 +31,20 @@ public final class ListViewController: UITableViewController, ResourceLoadingVie
         tableView.sizeTableHeaderToFit()
     }
 
+    // MARK: - UITableViewDelegate
+
     public override func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         let controller = cellController(at: indexPath)
         let delegate = controller?.delegate
         
         delegate?.tableView?(tableView, didEndDisplaying: cell, forRowAt: indexPath)
+    }
+
+    public override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let controller = cellController(at: indexPath)
+        let delegate = controller?.delegate
+
+        delegate?.tableView?(tableView, didSelectRowAt: indexPath)
     }
 
     @IBAction private func refresh() {

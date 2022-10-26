@@ -84,7 +84,7 @@ private extension FeedSnapshotTests {
 private extension ListViewController {
     func display(_ stubs: [ImageStub]) {
         let cells: [CellController] = stubs.map { stub in
-            let imageCellController = FeedImageCellController(viewModel: stub.viewModel, delegate: stub)
+            let imageCellController = FeedImageCellController(viewModel: stub.viewModel, delegate: stub, selectionHandler: {})
             stub.controller = imageCellController
             stub.didRequestImageData()
             return CellController(id: UUID(), imageCellController)

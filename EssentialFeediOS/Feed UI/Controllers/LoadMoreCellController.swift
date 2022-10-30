@@ -1,24 +1,44 @@
 import EssentialFeed
 import UIKit
 
- public class LoadMoreCellController: NSObject, UITableViewDataSource {
-     private let cell = LoadMoreCell()
+public class LoadMoreCellController: NSObject, UITableViewDataSource, UITableViewDelegate {
+    
+    // MARK: - Properties
+    
+    private let cell = LoadMoreCell()
+    
+    private let willDisplayHandler: () -> Void
 
-     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-         1
-     }
+    // MARK: - Init/Deinit
+    
+    public init(loadMoreHandler: @escaping () -> Void) {
+        self.willDisplayHandler = loadMoreHandler
+    }
 
-     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-         cell
-     }
- }
+    // MARK: - UITableViewDataSource
 
- extension LoadMoreCellController: ResourceLoadingView {
-     public func display(_ viewModel: ResourceErrorViewModel) {
-         cell.message = viewModel.message
-     }
+    public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        1
+    }
+    
+    public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        cell
+    }
 
-     public func display(_ viewModel: ResourceLoadingViewModel) {
-         cell.isLoading = viewModel.isLoading
-     }
- }
+    // MARK: - UITableViewDelegate
+
+    public func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        willDisplayHandler()
+    }
+    
+}
+
+extension LoadMoreCellController: ResourceLoadingView {
+    public func display(_ viewModel: ResourceErrorViewModel) {
+        cell.message = viewModel.message
+    }
+    
+    public func display(_ viewModel: ResourceLoadingViewModel) {
+        cell.isLoading = viewModel.isLoading
+    }
+}

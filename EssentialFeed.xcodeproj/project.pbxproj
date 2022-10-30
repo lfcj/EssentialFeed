@@ -100,6 +100,8 @@
 		407F762B282EE3E1008B93EE /* UIImageView+Animations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 407F762A282EE3E1008B93EE /* UIImageView+Animations.swift */; };
 		408787722895BF40005E31E4 /* FeedSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 408787712895BF40005E31E4 /* FeedSnapshotTests.swift */; };
 		4087877528966267005E31E4 /* UITableView+HeaderSizing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4087877428966267005E31E4 /* UITableView+HeaderSizing.swift */; };
+		40A84FF2290E6FD70012A3DE /* LoadMoreCellController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40A84FF1290E6FD70012A3DE /* LoadMoreCellController.swift */; };
+		40A84FF4290E700F0012A3DE /* LoadMoreCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40A84FF3290E700F0012A3DE /* LoadMoreCell.swift */; };
 		40C5F32B290053F500D62345 /* ListSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40C5F32A290053F500D62345 /* ListSnapshotTests.swift */; };
 		40C5F32E2900547000D62345 /* UIImage+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40C5F32D2900547000D62345 /* UIImage+Extension.swift */; };
 		40C5F3302900549A00D62345 /* SnapshotWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40C5F32F2900549A00D62345 /* SnapshotWindow.swift */; };
@@ -259,6 +261,8 @@
 		407F762A282EE3E1008B93EE /* UIImageView+Animations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+Animations.swift"; sourceTree = "<group>"; };
 		408787712895BF40005E31E4 /* FeedSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedSnapshotTests.swift; sourceTree = "<group>"; };
 		4087877428966267005E31E4 /* UITableView+HeaderSizing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableView+HeaderSizing.swift"; sourceTree = "<group>"; };
+		40A84FF1290E6FD70012A3DE /* LoadMoreCellController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadMoreCellController.swift; sourceTree = "<group>"; };
+		40A84FF3290E700F0012A3DE /* LoadMoreCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadMoreCell.swift; sourceTree = "<group>"; };
 		40C5F32A290053F500D62345 /* ListSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListSnapshotTests.swift; sourceTree = "<group>"; };
 		40C5F32D2900547000D62345 /* UIImage+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Extension.swift"; sourceTree = "<group>"; };
 		40C5F32F2900549A00D62345 /* SnapshotWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnapshotWindow.swift; sourceTree = "<group>"; };
@@ -814,6 +818,7 @@
 			isa = PBXGroup;
 			children = (
 				40CAFBA127EBC32700F6226C /* FeedImageCellController.swift */,
+				40A84FF1290E6FD70012A3DE /* LoadMoreCellController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -824,6 +829,7 @@
 				40C5F32729004E5F00D62345 /* Helpers */,
 				84D7D76B27DFDA6E0016EC56 /* FeedImageCell.swift */,
 				407F7626282ED685008B93EE /* Feed.storyboard */,
+				40A84FF3290E700F0012A3DE /* LoadMoreCell.swift */,
 				407F7628282EE2AF008B93EE /* UITableView+Dequeueing.swift */,
 			);
 			path = Views;
@@ -1260,11 +1266,13 @@
 				407F7629282EE2AF008B93EE /* UITableView+Dequeueing.swift in Sources */,
 				4087877528966267005E31E4 /* UITableView+HeaderSizing.swift in Sources */,
 				08BB7EAB22C1425100F8B83C /* ListViewController.swift in Sources */,
+				40A84FF2290E6FD70012A3DE /* LoadMoreCellController.swift in Sources */,
 				84D7D76C27DFDA6E0016EC56 /* FeedImageCell.swift in Sources */,
 				4031A6262901D82700CB7BC0 /* CellController.swift in Sources */,
 				40F51B112871C42200C0151F /* ErrorView.swift in Sources */,
 				40CAFBA227EBC32700F6226C /* FeedImageCellController.swift in Sources */,
 				407F762B282EE3E1008B93EE /* UIImageView+Animations.swift in Sources */,
+				40A84FF4290E700F0012A3DE /* LoadMoreCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

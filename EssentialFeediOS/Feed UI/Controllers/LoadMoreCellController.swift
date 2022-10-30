@@ -28,12 +28,16 @@ public class LoadMoreCellController: NSObject, UITableViewDataSource, UITableVie
     // MARK: - UITableViewDelegate
 
     public func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        guard !self.cell.isLoading else {
+            return
+        }
+
         willDisplayHandler()
     }
     
 }
 
-extension LoadMoreCellController: ResourceLoadingView {
+extension LoadMoreCellController: ResourceLoadingView, ResourceErrorView {
     public func display(_ viewModel: ResourceErrorViewModel) {
         cell.message = viewModel.message
     }

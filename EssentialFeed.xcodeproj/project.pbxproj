@@ -117,7 +117,6 @@
 		40F51AFA2870200B00C0151F /* FeedPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40F51AF92870200B00C0151F /* FeedPresenterTests.swift */; };
 		40F51AFE2871A3FA00C0151F /* Feed.strings in Resources */ = {isa = PBXBuildFile; fileRef = 40F51B012871A3FA00C0151F /* Feed.strings */; };
 		40F51B062871A57800C0151F /* FeedPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40F51B052871A57800C0151F /* FeedPresenter.swift */; };
-		40F51B0B2871A6DD00C0151F /* FeedViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40F51B072871A6AD00C0151F /* FeedViewModel.swift */; };
 		40F51B0E2871A6F700C0151F /* ResourceErrorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40F51B0C2871A6F500C0151F /* ResourceErrorViewModel.swift */; };
 		40F51B0F2871A7F100C0151F /* ResourceLoadingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40F51B092871A6D700C0151F /* ResourceLoadingViewModel.swift */; };
 		40F51B112871C42200C0151F /* ErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40F51B102871C42200C0151F /* ErrorView.swift */; };
@@ -281,7 +280,6 @@
 		40F51B022871A3FB00C0151F /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Feed.strings; sourceTree = "<group>"; };
 		40F51B032871A3FC00C0151F /* pt-BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-BR"; path = "pt-BR.lproj/Feed.strings"; sourceTree = "<group>"; };
 		40F51B052871A57800C0151F /* FeedPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedPresenter.swift; sourceTree = "<group>"; };
-		40F51B072871A6AD00C0151F /* FeedViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedViewModel.swift; sourceTree = "<group>"; };
 		40F51B092871A6D700C0151F /* ResourceLoadingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourceLoadingViewModel.swift; sourceTree = "<group>"; };
 		40F51B0C2871A6F500C0151F /* ResourceErrorViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourceErrorViewModel.swift; sourceTree = "<group>"; };
 		40F51B102871C42200C0151F /* ErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorView.swift; sourceTree = "<group>"; };
@@ -893,7 +891,6 @@
 				40F51B012871A3FA00C0151F /* Feed.strings */,
 				40F51B172871DA9E00C0151F /* FeedImageViewModel.swift */,
 				40F51B052871A57800C0151F /* FeedPresenter.swift */,
-				40F51B072871A6AD00C0151F /* FeedViewModel.swift */,
 				40F51B152871DA9100C0151F /* FeedImagePresenter.swift */,
 			);
 			path = "Feed Presentation";
@@ -1177,7 +1174,6 @@
 				40F51B182871DA9E00C0151F /* FeedImageViewModel.swift in Sources */,
 				0886893A221DAA34007BC3E7 /* LocalFeedImage.swift in Sources */,
 				089C40DE22170F2300DE552E /* FeedStore.swift in Sources */,
-				40F51B0B2871A6DD00C0151F /* FeedViewModel.swift in Sources */,
 				089C40DC22170EC500DE552E /* LocalFeedLoader.swift in Sources */,
 				08C0880C21E4EED600ACFB30 /* HTTPClient.swift in Sources */,
 				407B765428F3100400B4694A /* Paginated.swift in Sources */,

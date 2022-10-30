@@ -10,8 +10,6 @@ final class ListSnapshotTests: XCTestCase {
         
         assert(snapshot: sut.snapshot(for: .iPhone8(style: .light)), named: "FEED_EMPTY_light")
         assert(snapshot: sut.snapshot(for: .iPhone8(style: .dark)), named: "FEED_EMPTY_dark")
-//        record(snapshot: sut.snapshot(for: .iPhone8(style: .light)), named: "FEED_EMPTY_light")
-//        record(snapshot: sut.snapshot(for: .iPhone8(style: .dark)), named: "FEED_EMPTY_dark")
     }
 
     func test_feedWithErrorMessage() {
@@ -22,8 +20,6 @@ final class ListSnapshotTests: XCTestCase {
         assert(snapshot: sut.snapshot(for: .iPhone8(style: .light)), named: "FEED_WITH_ERROR_light")
         assert(snapshot: sut.snapshot(for: .iPhone8(style: .dark)), named: "FEED_WITH_ERROR_dark")
         assert(snapshot: sut.snapshot(for: .iPhone8(style: .light, contentSize: .extraExtraExtraLarge)), named: "FEED_WITH_ERROR_extraExtraExtraLarge_light")
-//        record(snapshot: sut.snapshot(for: .iPhone8(style: .light)), named: "FEED_WITH_ERROR_light")
-//        record(snapshot: sut.snapshot(for: .iPhone8(style: .dark)), named: "FEED_WITH_ERROR_dark")
     }
 
 }

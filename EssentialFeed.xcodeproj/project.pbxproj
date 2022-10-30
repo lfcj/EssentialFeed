@@ -527,7 +527,6 @@
 				407B765B28F3340700B4694A /* Helpers */,
 				400FBAE72909592E0060A798 /* FeedEndpoint.swift */,
 				08C0880D21E4EF2900ACFB30 /* FeedItemsMapper.swift */,
-				407B765328F3100400B4694A /* Paginated.swift */,
 				400140342853EE670044E176 /* RemoteFeedImageDataLoader.swift */,
 			);
 			path = "Feed API";
@@ -676,6 +675,7 @@
 			isa = PBXGroup;
 			children = (
 				08C0880B21E4EED600ACFB30 /* HTTPClient.swift */,
+				407B765328F3100400B4694A /* Paginated.swift */,
 			);
 			path = "Shared API";
 			sourceTree = "<group>";

@@ -1555,13 +1555,51 @@ extension DispatchQueue {
 
 ## [Bonus Lives] Adding a new Feature
 
-#### 001 - [Image Comments API] From Dependency Injection to Dependency Rejection
+#### 001 - [Image Comments API] From Dependency Injection to Dependency Rejection ✅
 
 -   How to refactor code backed by tests and the compiler
 -   How to decouple feature-specific modules without introducing duplication
 -   How to create reusable generic Services
 -   The object-oriented and functional way of composing components
 -   How to use built-in Combine operators to compose modules
+
+#### 002 - [Image Comments Presentation] Reusable Presentation Logic ✅
+
+-   How to refactor code backed by tests and the compiler
+-   How to decouple feature-specific modules without introducing duplication
+-   How to create reusable generic Presentation components
+    -   **First make it concrete using a primitive, for example, and then make it generic.**
+-   How to format Date instances into presentable localized strings
+    -   We can use the `RelativeDateTimeFormatter()`, but it is a good thing to make sure we inject a `Calendar` and a `Locale` to have more resilient tests.
+-   How to control the current date, locale, calendar, and other environment details to create fast and reliable tests
+
+#### #003 - [Image Comments UI] Reusable UI Components, Diffable Data Sources, Dynamic Type, Snapshot Testing ✅
+
+-   How to create a shared UI module without breaking modularity
+-   How to create UI elements programmatically to eliminate duplication in storyboards
+    -   For tableView header views, when sizing the header view to fit, it is necessary to call the `tableView.beginUpdate` and the `tableView.endUpdate` methods.
+-   How to solve memory leaks with the Memory Graph Debugger
+-   How to migrate to Diffable Data Sources
+    -   Diffable Data Sources prevent us from reloading all cells.
+    -   We do not want to reload all the data model, only what changed.
+    -   With table views, Diffable Data Sources try to load as many cells as the estimated cell height dictates. That means: if the cell has a height, the tableView should have that height as the estimate cell height.
+    -   If one does not have a cell, prefetching data to load the cell can be moved from `cellForRowAt` to `willDisplayCell` as in the latter, one is 100% sure the cell will show.
+    -   To test tableViews using diffable data sources, it is ok to not keep track of the changes if that is not what is being tested at the moment. That means that passing a `UUID()` is enough.
+    -   Diffable data sources does not always work with dynamic font types. The solution is to use the `traitCollectionDidChange` listeners to reload the tableView when this changes.
+-   How to scale fonts with Dynamic Type
+    -   It is possible to test that dynamic content size is supported from the snapshot tests.
+    -   To set a dynamic type, use `.preferredFont(`. This while setting `adjustsFontForContentSizeCategory` to `true`. The labels will not adapt without it.
+-   How to use snapshot tests effectively
+
+#### #004 - [Image Comments Composition] Navigation and Feature Composition ✅
+
+-   How to navigate between features without breaking modularity or introducing common anti-patterns
+    -   It is possible to inject closures, delegates, etc. in the highest composition root to avoid different modules knowing from each other.
+-   How to develop, test and use Composers in the Composition Root
+-   How to develop and test selection handlers
+-   How to use autoreleasepool to release autoreleased instances during tests
+-   Dependency Lifestyles
+
 
 [1]: https://www.essentialdeveloper.com/articles/the-minimum-you-should-do-to-prevent-memory-leaks-in-swift
 

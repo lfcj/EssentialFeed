@@ -47,6 +47,13 @@ public final class ListViewController: UITableViewController, ResourceLoadingVie
         delegate?.tableView?(tableView, didSelectRowAt: indexPath)
     }
 
+    public override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        let controller = cellController(at: indexPath)
+        let delegate = controller?.delegate
+        
+        delegate?.tableView?(tableView, willDisplay: cell, forRowAt: indexPath)
+    }
+
     @IBAction private func refresh() {
         onRefresh?()
     }

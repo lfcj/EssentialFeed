@@ -2,24 +2,6 @@ import Foundation
 
 extension CoreDataFeedStore: FeedImageDataStore {
 
-    public func insert(_ data: Data, for url: URL, completion: @escaping (FeedImageDataStore.InsertionResult) -> Void) {
-        do {
-            try insert(data, for: url)
-            completion(.success(()))
-        } catch {
-            completion(.failure(error))
-        }
-    }
-
-    public func retrieve(dataForURL url: URL, completion: @escaping (FeedImageDataStore.RetrievalResult) -> Void) {
-        do {
-            let retrievedData = try retrieve(dataForURL: url)
-            completion(.success(retrievedData))
-        } catch {
-            completion(.failure(error))
-        }
-    }
-
     public func insert(_ data: Data, for url: URL) throws {
         try performSync { context in
             Result {

@@ -22,9 +22,6 @@ final class FeedImageDataStoreSpy: FeedImageDataStore {
         try insertionResult?.get()
     }
 
-    func insert(_ data: Data, for url: URL, completion: @escaping (InsertionResult) -> Void) {}
-    func retrieve(dataForURL url: URL, completion: @escaping (FeedImageDataStore.RetrievalResult) -> Void) {}
-
     func complete(with error: Error, at index: Int = 0) {
         retrievalResult = .failure(error)
     }

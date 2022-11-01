@@ -11,9 +11,9 @@ final class FeedStoreSpy: FeedStore {
 
     private(set) var receivedMessages = [ReceivedMessage]()
 
-    private var deletionResult: DeletionResult?
-    private var insertionResult: InsertionResult?
-    private var retrievalResult: RetrievalResult?
+    private var deletionResult: Swift.Result<Void, Error>?
+    private var insertionResult: Swift.Result<Void, Error>?
+    private var retrievalResult: Swift.Result<CachedFeed?, Error>?
 
     func deleteCachedFeed() throws {
         receivedMessages.append(.deleteCachedFeed)

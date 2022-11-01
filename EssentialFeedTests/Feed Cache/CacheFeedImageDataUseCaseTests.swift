@@ -52,7 +52,7 @@ final class CacheFeedImageDataUseCaseTests: XCTestCase {
 
     private func expect(
         _ sut: LocalFeedImageDataLoader,
-        toCompleteWith expectedResult: LocalFeedImageDataLoader.SaveResult,
+        toCompleteWith expectedResult: Swift.Result<Void, Error>,
         when action: () -> Void,
         file: StaticString = #file,
         line: UInt = #line

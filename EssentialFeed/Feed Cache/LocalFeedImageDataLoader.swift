@@ -25,6 +25,7 @@ public final class LocalFeedImageDataLoader: FeedImageDataLoader, FeedImageDataC
         } catch {
             throw LoadError.failed
         }
+        throw LoadError.notFound
     }
 
     public func save(_ data: Data, for url: URL) throws {

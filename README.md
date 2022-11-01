@@ -1610,6 +1610,15 @@ extension DispatchQueue {
 -   Composing async operations with Combine
 -   Unit, Snapshot, Integration, and Acceptance Testing
 
+#### 006 - Logging, Profiling, and Optimizing Infrastructure Services ✅
+
+-   Why do we need logging?
+-   Common logging challenges and how to deal with them
+-   How to monitor Debug and Release builds in a clean way
+-   Implementing a fallback cache strategy with the Null Object pattern
+-   Persistence and performance of Logger’s log levels
+-   Performing optimizations in the Infrastructure layer to keep unnecessary complexity out of the service layer
+
 [1]: https://www.essentialdeveloper.com/articles/the-minimum-you-should-do-to-prevent-memory-leaks-in-swift
 
 [2]: https://www.essentialdeveloper.com/articles/xctest-swift-setup-teardown-vs-factory-methods

@@ -11,7 +11,7 @@ class LoadFeedFromCacheUseCaseTests: XCTestCase {
     func test_load_requestsCacheRetrieval() {
         let (sut, store) = makeSUT()
 
-        try? sut.load()
+        _ = try? sut.load()
 
         XCTAssertEqual(store.receivedMessages, [.retrieve])
     }
@@ -80,7 +80,7 @@ class LoadFeedFromCacheUseCaseTests: XCTestCase {
         let (sut, store) = makeSUT()
         store.completeRetrieval(with: anyNSError())
 
-        try? sut.load()
+        _ = try? sut.load()
 
         XCTAssertEqual(store.receivedMessages, [.retrieve])
     }
@@ -89,7 +89,7 @@ class LoadFeedFromCacheUseCaseTests: XCTestCase {
         let (sut, store) = makeSUT()
         store.completeRetrievalWithEmptyCache()
 
-        try? sut.load()
+        _ = try? sut.load()
 
         XCTAssertEqual(store.receivedMessages, [.retrieve])
     }
@@ -101,7 +101,7 @@ class LoadFeedFromCacheUseCaseTests: XCTestCase {
         let (sut, store) = makeSUT(currentDate: { fixedCurrentDate })
         store.completeRetrieval(with: feed.local, timestamp: nonExpiredCache)
 
-        try? sut.load()
+        _ = try? sut.load()
 
         XCTAssertEqual(store.receivedMessages, [.retrieve])
     }
@@ -113,7 +113,7 @@ class LoadFeedFromCacheUseCaseTests: XCTestCase {
         let (sut, store) = makeSUT(currentDate: { fixedCurrentDate })
         store.completeRetrieval(with: feed.local, timestamp: cacheExpirationTimestamp)
 
-        try? sut.load()
+        _ = try? sut.load()
 
         XCTAssertEqual(store.receivedMessages, [.retrieve])
     }
@@ -125,7 +125,7 @@ class LoadFeedFromCacheUseCaseTests: XCTestCase {
         let (sut, store) = makeSUT(currentDate: { fixedCurrentDate })
         store.completeRetrieval(with: feed.local, timestamp: expiredTimestamp)
 
-        try? sut.load()
+        _ = try? sut.load()
 
         XCTAssertEqual(store.receivedMessages, [.retrieve])
     }

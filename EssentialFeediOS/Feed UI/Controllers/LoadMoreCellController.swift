@@ -41,6 +41,10 @@ public class LoadMoreCellController: NSObject, UITableViewDataSource, UITableVie
         }
     }
 
+    public func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        offsetObserver = nil
+    }
+
     public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         reloadIfNeeded()
     }

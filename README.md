@@ -1600,7 +1600,7 @@ extension DispatchQueue {
 -   How to use autoreleasepool to release autoreleased instances during tests
 -   Dependency Lifestyles
 
-#### 005 - Keyset Pagination with Caching Strategy
+#### 005 - Keyset Pagination with Caching Strategy ✅
 
 -   Common pagination methods
 -   Pagination UI/UX best practices

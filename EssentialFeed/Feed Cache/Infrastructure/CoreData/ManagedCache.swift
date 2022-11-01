@@ -9,18 +9,6 @@ class ManagedCache: NSManagedObject {
 // MARK: - ManagedCache Helpers
 
 extension ManagedCache {
-    static func images(from localFeed: [LocalFeedImage], in context: NSManagedObjectContext) -> NSOrderedSet {
-        NSOrderedSet(
-            array: localFeed.map { local in
-                let managed = ManagedFeedImage(context: context)
-                managed.id = local.id
-                managed.imageDescription = local.description
-                managed.location = local.location
-                managed.url = local.url
-                return managed
-            }
-        )
-    }
     static func find(in context: NSManagedObjectContext) throws -> ManagedCache? {
         let request = NSFetchRequest<ManagedCache>(entityName: entity().name!)
         request.returnsObjectsAsFaults = false

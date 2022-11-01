@@ -1619,6 +1619,14 @@ extension DispatchQueue {
 -   Persistence and performance of Logger’s log levels
 -   Performing optimizations in the Infrastructure layer to keep unnecessary complexity out of the service layer
 
+#### 007 - Async Injection: Decoupling the Domain from Infra Details ✅
+
+-   Why async APIs lead to leaky abstractions in the domain layer and how to solve it
+-   How to eliminate Async Boilerplate & Nested Callbacks
+-   How to deal with Threading as a Cross-Cutting Concern in the Composition Root using Decorators and Universal Abstractions
+-   Combine Schedulers, receive(on:) and subscribe(on:)
+-   Type Erasure
+
 [1]: https://www.essentialdeveloper.com/articles/the-minimum-you-should-do-to-prevent-memory-leaks-in-swift
 
 [2]: https://www.essentialdeveloper.com/articles/xctest-swift-setup-teardown-vs-factory-methods

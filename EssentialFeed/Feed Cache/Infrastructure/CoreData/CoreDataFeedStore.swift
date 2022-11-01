@@ -55,7 +55,7 @@ public final class CoreDataFeedStore: FeedStore {
         perform { context in
             completion(
                 Result {
-                    try ManagedCache.find(in: context).map(context.delete).map(context.save)
+                    try ManagedCache.deleteCache(in: context)
                 }
             )
         }

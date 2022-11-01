@@ -1,6 +1,5 @@
-public protocol FeedCache {
-    typealias SaveResult = Result<Void, Error>
-    typealias SaveCompletion = (SaveResult) -> Void
+import Foundation
 
-    func save(_ feed: [FeedImage], completion: @escaping SaveCompletion)
+public protocol FeedCache {
+    func save(_ feed: [FeedImage]) throws
 }

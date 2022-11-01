@@ -18,7 +18,7 @@ extension CoreDataFeedStore: FeedImageDataStore {
         perform { context in
             completion(
                 Result {
-                    try ManagedFeedImage.first(with: url, in: context)?.data
+                    try ManagedFeedImage.data(with: url, in: context)
                 }
             )
         }

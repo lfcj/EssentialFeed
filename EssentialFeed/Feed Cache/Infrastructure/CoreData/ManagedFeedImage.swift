@@ -24,4 +24,8 @@ extension ManagedFeedImage {
         request.fetchLimit = 1
         return try context.fetch(request).first
     }
+
+    static func data(with url: URL, in context: NSManagedObjectContext) throws -> Data? {
+        try first(with: url, in: context)?.data
+    }
 }

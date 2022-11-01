@@ -26,44 +26,33 @@ public final class CoreDataFeedStore: FeedStore {
         }
     }
 
-    public func retrieve(completion: @escaping RetrievalCompletion) {
-        performAsync { context in
-            completion(
-                Result {
-                    try ManagedCache.find(in: context).map {
-                        return CachedFeed(feed: $0.localFeed, timestamp: $0.timestamp)
-                    }
+    public func retrieve() throws -> CachedFeed? {
+        try performSync { context in
+            Result {
+                try ManagedCache.find(in: context).map {
+                    return CachedFeed(feed: $0.localFeed, timestamp: $0.timestamp)
                 }
-            )
+            }
         }
     }
 
-    public func insert(_ feed: [LocalFeedImage], timestamp: Date, completion: @escaping InsertionCompletion) {
-        performAsync { context in
-            completion(
-                Result {
-                    let managedCache = try ManagedCache.newUniqueInstance(in: context)
-                    managedCache.timestamp = timestamp
-                    managedCache.feed = ManagedFeedImage.images(from: feed, in: context)
-                    try context.save()
-                }
-            )
+    public func insert(_ feed: [LocalFeedImage], timestamp: Date) throws {
+        try performSync { context in
+            Result {
+                let managedCache = try ManagedCache.newUniqueInstance(in: context)
+                managedCache.timestamp = timestamp
+                managedCache.feed = ManagedFeedImage.images(from: feed, in: context)
+                try context.save()
+            }
         }
     }
 
-    public func deleteCachedFeed(completion: @escaping DeletionCompletion) {
-        performAsync { context in
-            completion(
-                Result {
-                    try ManagedCache.deleteCache(in: context)
-                }
-            )
+    public func deleteCachedFeed() throws {
+        try performSync { context in
+            Result {
+                try ManagedCache.deleteCache(in: context)
+            }
         }
-    }
-
-    func performAsync(_ action: @escaping (NSManagedObjectContext) -> Void) {
-        let context = self.context
-        context.perform { action(context) }
     }
 
     func performSync<R>(_ action: (NSManagedObjectContext) -> Result<R, Error>) throws -> R {
